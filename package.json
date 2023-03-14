@@ -1,0 +1,25 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "link": "lerna link",
+    "lint": "eslint --ext .tsx,.ts packages/**/src",
+    "lint:fix": "eslint --fix --ext .tsx,.ts packages/**/src"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=16.13.1"
+  },
+  "author": "https://github.com/authing",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "ali-oss": "^6.16.0",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.1"
+  }
+}

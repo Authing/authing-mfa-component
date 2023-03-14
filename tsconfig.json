@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "outDir": "dist",
+    "target": "es5",
+    "lib": ["dom", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noEmit": false,
+    "jsx": "react",
+    "downlevelIteration": true,
+    "paths": {
+      "shim-react": ["./shim-react18/"],
+      "shim-antd": ["./shim-antd5/"],
+      "shim-antd/es/*": ["./shim-antd5/node_modules/antd/es/*"]
+    }
+  },
+  "include": [
+    "packages/*/src"
+  ],
+  "exclude": [
+    "node_modules/**"
+  ]
+}
