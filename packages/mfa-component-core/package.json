@@ -1,8 +1,8 @@
 {
-  "name": "@authing/mfa-components-vue3",
+  "name": "@authing/mfa-components-core",
   "version": "0.0.1",
-  "description": "Authing continuous adaptive mfa components for Vue 3",
-  "module": "dist/esm/authing-mfa-components-vue3.min.js",
+  "description": "Authing continuous adaptive mfa components for core codes, only be used to internal",
+  "module": "dist/esm/authing-mfa-component-core.min.js",
   "types": "dist/typings/index.d.ts",
   "files": [
     "dist"
@@ -14,5 +14,10 @@
     "release:alpha": "npm publish --verbose --tag=alpha --access public"
   },
   "author": "https://github.com/authing",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "i18next": "^22.4.11",
+    "i18next-browser-languagedetector": "^7.0.1",
+    "react-i18next": "^12.2.0"
+  }
 }

@@ -1,8 +1,8 @@
 {
-  "name": "@authing/mfa-components-angular",
+  "name": "@authing/mfa-components-native",
   "version": "0.0.1",
-  "description": "Authing continuous adaptive mfa components for Angular",
-  "module": "dist/esm/authing-mfa-components-angular.min.js",
+  "description": "Authing continuous adaptive mfa components for Native",
+  "module": "dist/esm/authing-mfa-component-native.min.js",
   "types": "dist/typings/index.d.ts",
   "files": [
     "dist"

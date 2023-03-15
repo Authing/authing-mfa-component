@@ -13,31 +13,42 @@ interface ICachedRoot {
 
 const cachedRoots: ICachedRoot[] = []
 
-const render = (renderer: IRenderer) => {
+function render (renderer: IRenderer) {
   const { container, element } = renderer
 
-  if (typeof element === 'string') {
-    container.innerHTML = element
-    return
+  const root: Root = createRoot(container)
+
+  const cacheIndex = cachedRoots.findIndex(item => {
+    return item.container === container
+  })
+
+  if (cacheIndex > -1) {
+    cachedRoots.splice(cacheIndex, 1, {
+      root,
+      container
+    })
+  } else {
+    cachedRoots.push({
+      container,
+      root
+    })
   }
 
+  root.render(element)
+}
+
+function unmount (container: Element) {
   const cache = cachedRoots.find(item => {
     return item.container === container
   })
 
   if (cache) {
-    return cache.root.render(element)
+    cache.root.unmount()
   }
-
-  const root: Root = createRoot(container)
-  cachedRoots.push({
-    container,
-    root
-  })
-  root.render(element)
 }
 
 export {
   React,
-  render
+  render,
+  unmount
 }
