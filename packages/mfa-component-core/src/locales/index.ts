@@ -2,8 +2,6 @@ import { React } from 'shim-react'
 
 import i18n, { InitOptions, Resource } from 'i18next'
 
-import { initReactI18next } from 'react-i18next'
-
 import LanguageDetector from 'i18next-browser-languagedetector'
 
 import * as zhCnTrans from './zh-cn'
@@ -50,9 +48,7 @@ export function fallbackLng(code = 'en'): string[] {
   }
 
   if (code.startsWith('zh-')) {
-    if (
-      ['zh-tw', 'zh-hk', 'zh-mo', 'zh-hant'].includes(code.toLocaleLowerCase())
-    ) {
+    if (['zh-tw', 'zh-hk', 'zh-mo', 'zh-hant'].includes(code.toLocaleLowerCase())) {
       fallbacks.push('zh-TW')
     } else if (['zh-cn', 'zh-sg', 'zh-my'].includes(code.toLocaleLowerCase())) {
       fallbacks.push('zh-CN')
@@ -68,7 +64,7 @@ export function fallbackLng(code = 'en'): string[] {
 
 export async function initAuthingMFAI18n(
   options: AuthingMFAI18nOptions,
-  callback: React.Dispatch<React.SetStateAction<boolean>>
+  callback?: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   const { defaultLanguage } = options
   const detectionOrder: string[] = []
@@ -108,9 +104,9 @@ export async function initAuthingMFAI18n(
     }
   }
 
-  await i18n.use(LanguageDetector).use(initReactI18next).init(i18nOptions)
+  await i18n.use(LanguageDetector).init(i18nOptions)
 
-  callback(true)
+  callback?.(true)
 }
 
 export { i18n }

@@ -1,3 +1,4 @@
+import { Lang } from './locales'
 export interface IAuthingMFAOptions {
   el: Element
 }
@@ -11,7 +12,7 @@ export interface IAuthingMFAEvent {
 export type MFAType = 'SMS' | 'EMAIL' | 'OTP' | 'FACE'
 
 export interface IMFAInitData {
-  applicationMfa?: Array<{
+  applicationMfa: Array<{
     mfaPolicy: MFAType
     status: number
     sort: number
@@ -39,6 +40,16 @@ export interface IMFAInitData {
   nickname?: string
 }
 
+export interface IAuthingPublicConfig {
+  cdnBase: string
+}
+
 export interface IAuthingMFAComponentProps {
   initData: IMFAInitData
+  authingPublicConfig: IAuthingPublicConfig
+  lang?: Lang
+}
+
+export interface IOnMFAVerify {
+  (code: number, data: any, message?: string): void
 }
