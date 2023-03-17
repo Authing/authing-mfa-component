@@ -5,10 +5,12 @@
   "module": "dist/esm/authing-mfa-component-core.min.js",
   "types": "dist/typings/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "package.json",
+    "package-lock.json"
   ],
   "scripts": {
-    "autoinstall": "npm ci",
+    "autoinstall": "npm ci && cd shim-antd4 && npm ci && cd shim-antd5 && npm ci && cd shim-react16 && npm ci && cd shim-react18 && npm ci",
     "build": "node scripts/build.js",
     "release:official": "npm publish --verbose --access public",
     "release:alpha": "npm publish --verbose --tag=alpha --access public"
