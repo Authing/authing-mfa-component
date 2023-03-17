@@ -23,7 +23,8 @@
     "paths": {
       "shim-react": ["./shim-react16/"],
       "shim-antd": ["./shim-antd4/"],
-      "shim-antd/es/*": ["./shim-antd4/node_modules/antd/es/*"]
+      "shim-antd/es/*": ["./shim-antd4/node_modules/antd/es/*"],
+      "shim-antd/lib/*": ["./shim-antd4/node_modules/antd/lib/*"]
     }
   },
   "include": [

@@ -1,3 +1,5 @@
+import { FormInstance, FormItemProps } from 'shim-antd/lib/form'
+
 import { Lang } from './locales'
 export interface IAuthingMFAOptions {
   el: Element
@@ -42,6 +44,11 @@ export interface IMFAInitData {
 
 export interface IAuthingPublicConfig {
   cdnBase: string
+  verifyCodeLength?: number
+  internationalSmsConfig?: {
+    enabled: boolean
+  }
+  userPoolId: string
 }
 
 export interface IAuthingMFAComponentProps {
@@ -52,4 +59,23 @@ export interface IAuthingMFAComponentProps {
 
 export interface IOnMFAVerify {
   (code: number, data: any, message?: string): void
+}
+
+export interface ValidatorFormItemProps extends FormItemProps {
+  form?: FormInstance
+  checkRepeat?: boolean
+  checkExist?: boolean
+  areaCode?: string //国际化区号
+  /**
+   * 控制内部FormItem组件关于pattern的校验规则
+   */
+  isCheckPattern?: boolean
+}
+
+export interface ValidatorFormItemMetaProps extends ValidatorFormItemProps {
+  method: 'email' | 'phone' | 'username' | string
+}
+
+export interface ICheckProps {
+  check: (values: any) => void
 }

@@ -517,7 +517,7 @@ function Example () {
 		},
 		"requestHostname": "mlbkhepjgjiihaap.authing.cn",
 		"customLoading": null,
-		"internationalSmsConfig": null,
+		// "internationalSmsConfig": null,
 		"loadingBackground": "rgba(42,58,154,1)",
 		"asa": {
 			"plugin": {
