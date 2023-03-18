@@ -31,5 +31,15 @@ export const mfa = {
   bindPhoneInfo: '携帯番号を入力して結びつけてください',
   phone: '携帯電話番号',
   SmsMfaCheck: 'SMS認証コードを入力してください',
-  fullCaptchaCode: '{{name}}を記入してください'
+  fullCaptchaCode: '{{name}}を記入してください',
+  inputSixCode: 'バインドされた 6 桁のセキュリティ コードを入力してください',
+  hasLooseSaftyCode: 'セキュリティコードの紛失?',
+  useRecoverCode: '復旧コードを使って',
+  backToVerify: '検証ページに戻る',
+  totpGenerateCode: 'この鍵を安全に記録してください',
+  pleaseRecordKey: '鍵を記録してください',
+  rememberedSecret: '鍵は安全に記録されています',
+  confirm: '確認',
+  mfaAfterReset: '復旧コードがない場合は管理者に連絡してください',
+  inputRecoverCode: '復旧コードを入力してください'
 }

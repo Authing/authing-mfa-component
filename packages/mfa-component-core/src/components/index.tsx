@@ -19,17 +19,23 @@ import {
   IAuthingPublicConfig,
   IMFAInitData,
   IOnMFAVerify,
-  MFAType
+  MFAType,
+  MFAVerifyPage
 } from '../types'
+import { GuardRecoveryCodeView } from './RecoveryCode'
 
 export interface IMFAFuncProps {
   initData: IMFAInitData
   setMFASelectorVisible: React.Dispatch<React.SetStateAction<boolean>>
   authingPublicConfig: IAuthingPublicConfig
   onVerify: IOnMFAVerify
+  onChange?: (type: MFAType | MFAVerifyPage) => void
 }
 
-const ComponentsMapping: Record<MFAType, (props: IMFAFuncProps) => React.ReactNode> = {
+const ComponentsMapping: Record<
+  MFAType | MFAVerifyPage,
+  (props: IMFAFuncProps) => React.ReactNode
+> = {
   EMAIL: (props: IMFAFuncProps) => {
     const { initData, authingPublicConfig, onVerify } = props
     return (
@@ -41,8 +47,16 @@ const ComponentsMapping: Record<MFAType, (props: IMFAFuncProps) => React.ReactNo
     return <SMS authingPublicConfig={authingPublicConfig} initData={initData} onVerify={onVerify} />
   },
   OTP: (props: IMFAFuncProps) => {
-    const { initData, authingPublicConfig, onVerify } = props
-    return <OTP authingPublicConfig={authingPublicConfig} initData={initData} onVerify={onVerify} />
+    const { initData, authingPublicConfig, onVerify, onChange, setMFASelectorVisible } = props
+    return (
+      <OTP
+        authingPublicConfig={authingPublicConfig}
+        initData={initData}
+        onVerify={onVerify}
+        onChange={onChange}
+        setMFASelectorVisible={setMFASelectorVisible}
+      />
+    )
   },
   FACE: (props: IMFAFuncProps) => {
     const { initData, authingPublicConfig, onVerify, setMFASelectorVisible } = props
@@ -54,6 +68,10 @@ const ComponentsMapping: Record<MFAType, (props: IMFAFuncProps) => React.ReactNo
         setMFASelectorVisible={setMFASelectorVisible}
       />
     )
+  },
+  RECOVERY: (props: IMFAFuncProps) => {
+    const { initData } = props
+    return <GuardRecoveryCodeView initData={initData} />
   }
 }
 
@@ -70,7 +88,7 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
 
   const { t } = i18n
 
-  const [currentMFAType, setCurrentMFAType] = useState<MFAType>(
+  const [currentMFAType, setCurrentMFAType] = useState<MFAType | MFAVerifyPage>(
     initData.current ||
       initData.applicationMfa.sort((a, b) => a.sort - b.sort)[0].mfaPolicy ||
       'EMAIL'
@@ -84,6 +102,8 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
     console.log(code, data, message)
   }
 
+  const onChange = (type: MFAType | MFAVerifyPage) => setCurrentMFAType(type)
+
   return (
     <div className="authing-mfa-container">
       <Back></Back>
@@ -92,14 +112,15 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
           initData,
           setMFASelectorVisible,
           authingPublicConfig,
-          onVerify
+          onVerify,
+          onChange
         })}
       </div>
       {MFASelectorVisible && (
         <MFASelector
           initData={initData}
-          current={currentMFAType}
-          onChange={(type: MFAType) => setCurrentMFAType(type)}
+          current={currentMFAType as MFAType}
+          onChange={onChange}
         ></MFASelector>
       )}
     </div>

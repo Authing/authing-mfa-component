@@ -31,5 +31,15 @@ export const mfa = {
   bindPhoneInfo: '請輸入手機號碼進行綁定',
   phone: '手機號碼',
   SmsMfaCheck: '請輸入短信驗證碼',
-  fullCaptchaCode: '請填寫完整的{{name}}'
+  fullCaptchaCode: '請填寫完整的{{name}}',
+  inputSixCode: '請輸入綁定的 6 位數字安全碼',
+  hasLooseSaftyCode: '安全碼丟失？',
+  useRecoverCode: '使用恢復代碼',
+  backToVerify: '返回驗證頁',
+  totpGenerateCode: '為您生成一串新的恢復代碼，請安全地記錄這段密鑰',
+  pleaseRecordKey: '請記錄密鑰',
+  rememberedSecret: '已經安全地記錄了這段密鑰',
+  confirm: '確認',
+  mfaAfterReset: '如果您沒有恢復代碼，請聯繫管理員處理',
+  inputRecoverCode: '請輸入恢復代碼'
 }

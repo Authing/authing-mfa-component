@@ -31,5 +31,15 @@ export const mfa = {
   bindPhoneInfo: 'Please enter the phone number to bind',
   phone: 'Phone number',
   SmsMfaCheck: 'Please enter SMS verification code',
-  fullCaptchaCode: 'Please fill in the complete'
+  fullCaptchaCode: 'Please fill in the complete',
+  inputSixCode: 'Enter 6-digit security code',
+  hasLooseSaftyCode: 'Lost the security code?',
+  useRecoverCode: 'Use recovery code',
+  backToVerify: 'Back',
+  totpGenerateCode: 'Generate a new recovery code for you, please record this key safely',
+  pleaseRecordKey: 'Please record the key',
+  rememberedSecret: 'This key has been safely recorded',
+  confirm: 'Confirm',
+  mfaAfterReset: 'If you do not have a recovery code, please contact the administrator',
+  inputRecoverCode: 'Enter recovery code'
 }
