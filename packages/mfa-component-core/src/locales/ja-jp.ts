@@ -23,5 +23,13 @@ export const mfa = {
   isMissing: '{{name}}が未入力です',
   password: 'パスワード',
   inputPwd: 'パスワードを入力してください',
-  emailLabel: 'メールアドレス'
+  emailLabel: 'メールアドレス',
+  clickSent: '認証コード',
+  captchaCode: 'グラフィックス認証コード',
+  retryAfterTime: '{{time}} 秒',
+  verifyCodeSended: '認証コードが送信され',
+  bindPhoneInfo: '携帯番号を入力して結びつけてください',
+  phone: '携帯電話番号',
+  SmsMfaCheck: 'SMS認証コードを入力してください',
+  fullCaptchaCode: '{{name}}を記入してください'
 }

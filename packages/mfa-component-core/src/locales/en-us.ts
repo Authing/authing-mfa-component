@@ -23,5 +23,13 @@ export const mfa = {
   isMissing: '{{name}} is missing',
   password: 'Password',
   inputPwd: 'Password',
-  emailLabel: 'Email'
+  emailLabel: 'Email',
+  clickSent: 'Click  send',
+  captchaCode: 'Captcha',
+  retryAfterTime: '{{time}} seconds',
+  verifyCodeSended: 'Verification code has been sent to',
+  bindPhoneInfo: 'Please enter the phone number to bind',
+  phone: 'Phone number',
+  SmsMfaCheck: 'Please enter SMS verification code',
+  fullCaptchaCode: 'Please fill in the complete'
 }

@@ -11,7 +11,7 @@ function Example () {
 		"email": '',
 		"phone": '',
 		"phoneCountryCode": '',
-		"mfaPhone": "17610800803",
+		"mfaPhone": "",
 		"mfaEmail": '',
 		"mfaPhoneCountryCode": "+86",
 		"username": "test6",
@@ -595,7 +595,7 @@ function Example () {
 	}
   
   return <>
-    <AuthingMFAComponent initData={initData} authingPublicConfig={authingPublicConfig}></AuthingMFAComponent>
+    <AuthingMFAComponent initData={initData} authingPublicConfig={authingPublicConfig} lang="zh-TW"></AuthingMFAComponent>
   </>
 }
 

@@ -2,6 +2,10 @@ import { Rule } from 'shim-antd/lib/form'
 
 import { i18n } from '../locales'
 
+import { phone } from 'phone'
+
+export * from './countryList'
+
 // NoCheck | Low | Middle | High | AUTO
 export type PasswordStrength = 0 | 1 | 2 | 3 | 4
 
@@ -158,4 +162,45 @@ export const mailDesensitization = (mail: string) => {
   const mailArr = mail.split('@')
   const mailName = mailArr[0].substr(0, 1) + '***'
   return mailName + '@' + mailArr[1]
+}
+
+export interface PhoneValidResult {
+  isValid: boolean
+  phoneNumber: string
+  countryIso2: string
+  countryIso3: string
+  countryCode: string
+}
+
+export const parsePhone = (isInternationSms: boolean, fieldValue: string, areaCode = 'CN') => {
+  let countryCode = undefined
+
+  let phoneNumber = fieldValue
+  // 未开启国家化短信
+  if (!isInternationSms) {
+    return { phoneNumber, countryCode: undefined }
+  }
+  // 处理 类似 192*******9 情况
+  if (phone(fieldValue, { country: areaCode }).isValid) {
+    const parsePhone = phone(fieldValue, {
+      country: areaCode
+    }) as PhoneValidResult
+
+    countryCode = parsePhone.countryCode as string
+
+    phoneNumber = parsePhone.phoneNumber.split(countryCode)[1]
+  } else if (phone(fieldValue).isValid) {
+    // 处理 +86 19294229909 情况
+    const parsePhone = phone(fieldValue) as PhoneValidResult
+
+    countryCode = parsePhone.countryCode as string
+
+    phoneNumber = parsePhone.phoneNumber.split(countryCode)[1]
+  }
+
+  return { countryCode, phoneNumber }
+}
+
+export const phoneDesensitization = (phone: string) => {
+  return phone.replace(/(\d{3})\d*(\d{4})/, '$1****$2')
 }

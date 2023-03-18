@@ -23,5 +23,13 @@ export const mfa = {
   isMissing: '{{name}}未填写',
   password: '密码',
   inputPwd: '请输入密码',
-  emailLabel: '邮箱'
+  emailLabel: '邮箱',
+  clickSent: '点击发送验证码',
+  captchaCode: '验证码',
+  retryAfterTime: '{{time}} 秒',
+  verifyCodeSended: '验证码已发送至',
+  bindPhoneInfo: '请输入手机号进行绑定',
+  phone: '手机号',
+  SmsMfaCheck: '请输入短信验证码',
+  fullCaptchaCode: '请填写完整的{{name}}'
 }

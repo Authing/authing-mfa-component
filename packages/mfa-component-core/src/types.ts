@@ -47,6 +47,7 @@ export interface IAuthingPublicConfig {
   verifyCodeLength?: number
   internationalSmsConfig?: {
     enabled: boolean
+    defaultISOType: ''
   }
   userPoolId: string
 }

@@ -1,7 +1,5 @@
 import { React } from 'shim-react'
 
-import { useTranslation } from 'react-i18next'
-
 import { Email } from './Email'
 import { SMS } from './SMS'
 import { Face } from './Face'
@@ -12,7 +10,7 @@ import { Back } from './Back'
 
 import { useIconfont } from '../IconFont'
 
-import { initAuthingMFAI18n } from '../locales'
+import { i18n, initAuthingMFAI18n } from '../locales'
 
 import './style.less'
 
@@ -70,7 +68,7 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
 
   useIconfont(authingPublicConfig.cdnBase)
 
-  const { t } = useTranslation()
+  const { t } = i18n
 
   const [currentMFAType, setCurrentMFAType] = useState<MFAType>(
     initData.current ||
