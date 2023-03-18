@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { Select, Tooltip } from 'shim-antd'
 
-import { isoInfo, IsoType } from '../../utils'
+import { isoInfo, IsoType } from '../../helpers'
 
 import './styles.less'
 

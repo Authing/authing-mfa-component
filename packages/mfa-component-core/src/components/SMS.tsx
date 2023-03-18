@@ -16,7 +16,7 @@ import { InputNumber } from './InputNumber'
 
 import { InputInternationPhone } from './InputInternationPhone'
 
-import { parsePhone, phoneDesensitization } from '../utils'
+import { parsePhone, phoneDesensitization } from '../helpers'
 
 import { VerifyCodeInput, VerifyCodeFormItem } from './VerifyCode'
 

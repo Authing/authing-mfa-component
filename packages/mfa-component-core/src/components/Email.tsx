@@ -12,7 +12,7 @@ import { i18n } from '../locales'
 
 import { SubmitButton } from './SubmitButton'
 
-import { mailDesensitization } from '../utils'
+import { mailDesensitization } from '../helpers'
 
 import { VerifyCodeInput, VerifyCodeFormItem } from './VerifyCode'
 

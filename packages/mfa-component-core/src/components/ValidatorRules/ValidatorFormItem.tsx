@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { Form, FormItemProps } from 'shim-antd'
 
-import { fieldRequiredRule, VALIDATE_PATTERN } from '../../utils'
+import { fieldRequiredRule, VALIDATE_PATTERN } from '../../helpers'
 
 import { Rule, FormInstance } from 'shim-antd/lib/form'
 

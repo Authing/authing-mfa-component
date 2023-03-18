@@ -595,7 +595,7 @@ function Example () {
 	}
   
   return <>
-    <AuthingMFAComponent initData={initData} authingPublicConfig={authingPublicConfig} lang="zh-TW"></AuthingMFAComponent>
+    <AuthingMFAComponent initData={initData} authingPublicConfig={authingPublicConfig}></AuthingMFAComponent>
   </>
 }
 
