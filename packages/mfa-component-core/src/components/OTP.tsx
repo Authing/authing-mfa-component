@@ -37,8 +37,8 @@ export function OTP(props: IOTPProps) {
   }, [mfaToken])
   return (
     <>
-      <p className="authing-g2-mfa-title">{i18n.t('mfa.mfaCertification')}</p>
-      <p className="authing-g2-mfa-tips">{i18n.t('mfa.inputSixCode')}</p>
+      <p className="authing-mfa-title">{i18n.t('mfa.mfaCertification')}</p>
+      <p className="authing-mfa-tips">{i18n.t('mfa.inputSixCode')}</p>
 
       <Form
         form={form}

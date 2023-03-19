@@ -31,8 +31,8 @@ export const SaveCode: React.FC<{
 
   return (
     <>
-      <p className="authing-g2-mfa-title">{i18n.t('mfa.useRecoverCode')}</p>
-      <p className="authing-g2-mfa-tips">{i18n.t('mfa.totpGenerateCode')}</p>
+      <p className="authing-mfa-title">{i18n.t('mfa.useRecoverCode')}</p>
+      <p className="authing-mfa-tips">{i18n.t('mfa.totpGenerateCode')}</p>
 
       <div className="g2-mfa-bindTotp-copySecret">
         <Paragraph copyable>{secret}</Paragraph>
@@ -45,7 +45,7 @@ export const SaveCode: React.FC<{
         onFinishFailed={() => submitButtonRef.current?.onError()}
       >
         <Form.Item
-          className="authing-g2-input-form g2-mfa-totp-recoveryCode-input"
+          className="authing-mfa-input-form g2-mfa-totp-recoveryCode-input"
           name="remember"
           rules={[
             {
