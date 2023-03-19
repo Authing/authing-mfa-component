@@ -238,7 +238,7 @@ function Example () {
 		"showAuthorizationPage": false,
 		"publicKey": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4xKeUgQ+Aoz7TLfAfs9+paePb\n5KIofVthEopwrXFkp8OCeocaTHt9ICjTT2QeJh6cZaDaArfZ873GPUn00eOIZ7Ae\n+TiA2BKHbCvloW3w5Lnqm70iSsUi5Fmu9/2+68GZRH9L7Mlh8cFksCicW2Y2W2uM\nGKl64GDcIq3au+aqJQIDAQAB\n-----END PUBLIC KEY-----\n",
 		"name": "test-auth-zhaoyiming",
-		"css": "#authing-guard-container {\n         display: flex;\n         align-items: center;\n         justify-content: center;\n       }\n/*\n[class*=authing-].authing-ant-tabs-tab.authing-ant-tabs-tab-active .authing-ant-tabs-tab-btn {\n\tcolor: red;\n}\n\n[class*=authing-][class*=authing-].authing-ant-btn-link.guard-button-link-like {\n\tcolor: red;\n}\n\n.g2-tips-line .link-like {\n\tcolor: red;\n}\n\n.g2-tips-line .link-like:hover {\n\tcolor: orange;\n}\n\n[class*=authing-].authing-ant-btn-primary {\n\tbackground-color: red;\n  \tborder-color: red;\n}\n\n[class*=authing-].authing-ant-btn-primary:hover {\n\tbackground-color: orange;\n  \tborder-color: orange;\n}\n\n[class*=authing-].authing-ant-btn-primary:focus, [class*=authing-].authing-ant-btn-primary:hover {\n\tbackground-color: orange;\n}\n*/",
+		"css": "",
 		"logo": "https://files.authing.co/user-contents/photos/1273ed68-949b-448b-b552-ce807704f384.png",
 		"userpoolLogo": "https://files.authing.co/authing-console/default-userpool-logo.ico",
 		"userpoolName": "user-pool-zhaoyiming",

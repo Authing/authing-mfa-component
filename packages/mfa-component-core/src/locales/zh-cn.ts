@@ -31,5 +31,14 @@ export const mfa = {
   bindPhoneInfo: '请输入手机号进行绑定',
   phone: '手机号',
   SmsMfaCheck: '请输入短信验证码',
-  fullCaptchaCode: '请填写完整的{{name}}'
+  fullCaptchaCode: '请填写完整的{{name}}',
+  faceCheck: '请保持摄像头已打开并无遮挡',
+  faceText2: '请打开摄像头识别人脸进行绑定',
+  faceText3: '开始验证',
+  mediaDevicesSupport: '当前设备暂不支持人脸识别',
+  AuthorizationCamera: '请先开启授权',
+  checkPreferences: '请检查偏好设置',
+  requireError: '无法满足要求错误',
+  hardwareSupport: '硬件不支持',
+  verifyCodeTip: ''
 }

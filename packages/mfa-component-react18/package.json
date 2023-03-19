@@ -1,7 +1,7 @@
 {
-  "name": "@authing/mfa-components-react18",
+  "name": "@authing/mfa-component-react18",
   "version": "0.0.1",
-  "description": "Authing continuous adaptive mfa components for React 18",
+  "description": "Authing continuous adaptive mfa component for React 18",
   "module": "dist/esm/authing-mfa-component-react18.min.js",
   "types": "dist/typings/index.d.ts",
   "files": [

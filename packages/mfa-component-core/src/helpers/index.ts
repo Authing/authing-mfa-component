@@ -204,3 +204,7 @@ export const parsePhone = (isInternationSms: boolean, fieldValue: string, areaCo
 export const phoneDesensitization = (phone: string) => {
   return phone.replace(/(\d{3})\d*(\d{4})/, '$1****$2')
 }
+
+export const getClassnames = (classnames: (string | boolean | undefined)[]) => {
+  return classnames.filter(Boolean).join(' ')
+}

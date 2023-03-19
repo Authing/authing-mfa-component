@@ -31,5 +31,13 @@ export const mfa = {
   bindPhoneInfo: 'Please enter the phone number to bind',
   phone: 'Phone number',
   SmsMfaCheck: 'Please enter SMS verification code',
-  fullCaptchaCode: 'Please fill in the complete'
+  fullCaptchaCode: 'Please fill in the complete',
+  faceCheck: 'Please keep the camera turned on and unobstructed',
+  faceText2: 'Please turn on the camera to recognize the face for binding',
+  faceText3: 'Start',
+  mediaDevicesSupport: 'The current device does not support face recognition',
+  AuthorizationCamera: 'Please enable authorization first',
+  checkPreferences: 'Please check preferences',
+  requireError: 'Unable to satisfy request error',
+  hardwareSupport: 'Hardware not supported'
 }

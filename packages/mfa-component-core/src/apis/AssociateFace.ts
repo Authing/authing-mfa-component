@@ -1,3 +1,5 @@
+import { post } from '../request'
+
 interface AssociateFaceContent {
   photoA: string
   photoB: string
@@ -6,19 +8,18 @@ interface AssociateFaceContent {
 }
 
 export const AssociateFace = async (content: AssociateFaceContent) => {
-  return Promise.resolve(content)
-
-  // return await post(
-  //   '/api/v2/mfa/face/associate',
-  //   {
-  //     photoA,
-  //     photoB,
-  //     isExternalPhoto,
-  //   },
-  //   {
-  //     headers: {
-  //       authorization: `Bearer ${mfaToken}`,
-  //     },
-  //   }
-  // )
+  const { photoA, photoB, isExternalPhoto, mfaToken } = content
+  return await post({
+    path: '/api/v2/mfa/face/associate',
+    data: {
+      photoA,
+      photoB,
+      isExternalPhoto
+    },
+    config: {
+      headers: {
+        authorization: `Bearer ${mfaToken}`
+      }
+    }
+  })
 }

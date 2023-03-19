@@ -31,5 +31,13 @@ export const mfa = {
   bindPhoneInfo: '携帯番号を入力して結びつけてください',
   phone: '携帯電話番号',
   SmsMfaCheck: 'SMS認証コードを入力してください',
-  fullCaptchaCode: '{{name}}を記入してください'
+  fullCaptchaCode: '{{name}}を記入してください',
+  faceCheck: 'カメラの電源を入れ、遮るものがない状態にしてください',
+  faceText2: 'バインドする顔を認識するためにカメラをオンにしてください',
+  faceText3: '検証を開始する',
+  mediaDevicesSupport: '現在のデバイスは顔認識をサポートしていない',
+  AuthorizationCamera: '最初に認証を有効にしてください',
+  checkPreferences: '設定を確認してください',
+  requireError: '要求エラーを満たすことができません',
+  hardwareSupport: 'ハードウェアはサポートされていません'
 }
