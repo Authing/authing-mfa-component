@@ -41,5 +41,13 @@ export const mfa = {
   rememberedSecret: '已經安全地記錄了這段密鑰',
   confirm: '確認',
   mfaAfterReset: '如果您沒有恢復代碼，請聯繫管理員處理',
-  inputRecoverCode: '請輸入恢復代碼'
+  inputRecoverCode: '請輸入恢復代碼',
+  faceCheck: '請保持攝像頭已打開並無遮擋',
+  faceText2: '請打開攝像頭識別人臉進行綁定',
+  faceText3: '開始驗證',
+  mediaDevicesSupport: '當前設備暫不支持人臉識別',
+  AuthorizationCamera: '請先開啟授權',
+  checkPreferences: '請檢查偏好設置',
+  requireError: '無法滿足要求錯誤',
+  hardwareSupport: '硬件不支持'
 }

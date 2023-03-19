@@ -1,7 +1,5 @@
 import axios, { AxiosRequestConfig, CancelTokenSource } from 'axios'
 
-import { stringify } from 'querystring'
-
 import { i18n } from '../locales'
 
 const LANG_HEADER_KEY = 'x-authing-lang'
@@ -20,16 +18,8 @@ export interface IAuthingResponse<T = any> {
 
 export interface IGetProps {
   path: string
-  query: Record<string, any>
+  query: string
   config?: AxiosRequestConfig
-}
-
-export interface IPostProps {
-  path: string
-  data: any
-  config?: {
-    headers: any
-  }
 }
 
 export async function get<T>(props: IGetProps): Promise<IAuthingResponse<T>> {
@@ -47,7 +37,7 @@ export async function get<T>(props: IGetProps): Promise<IAuthingResponse<T>> {
 
     const res: any = await Promise.race([
       timeoutAction(source.cancel),
-      axios(`${baseUrl}${path}${stringify(query)}`, {
+      axios(`${baseUrl}${path}${query}`, {
         method: 'GET',
         ...config,
         withCredentials: true,
@@ -61,6 +51,14 @@ export async function get<T>(props: IGetProps): Promise<IAuthingResponse<T>> {
     return Promise.resolve({
       code: -2
     })
+  }
+}
+
+export interface IPostProps {
+  path: string
+  data: any
+  config?: {
+    headers: any
   }
 }
 
@@ -88,6 +86,40 @@ export async function post<T>(props: IPostProps): Promise<IAuthingResponse<T>> {
       })
     ])
 
+    return res?.data
+  } catch (e) {
+    return Promise.resolve({
+      code: -2
+    })
+  }
+}
+
+export interface IPostFormProps {
+  path: string
+  formData: any
+  config?: {
+    headers: any
+  }
+}
+
+export async function postForm<T>(props: IPostFormProps): Promise<IAuthingResponse<T>> {
+  const { path, formData, config } = props
+  try {
+    const CancelToken = axios.CancelToken
+    const source = CancelToken.source()
+    const res: any = await Promise.race([
+      timeoutAction(source.cancel),
+      axios(`${baseUrl}${path}`, {
+        method: 'POST',
+        data: formData,
+        withCredentials: true,
+        cancelToken: source.token,
+        headers: {
+          ...config?.headers,
+          [LANG_HEADER_KEY]: i18n.language
+        }
+      })
+    ])
     return res?.data
   } catch (e) {
     return Promise.resolve({

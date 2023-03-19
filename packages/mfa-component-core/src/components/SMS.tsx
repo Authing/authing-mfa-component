@@ -110,7 +110,7 @@ function BindMFASms(props: BindMFASmsProps) {
         return (
           <InputInternationPhone
             {...props}
-            className="authing-g2-input"
+            className="authing-mfa-input"
             size="large"
             areaCode={areaCode}
             onAreaCodeChange={(value: string) => {
@@ -124,7 +124,7 @@ function BindMFASms(props: BindMFASmsProps) {
         return (
           <InputNumber
             {...props}
-            className="authing-g2-input"
+            className="authing-mfa-input"
             autoComplete="off"
             size="large"
             placeholder={t('mfa.inputPhone')}
@@ -139,8 +139,8 @@ function BindMFASms(props: BindMFASmsProps) {
 
   return (
     <>
-      <h3 className="authing-g2-mfa-title">{t('mfa.mfaCertification')}</h3>
-      <p className="authing-g2-mfa-tips">{t('mfa.bindPhoneInfo')}</p>
+      <h3 className="authing-mfa-title">{t('mfa.mfaCertification')}</h3>
+      <p className="authing-mfa-tips">{t('mfa.bindPhoneInfo')}</p>
       <Form
         form={form}
         onSubmitCapture={() => submitButtonRef.current.onSpin(true)}
@@ -149,7 +149,7 @@ function BindMFASms(props: BindMFASmsProps) {
       >
         <CustomFormItem.Phone
           className={
-            isInternationSms ? 'authing-g2-input-form remove-padding' : 'authing-g2-input-form'
+            isInternationSms ? 'authing-mfa-input-form remove-padding' : 'authing-mfa-input-form'
           }
           name="phone"
           form={form}
@@ -214,8 +214,8 @@ function VerifyMFASms(props: VerifyMFASmsProps) {
 
   return (
     <>
-      <h3 className="authing-g2-mfa-title">{t('mfa.mfaCertification')}</h3>
-      <p className="authing-g2-mfa-tips">{tips}</p>
+      <h3 className="authing-mfa-title">{t('mfa.mfaCertification')}</h3>
+      <p className="authing-mfa-tips">{tips}</p>
       <Form
         form={form}
         onFinish={onFinish}

@@ -9,17 +9,13 @@ export interface MFAButtonProps extends ButtonProps {}
 export function MFAButton(props: MFAButtonProps) {
   const { useMemo } = React
 
-  const { type, onClick } = props
+  const { onClick } = props
 
   const buttonClassName = useMemo(() => {
-    let { className } = props
-
-    if (type) {
-      className += ' guard-button-link-like'
-    }
+    const { className } = props
 
     return className
-  }, [props, type])
+  }, [props])
 
   return (
     <Button

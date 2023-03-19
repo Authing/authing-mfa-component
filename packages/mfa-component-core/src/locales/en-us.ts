@@ -41,5 +41,13 @@ export const mfa = {
   rememberedSecret: 'This key has been safely recorded',
   confirm: 'Confirm',
   mfaAfterReset: 'If you do not have a recovery code, please contact the administrator',
-  inputRecoverCode: 'Enter recovery code'
+  inputRecoverCode: 'Enter recovery code',
+  faceCheck: 'Please keep the camera turned on and unobstructed',
+  faceText2: 'Please turn on the camera to recognize the face for binding',
+  faceText3: 'Start',
+  mediaDevicesSupport: 'The current device does not support face recognition',
+  AuthorizationCamera: 'Please enable authorization first',
+  checkPreferences: 'Please check preferences',
+  requireError: 'Unable to satisfy request error',
+  hardwareSupport: 'Hardware not supported'
 }

@@ -25,18 +25,15 @@ function SubmitButtonComponent(props: SubmitButtonProps, ref: any) {
     }
   }))
 
-  const propsCls = props.className ? props.className : ''
-
-  const shakingCls = ''
+  const propsCls = props.className || ''
 
   return (
     <MFAButton
       {...props}
       size={props?.size ?? 'large'}
-      type={props?.type ?? 'primary'}
       htmlType={props?.htmlType ?? 'submit'}
       loading={spin}
-      className={`authing-g2-submit-button ${propsCls} ${shakingCls}`}
+      className={`authing-mfa-submit-button ${propsCls}`}
     >
       {props.text}
     </MFAButton>

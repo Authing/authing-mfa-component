@@ -1,20 +1,20 @@
+import { post } from '../request'
 interface VerifyFaceContent {
   photo: string
   mfaToken?: string
 }
 
 export const VerifyFace = async (content: VerifyFaceContent) => {
-  return Promise.resolve(content)
-
-  // return await post(
-  //   '/api/v2/applications/mfa/face/verify',
-  //   {
-  //     photo,
-  //   },
-  //   {
-  //     headers: {
-  //       authorization: `Bearer ${mfaToken}`,
-  //     },
-  //   }
-  // )
+  const { photo, mfaToken } = content
+  return await post({
+    path: '/api/v2/applications/mfa/face/verify',
+    data: {
+      photo
+    },
+    config: {
+      headers: {
+        authorization: `Bearer ${mfaToken}`
+      }
+    }
+  })
 }

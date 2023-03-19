@@ -52,6 +52,9 @@ export interface IAuthingPublicConfig {
     defaultISOType: ''
   }
   userPoolId: string
+  mfa?: {
+    faceScore?: number
+  }
 }
 
 export interface IAuthingMFAComponentProps {

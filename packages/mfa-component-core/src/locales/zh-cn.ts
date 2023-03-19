@@ -41,5 +41,14 @@ export const mfa = {
   rememberedSecret: '已经安全地记录了这段密钥',
   confirm: '确认',
   mfaAfterReset: '如果你没有恢复代码，请联系管理员处理',
-  inputRecoverCode: '请输入恢复代码'
+  inputRecoverCode: '请输入恢复代码',
+  faceCheck: '请保持摄像头已打开并无遮挡',
+  faceText2: '请打开摄像头识别人脸进行绑定',
+  faceText3: '开始验证',
+  mediaDevicesSupport: '当前设备暂不支持人脸识别',
+  AuthorizationCamera: '请先开启授权',
+  checkPreferences: '请检查偏好设置',
+  requireError: '无法满足要求错误',
+  hardwareSupport: '硬件不支持',
+  verifyCodeTip: ''
 }

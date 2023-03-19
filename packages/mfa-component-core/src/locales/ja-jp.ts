@@ -41,5 +41,13 @@ export const mfa = {
   rememberedSecret: '鍵は安全に記録されています',
   confirm: '確認',
   mfaAfterReset: '復旧コードがない場合は管理者に連絡してください',
-  inputRecoverCode: '復旧コードを入力してください'
+  inputRecoverCode: '復旧コードを入力してください',
+  faceCheck: 'カメラの電源を入れ、遮るものがない状態にしてください',
+  faceText2: 'バインドする顔を認識するためにカメラをオンにしてください',
+  faceText3: '検証を開始する',
+  mediaDevicesSupport: '現在のデバイスは顔認識をサポートしていない',
+  AuthorizationCamera: '最初に認証を有効にしてください',
+  checkPreferences: '設定を確認してください',
+  requireError: '要求エラーを満たすことができません',
+  hardwareSupport: 'ハードウェアはサポートされていません'
 }

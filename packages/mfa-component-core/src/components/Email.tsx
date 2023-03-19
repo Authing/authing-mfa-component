@@ -94,8 +94,8 @@ function BindMFAEmail(props: BindMFAEmailProps) {
 
   return (
     <>
-      <p className="authing-g2-mfa-title">{i18n.t('mfa.mfaCertification')}</p>
-      <p className="authing-g2-mfa-tips">{i18n.t('mfa.bindEmailDoc')}</p>
+      <p className="authing-mfa-title">{i18n.t('mfa.mfaCertification')}</p>
+      <p className="authing-mfa-tips">{i18n.t('mfa.bindEmailDoc')}</p>
       <Form
         form={form}
         onSubmitCapture={() => submitButtonRef.current.onSpin(true)}
@@ -103,7 +103,7 @@ function BindMFAEmail(props: BindMFAEmailProps) {
         onFinishFailed={() => submitButtonRef.current.onError()}
       >
         <CustomFormItem.Email
-          className="authing-g2-input-form"
+          className="authing-mfa-input-form"
           name="email"
           form={form}
           required={true}
@@ -111,7 +111,7 @@ function BindMFAEmail(props: BindMFAEmailProps) {
           authingPublicConfig={authingPublicConfig}
         >
           <Input
-            className="authing-g2-input"
+            className="authing-mfa-input"
             autoComplete="off"
             size="large"
             placeholder={i18n.t('mfa.inputEmail')}

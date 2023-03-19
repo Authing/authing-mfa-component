@@ -1,7 +1,7 @@
 {
-  "name": "@authing/mfa-components-vue3",
+  "name": "@authing/mfa-component-vue3",
   "version": "0.0.1",
-  "description": "Authing continuous adaptive mfa components for Vue 3",
+  "description": "Authing continuous adaptive mfa component for Vue 3",
   "module": "dist/esm/authing-mfa-component-vue3.min.js",
   "types": "dist/typings/index.d.ts",
   "files": [
