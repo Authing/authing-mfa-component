@@ -1,3 +1,3 @@
-import 'antd/dist/antd.min.css'
+import 'antd/dist/antd.less'
 
 export * from 'antd'

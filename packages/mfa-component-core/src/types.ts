@@ -13,6 +13,8 @@ export interface IAuthingMFAEvent {
 
 export type MFAType = 'SMS' | 'EMAIL' | 'OTP' | 'FACE'
 
+export type MFAVerifyPage = 'RECOVERY'
+
 export interface IMFAInitData {
   applicationMfa: Array<{
     mfaPolicy: MFAType

@@ -15,9 +15,6 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: resolve('dist'),
-    library: {
-      type: 'module'
-    }
   },
   experiments: {
     outputModule: true
@@ -52,7 +49,20 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader', {
+          loader: 'less-loader',
+          options: {
+            sourceMap: true,
+            lessOptions: {
+              javascriptEnabled: true,
+              modifyVars: {
+                '@primary-color': '#215AE5',
+                '@link-color': '#215AE5',
+                '@ant-prefix': 'authing-ant',
+              },
+            },
+          },
+        }]
       }
     ]
   },
@@ -62,6 +72,7 @@ module.exports = {
       filename: 'index.html',
       env: process.env.NODE_ENV,
       reactVersion,
+      scriptLoading: "module",
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -84,15 +95,8 @@ module.exports = {
   ],
   devServer: {
     host: 'localhost',
-    inline: false, // 启用热更新
     port: 3002,
-    progress: true,
-    contentBase: resolve('./'),
-    compress: true,
-    disableHostCheck: true,
-    historyApiFallback: true,
     hot: true,
     open: true,
-    openPage: '../'
   }
 }

@@ -17,6 +17,7 @@
   display: flex;
   flex-direction: column;
   width: 456px;
+  min-height: 540px;
 
   @media only screen and (max-width: 450px) {
     width: 100%;
@@ -31,16 +32,119 @@
     display: none;
   }
 
-  .authing-mfa-content{
+  .authing-mfa-content {
     margin: 0;
     margin-bottom: 8px;
     padding: 0 38px;
+
     @media only screen and (max-width: 450px) {
       padding-left: 8px;
       padding-right: 8px;
     }
   }
 
+  .no-login-methods-view {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .g2-view-login-mobile-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .no-login-methods-view {
+      display: flex;
+      flex: 0;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .g2-view-header {
+    user-select: none;
+    padding: 24px 38px 0;
+    margin-bottom: 16px;
+
+    @media only screen and (max-width: 450px) {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    &.g2-view-header-mobile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      // padding-top: 100px;
+      margin-bottom: 62px;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+    }
+
+    .title {
+      color: #282d3c;
+      font-weight: 600;
+      font-size: 24px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .title-description,
+    .title-explain {
+      font-weight: 400;
+      font-size: 14px;
+      color: #545968;
+    }
+  }
+
+  .g2-view-tabs {
+    padding: 0 38px;
+
+    @media only screen and (max-width: 450px) {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    &.hidden {
+      .authing-ant-tabs-nav-wrap {
+        display: none;
+      }
+
+      .authing-ant-tabs-content-holder {
+        min-height: 240px;
+        display: flex;
+
+        .authing-ant-tabs-content {
+          flex: 1;
+          align-items: center;
+        }
+      }
+
+      .authing-ant-tabs-nav::before {
+        display: none;
+      }
+    }
+
+    .authing-ant-tabs-tab {
+      user-select: none;
+      color: #878a95;
+
+      &:hover {
+        color: #282d3c;
+      }
+    }
+  }
 
   .authing-mfa-submit-button {
     &[disabled] {
@@ -48,15 +152,19 @@
       border-color: #618eff;
       color: #fff;
     }
+
     box-shadow: none;
     width: calc(100% - 4px);
     border-radius: 4px;
     height: 42px;
     margin: 0 2px;
+
     &.shaking {
       animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
     }
+
     @keyframes shake {
+
       10%,
       90% {
         transform: translate3d(-1px, 0, 0);
@@ -98,7 +206,7 @@
   min-height: 23px;
 }
 
-.g2-mfa-content {
+.authing-mfa-content {
   margin: 0 38px;
 
   .authing-g2-mfa-totp-recoveryCode {
@@ -121,6 +229,7 @@
     display: flex;
     justify-content: center;
   }
+
   // totp 恢复码 高度问题
   .authing-mfa-input-form.g2-mfa-totp-verify-input {
     .authing-ant-form-item-explain {
@@ -130,6 +239,7 @@
 
   .g2-mfa-totp-verify-input {
     text-align: center;
+
     .authing-code-input-item {
       &:not(:first-child) {
         margin-left: 14px;
@@ -169,6 +279,51 @@
     stroke-linecap: round;
   }
 
+  .g2-mfa-face-identifying {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .video-round {
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
+
+    .mesh {
+      z-index: 100;
+      cursor: pointer;
+      user-select: none;
+      color: white;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .ring {
+      width: 240px;
+      height: 240px;
+      position: absolute;
+      transform: rotate(270deg);
+    }
+  }
+}
+
+.svg-circle-bg {
+  stroke-width: 4;
+  // stroke: rgba(255, 161, 39, 1);
+}
+
+.svg-circle-running {
+  stroke-width: 4;
+  transition: all 0.2s linear;
+  stroke: #215ae5;
+  stroke-linecap: round;
+
   .mesh {
     z-index: 100;
     cursor: pointer;
@@ -181,6 +336,7 @@
     cursor: pointer;
     background: rgba(0, 0, 0, 0.4);
   }
+
   .ring {
     width: 240px;
     height: 240px;
@@ -219,6 +375,224 @@
   vertical-align: top;
 }
 
+.authing-mfa-input-form {
+  .authing-mfa-select {
+    &:hover {
+      border-color: #eeeff1;
+      background: #eeeff1;
+    }
+
+    border: 1px solid #f5f6f7;
+    border-radius: 4px;
+
+    .authing-ant-select-selector {
+      outline: 0;
+      border-color: #f5f6f7;
+      height: 100%;
+      background-color: #f5f6f7;
+
+      &:hover {
+        border-color: #eeeff1 !important;
+        background: #eeeff1;
+      }
+    }
+
+    // focus
+    &.authing-ant-select-focused {
+      // border-color: #618eff;
+      border-right-width: 1px;
+      outline: 0;
+      box-shadow: 0 0 0 2px rgba(57, 106, 255, 0.2);
+
+      .authing-ant-select-selector {
+        background: #fff;
+      }
+    }
+  }
+
+  // .authing-ant-select:not(.authing-ant-select-customize-input)
+  //   .authing-ant-select-selector {
+  //   border-color: #f5f6f7;
+  // }
+  &.authing-ant-form-item-has-error {
+    .authing-mfa-select {
+
+      // &:hover {
+      //   border-color: #eeeff1 !important;
+      //   background: #eeeff1;
+      // }
+      // focus
+      &.authing-ant-select-focused {
+        // .authing-ant-select-selector {
+        //   border-color: #eeeff1 !important;
+        // }
+        // border-color: #ff7875;
+        border-right-width: 1px;
+        outline: 0;
+        box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+
+        .authing-ant-select-selector {
+          background: #fff;
+        }
+      }
+    }
+  }
+}
+
+.authing-mfa-sumbit-form {
+  margin-bottom: 12px;
+}
+
+@keyframes authingShake {
+
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-3px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(3px, 0, 0);
+  }
+}
+
+.authing-agreements-error {
+  .authing-agreements-item {
+    &.shaking {
+      animation: authingShake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+  }
+}
+
+.authing-ant-form-item-has-error {
+  .authing-mfa-input {
+    &.shaking {
+      animation: authingShake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    // animation-iteration-count: infinite;
+  }
+
+  .authing-mfa-code-input {
+    &.shaking {
+      animation: authingShake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    // animation-iteration-count: infinite;
+  }
+
+  .g2-mfa-bindTotp-secretSave {
+    color: #ff4d4f;
+
+    &.shaking {
+      animation: authingShake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+  }
+}
+
+.authing-mfa-input {
+  border: 1px solid #f5f6f7;
+  // height: 46px;
+  border-radius: 4px;
+  background: #f5f6f7;
+
+  input {
+    // 通过这个方式 hack 浏览器自动填充：
+    // 自动填充的浏览器可以说罪恶滔天，钉死在 mdn 的耻辱柱上：https://developer.mozilla.org/en-US/docs/Web/CSS/:autofill
+    // 下方的 focused 同样需要这样处理
+    font-size: 14px !important;
+    height: 0;
+    background-color: #f5f6f7;
+    padding: 1em 0.5em !important;
+    background-clip: content-box !important;
+
+    &::placeholder,
+    &::-webkit-input-placeholder {
+      // color: #a7a7a7;
+      color: #c8c9cc;
+    }
+  }
+
+  &:hover {
+    background-color: #eeeff1 !important;
+  }
+
+  &:focus {
+    border-color: #618eff;
+    background: #ffffff;
+  }
+
+  // affix-wrapper 特殊处理 hover
+  &.authing-ant-input-affix-wrapper:hover {
+    border-color: #eeeff1;
+    background: #eeeff1;
+
+    // border-color: #618eff;
+    .authing-ant-input {
+      background: #eeeff1;
+    }
+  }
+
+  // focus
+  &.authing-ant-input-affix-wrapper-focused {
+    background: #ffffff !important;
+    border-color: #618eff;
+
+    input {
+      background: #ffffff !important;
+      padding: 1em 0.5em !important;
+      background-clip: content-box !important;
+
+      &::placeholder,
+      &::-webkit-input-placeholder {
+        color: #a7a7a7;
+      }
+    }
+  }
+
+  // 适配图形验证码
+  &.add-after {
+    border: none;
+
+    .authing-ant-input-group {
+
+      .authing-ant-input,
+      .authing-ant-input-group-addon {
+        border-radius: 4px;
+        height: 46px;
+      }
+    }
+  }
+
+  // 适配数字输入框
+  &.authing-ant-input-number {
+    width: 100%;
+
+    input {
+      padding: 1.4em 0.5em !important;
+    }
+
+    .authing-ant-input-number-handler-wrap {
+      display: none;
+    }
+  }
+
+  .g2-captcha-code-image {
+    min-width: 100px;
+  }
+}
+
 *[class*="authing-"].authing-ant-input {
   box-sizing: border-box;
   margin: 0;
@@ -235,7 +609,7 @@
   line-height: 1.5715;
   background-color: #fff;
   background-image: none;
-  border: 1px solid #d9d9d9;
+  border: none;
   border-radius: 2px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
