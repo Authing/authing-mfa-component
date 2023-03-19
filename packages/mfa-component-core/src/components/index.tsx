@@ -23,6 +23,7 @@ import {
   MFAVerifyPage
 } from '../types'
 import { GuardRecoveryCodeView } from './RecoveryCode'
+import { ConfigProvider } from 'shim-antd'
 
 export interface IMFAFuncProps {
   initData: IMFAInitData
@@ -105,26 +106,28 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
   const onChange = (type: MFAType | MFAVerifyPage) => setCurrentMFAType(type)
 
   return (
-    <div className="authing-mfa-container">
-      <Back></Back>
-      <div className="authing-mfa-content">
-        {ComponentsMapping[currentMFAType]({
-          initData,
-          setMFASelectorVisible,
-          authingPublicConfig,
-          onVerify,
-          onChange
-        })}
+    <ConfigProvider prefixCls="authing-ant">
+      <div className="authing-mfa-container">
+        <Back></Back>
+        <div className="authing-mfa-content">
+          {ComponentsMapping[currentMFAType]({
+            initData,
+            setMFASelectorVisible,
+            authingPublicConfig,
+            onVerify,
+            onChange
+          })}
+        </div>
+        {MFASelectorVisible && (
+          <MFASelector
+            initData={initData}
+            current={currentMFAType as MFAType}
+            onChange={onChange}
+          ></MFASelector>
+        )}
       </div>
-      {MFASelectorVisible && (
-        <MFASelector
-          initData={initData}
-          current={currentMFAType as MFAType}
-          onChange={onChange}
-        ></MFASelector>
-      )}
-    </div>
+    </ConfigProvider>
   )
 }
 
-AuthingMFAComponent.name = 'authing-mfa-component'
+// AuthingMFAComponent.name = 'authing-mfa-component'

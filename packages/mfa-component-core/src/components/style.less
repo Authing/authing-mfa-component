@@ -12,6 +12,7 @@
   display: flex;
   flex-direction: column;
   width: 456px;
+  min-height: 540px;
 
   @media only screen and (max-width: 450px) {
     width: 100%;
@@ -184,7 +185,7 @@
 }
 
 .authing-g2-mfa-title {
-  color: #282d3c;
+  color: #282d3c !important;
   font-size: 18px;
   font-weight: 600;
   text-align: center;
@@ -303,5 +304,223 @@
   .authing-ant-form-item-explain-error {
     display: flex;
     justify-content: center;
+  }
+}
+
+.authing-g2-input-form {
+  .authing-g2-select {
+    &:hover {
+      border-color: #eeeff1;
+      background: #eeeff1;
+    }
+
+    border: 1px solid #f5f6f7;
+    border-radius: 4px;
+
+    .authing-ant-select-selector {
+      outline: 0;
+      border-color: #f5f6f7;
+      height: 100%;
+      background-color: #f5f6f7;
+
+      &:hover {
+        border-color: #eeeff1 !important;
+        background: #eeeff1;
+      }
+    }
+
+    // focus
+    &.authing-ant-select-focused {
+      // border-color: #618eff;
+      border-right-width: 1px;
+      outline: 0;
+      box-shadow: 0 0 0 2px rgba(57, 106, 255, 0.2);
+
+      .authing-ant-select-selector {
+        background: #fff;
+      }
+    }
+  }
+
+  // .authing-ant-select:not(.authing-ant-select-customize-input)
+  //   .authing-ant-select-selector {
+  //   border-color: #f5f6f7;
+  // }
+  &.authing-ant-form-item-has-error {
+    .authing-g2-select {
+
+      // &:hover {
+      //   border-color: #eeeff1 !important;
+      //   background: #eeeff1;
+      // }
+      // focus
+      &.authing-ant-select-focused {
+        // .authing-ant-select-selector {
+        //   border-color: #eeeff1 !important;
+        // }
+        // border-color: #ff7875;
+        border-right-width: 1px;
+        outline: 0;
+        box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
+
+        .authing-ant-select-selector {
+          background: #fff;
+        }
+      }
+    }
+  }
+}
+
+.authing-g2-sumbit-form {
+  margin-bottom: 12px;
+}
+
+@keyframes authingShake {
+
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-3px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(3px, 0, 0);
+  }
+}
+
+.authing-agreements-error {
+  .authing-agreements-item {
+    &.shaking {
+      animation: authingShake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+  }
+}
+
+.authing-ant-form-item-has-error {
+  .authing-g2-input {
+    &.shaking {
+      animation: authingShake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    // animation-iteration-count: infinite;
+  }
+
+  .authing-g2-code-input {
+    &.shaking {
+      animation: authingShake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    // animation-iteration-count: infinite;
+  }
+
+  .g2-mfa-bindTotp-secretSave {
+    color: #ff4d4f;
+
+    &.shaking {
+      animation: authingShake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+  }
+}
+
+.authing-g2-input {
+  border: 1px solid #f5f6f7;
+  // height: 46px;
+  border-radius: 4px;
+  background: #f5f6f7;
+
+  input {
+    // 通过这个方式 hack 浏览器自动填充：
+    // 自动填充的浏览器可以说罪恶滔天，钉死在 mdn 的耻辱柱上：https://developer.mozilla.org/en-US/docs/Web/CSS/:autofill
+    // 下方的 focused 同样需要这样处理
+    font-size: 14px !important;
+    height: 0;
+    background-color: #f5f6f7;
+    padding: 1em 0.5em !important;
+    background-clip: content-box !important;
+
+    &::placeholder,
+    &::-webkit-input-placeholder {
+      // color: #a7a7a7;
+      color: #c8c9cc;
+    }
+  }
+
+  &:hover {
+    background-color: #eeeff1 !important;
+  }
+
+  &:focus {
+    border-color: #618eff;
+    background: #ffffff;
+  }
+
+  // affix-wrapper 特殊处理 hover
+  &.authing-ant-input-affix-wrapper:hover {
+    border-color: #eeeff1;
+    background: #eeeff1;
+
+    // border-color: #618eff;
+    .authing-ant-input {
+      background: #eeeff1;
+    }
+  }
+
+  // focus
+  &.authing-ant-input-affix-wrapper-focused {
+    background: #ffffff !important;
+    border-color: #618eff;
+
+    input {
+      background: #ffffff !important;
+      padding: 1em 0.5em !important;
+      background-clip: content-box !important;
+
+      &::placeholder,
+      &::-webkit-input-placeholder {
+        color: #a7a7a7;
+      }
+    }
+  }
+
+  // 适配图形验证码
+  &.add-after {
+    border: none;
+
+    .authing-ant-input-group {
+
+      .authing-ant-input,
+      .authing-ant-input-group-addon {
+        border-radius: 4px;
+        height: 46px;
+      }
+    }
+  }
+
+  // 适配数字输入框
+  &.authing-ant-input-number {
+    width: 100%;
+
+    input {
+      padding: 1.4em 0.5em !important;
+    }
+
+    .authing-ant-input-number-handler-wrap {
+      display: none;
+    }
+  }
+
+  .g2-captcha-code-image {
+    min-width: 100px;
   }
 }
