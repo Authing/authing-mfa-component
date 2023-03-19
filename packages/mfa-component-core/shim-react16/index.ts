@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, CSSProperties, ReactNode } from 'react'
+
 import ReactDOM from 'react-dom'
 
 export interface IRenderer {
@@ -36,6 +37,8 @@ function unmount (container: Element) {
 
 export {
   React,
+  CSSProperties,
+  ReactNode,
   render,
   unmount
 }
