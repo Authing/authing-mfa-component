@@ -125,7 +125,7 @@ export const GuardBindTotpView = forwardRef((props: GuardBindTotpProps, ref) => 
     }
   }, [bindTotpType])
 
-  const renderer = useMemo(() => {
+  const component = useMemo(() => {
     if (bindInfo.loading) {
       return 'loading'
     }
@@ -144,7 +144,7 @@ export const GuardBindTotpView = forwardRef((props: GuardBindTotpProps, ref) => 
         <Spin />
       ) : (
         <div className="g2-view-container g2-bind-totp">
-          <div className="g2-mfa-content g2-mfa-bindTotp">{renderer}</div>
+          <div className="g2-mfa-content g2-mfa-bindTotp">{component}</div>
         </div>
       )}
     </>
