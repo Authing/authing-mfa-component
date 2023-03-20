@@ -1,9 +1,13 @@
 import { React } from 'shim-react'
+
 import { Typography, Form, Checkbox } from 'shim-antd'
+
 import { SubmitButton } from '../../SubmitButton'
+
 import { i18n } from '../../../locales'
 
 const { Paragraph } = Typography
+
 const { useRef } = React
 
 export const SaveCode: React.FC<{

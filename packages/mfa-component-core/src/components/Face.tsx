@@ -110,7 +110,7 @@ export function Face(props: IFaceProps) {
       formData
     })
 
-    const key = result.data?.key as string
+    const key = result.data?.key || ''
 
     return key
   }
@@ -151,7 +151,7 @@ export function Face(props: IFaceProps) {
       return setFaceState('retry')
     }
 
-    message.error(tips)
+    message.error(tips, 5)
   }
 
   const faceCheck = async () => {
@@ -163,8 +163,6 @@ export function Face(props: IFaceProps) {
     const result = await verifyFace(requestData)
 
     const { data, code } = result
-
-    console.log(333)
 
     if (code === 1700 || code === 1701 || code === 1702) {
       p1.current = undefined
@@ -183,7 +181,6 @@ export function Face(props: IFaceProps) {
 
   // bind 的情况
   const goToBindScene = (key: string) => {
-    console.log(444, p1, cooldown)
     if (!p1.current) {
       p1.current = key
     } else {
@@ -211,10 +208,8 @@ export function Face(props: IFaceProps) {
     setPercent(100)
     uploadImage(blob).then(key => {
       if (mfaTriggerData.faceMfaEnabled === true) {
-        console.log(111)
         goToCheckScene(key)
       } else {
-        console.log(222)
         goToBindScene(key)
       }
     })

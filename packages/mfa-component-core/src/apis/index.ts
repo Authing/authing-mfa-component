@@ -13,3 +13,6 @@ export * from './verify-face'
 export * from './upload-file'
 
 export * from './verify-totp'
+export * from './mfa-authenticator'
+export * from './otp-associate'
+export * from './confirm-otp'

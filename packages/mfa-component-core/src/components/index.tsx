@@ -10,7 +10,7 @@ import { OTP } from './OTP'
 
 import { MFASelector } from './MFASelector'
 
-import { Back } from './Back'
+// import { Back } from './Back'
 
 import { useIconfont } from '../IconFont'
 
@@ -126,6 +126,9 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
   const onChange = (type: MFAType) => setCurrentMFAType(type)
 
   const [CustomBack, setCustomBack] = useState<React.ReactNode>(null)
+
+  console.log(CustomBack)
+
   const updateBackComponent = (component: React.ReactNode) => {
     setCustomBack(component)
   }
@@ -135,7 +138,7 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
       <div className="authing-mfa-container">
         {(appId && mfaTriggerData && publicConfig && (
           <>
-            {CustomBack ?? <Back />}
+            {/* {CustomBack ?? <Back />} */}
             <div className="authing-mfa-content">
               {ComponentsMapping[currentMFAType]({
                 mfaTriggerData,

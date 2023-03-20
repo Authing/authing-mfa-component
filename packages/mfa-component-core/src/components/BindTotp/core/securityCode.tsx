@@ -1,15 +1,22 @@
 import { Form } from 'shim-antd'
+
 import { React } from 'shim-react'
+
 import { i18n } from '../../../locales'
+
 import { useAsyncFn } from 'react-use'
+
 import { SubmitButton } from '../../SubmitButton'
+
 import { VerifyCodeFormItem, VerifyCodeInput } from '../../VerifyCode'
+
 import { ImagePro } from '../../../components/ImagePro'
+
+import { confirmOtp } from '../../../apis'
 export interface SecurityCodeProps {
   mfaToken: string
   qrcode: string
   onNext: any
-  changeModule: any
   onDownload: any
 }
 
@@ -19,67 +26,35 @@ export const SecurityCode: React.FC<SecurityCodeProps> = ({
   mfaToken,
   qrcode,
   onNext,
-  // changeModule,
   onDownload
 }) => {
   const [form] = Form.useForm()
-  const submitButtonRef = useRef<any>(null)
 
-  // 下载认证器
-  const onJump = () => {
-    onDownload?.()
-  }
+  const submitButtonRef = useRef<any>(null)
 
   const [, bindTotp] = useAsyncFn(async () => {
     submitButtonRef.current?.onSpin(true)
 
     await form.validateFields()
-    // const saftyCode = form.getFieldValue('saftyCode')
 
-    // if (isAuthFlow) {
-    //   // 这里绑定成功过返回的是 statusCode
-    //   const { statusCode, onGuardHandling } = await authFlow(
-    //     BindTotpBusinessAction.VerifyTotpFirstTime,
-    //     {
-    //       totp: saftyCode.join(''),
-    //     }
-    //   )
-    //   submitButtonRef.current?.onSpin(false)
+    const saftyCode = form.getFieldValue('saftyCode')
 
-    //   if (statusCode === 200) {
-    //     onNext()
-    //   } else {
-    //     submitButtonRef.current?.onError()
-    //     onGuardHandling?.()
-    //   }
-    // } else {
-    //   const { code, data, onGuardHandling } = await post(
-    //     '/api/v2/mfa/totp/associate/confirm',
-    //     {
-    //       authenticator_type: 'totp',
-    //       totp: saftyCode.join(''),
-    //       source: 'APPLICATION',
-    //     },
-    //     {
-    //       headers: {
-    //         authorization: mfaToken,
-    //       },
-    //     }
-    //   )
-    //   submitButtonRef.current?.onSpin(false)
-
-    //   if (code === 200) {
-    //     onNext(data)
-    //   } else {
-    //     submitButtonRef.current?.onError()
-    //     onGuardHandling?.()
-    //   }
-    // }
     try {
-      submitButtonRef.current?.onSpin(false)
-      onNext('')
-    } catch (error) {
+      const { code, data } = await confirmOtp({
+        authenticator_type: 'totp',
+        totp: saftyCode.join(''),
+        source: 'APPLICATION',
+        mfaToken
+      })
+      if (code === 200) {
+        onNext(data)
+      } else {
+        submitButtonRef.current?.onError()
+      }
+    } catch (e) {
       submitButtonRef.current?.onError()
+    } finally {
+      submitButtonRef.current?.onSpin(false)
     }
   }, [mfaToken])
 
@@ -98,7 +73,7 @@ export const SecurityCode: React.FC<SecurityCodeProps> = ({
             color: '#215AE5',
             cursor: 'pointer'
           }}
-          onClick={onJump}
+          onClick={onDownload}
         >
           {i18n.t('mfa.clickTodownload')}
         </span>
@@ -109,7 +84,7 @@ export const SecurityCode: React.FC<SecurityCodeProps> = ({
         className="g2-mfa-bindTotp-securityCode-form"
         form={form}
         onSubmitCapture={() => {
-          console.log('cap')
+          bindTotp()
         }}
         onFinish={bindTotp}
         onFinishFailed={() => {

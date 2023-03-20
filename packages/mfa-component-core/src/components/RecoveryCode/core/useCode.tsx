@@ -1,7 +1,11 @@
 import { React } from 'shim-react'
+
 import { Input, Form } from 'shim-antd'
+
 import { IconFont } from '../../../IconFont'
+
 import { SubmitButton } from '../../SubmitButton'
+
 import { i18n } from '../../../locales'
 
 const { useRef } = React

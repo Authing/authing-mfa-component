@@ -6,7 +6,7 @@ import { IMFATriggerData, IAuthingPublicConfig } from './src/types'
 
 function Example() {
   const mfaTriggerData: IMFATriggerData = {
-    "mfaToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJQb29sSWQiOiI2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzkiLCJ1c2VySWQiOiI2NDE4NDRjZjY5MDc3YTZkMTQyMzVlYjciLCJhcm4iOiJhcm46Y246YXV0aGluZzo2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzk6dXNlcjo2NDE4NDRjZjY5MDc3YTZkMTQyMzVlYjciLCJzdGFnZSI6MX0sImlhdCI6MTY3OTMxMjkxMiwiZXhwIjoxNjc5MzEzMjcyfQ.0iHJDdpEu6htpEfIJmDGmHDQkthaOn37EKPpJ_7vJfc",
+    "mfaToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJQb29sSWQiOiI2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzkiLCJ1c2VySWQiOiI2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJhcm4iOiJhcm46Y246YXV0aGluZzo2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzk6dXNlcjo2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJzdGFnZSI6MX0sImlhdCI6MTY3OTMyOTgwMSwiZXhwIjoxNjc5MzMwMTYxfQ.wiwgPvcKyGb5vRqntuPBCj8UMV2qBsPDO2sO2Gp3bv4",
     "nickname": '',
     "email": '',
     "phone": '',

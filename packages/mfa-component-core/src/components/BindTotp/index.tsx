@@ -1,13 +1,21 @@
 import { message, Spin } from 'shim-antd'
-import { User } from 'authing-js-sdk'
+
 import { React } from 'shim-react'
+
 import { useAsyncFn } from 'react-use'
+
 import { BindSuccess } from './core/bindSuccess'
+
 import { SecurityCode } from './core/securityCode'
+
 import { IAuthingPublicConfig, IMFATriggerData } from '../../types'
-import { GuardDownloadATView } from '../DownloadAuthenticator'
+
+import { AuthingMFADownloadATView } from '../DownloadAuthenticator'
+
 import { BackType } from '../OTP'
-import { get, post } from '../../request'
+
+import { mfaAuthenticator, otpAssociate } from '../../apis'
+
 import './styles.less'
 
 const { useEffect, useState, useMemo, forwardRef, useImperativeHandle } = React
@@ -15,13 +23,13 @@ const { useEffect, useState, useMemo, forwardRef, useImperativeHandle } = React
 type BindTotpType = 'securityCode' | 'bindSuccess' | 'downloadAuthenticator'
 
 interface GuardBindTotpProps {
-  initData: IMFATriggerData
-  authingPublicConfig: IAuthingPublicConfig
+  mfaTriggerData: IMFATriggerData
+  publicConfig: IAuthingPublicConfig
   resetBackType: (type: BackType) => void
 }
 
-export const GuardBindTotpView = forwardRef((props: GuardBindTotpProps, ref) => {
-  const { initData, authingPublicConfig, resetBackType } = props
+export const AuthingMFABindTotpView = forwardRef((props: GuardBindTotpProps, ref) => {
+  const { mfaTriggerData, publicConfig, resetBackType } = props
 
   const [secret, setSecret] = useState('')
 
@@ -31,74 +39,48 @@ export const GuardBindTotpView = forwardRef((props: GuardBindTotpProps, ref) => 
 
   useImperativeHandle(
     ref,
-    () => ({
-      update: () => {
-        setBindTotpType('securityCode')
+    () => {
+      return {
+        update: () => {
+          setBindTotpType('securityCode')
+        }
       }
-    }),
+    },
     []
   )
 
   const [bindInfo, fetchBindInfo] = useAsyncFn(async () => {
-    const query = {
-      source: 'APPLICATION'
-    }
-    const config = {
-      headers: {
-        authorization: initData.mfaToken
-      }
-    }
+    mfaAuthenticator({
+      mfaToken: mfaTriggerData.mfaToken
+    })
 
     try {
-      const { code, message: msg } = await get({
-        path: `/api/v2/mfa/authenticator?source=${query.source}`,
-        config
+      const {
+        code,
+        message: tips,
+        data
+      } = await otpAssociate({
+        mfaToken: mfaTriggerData.mfaToken
       })
-      if (code === 2021) {
-        message.error(msg)
-        // TODO mfa token 失效
-        return
-      }
-    } catch (error: any) {
-      message.error(error?.message)
-    }
 
-    try {
-      const { data, code } = await post<any>({
-        path: '/api/v2/mfa/totp/associate',
-        data: query,
-        config
-      })
-      if (code === 200) {
+      if (code === 200 && data) {
         setSecret(data.recovery_code)
         setQrcode(data.qrcode_data_url)
       } else {
-        // onGuardHandling?.()
+        message.error(tips)
       }
-    } catch (error: any) {
-      message.error(error?.message)
+    } catch (e: any) {
+      message.error(e?.message)
     }
   }, [])
 
-  const onBind = (resUser?: User) => {
+  const onBind = (resUser: any) => {
     console.log(resUser)
-    // if (isAuthFlow && resUser) {
-    //   events?.onLogin?.(resUser, authClient)
-    // } else {
-    //   if (user) {
-    //     events?.onLogin?.(user, authClient)
-    //   }
-    // }
   }
 
-  const onNext = (user?: User) => {
+  const onNext = (user?: any) => {
     console.log(user)
-    // if (isAuthFlow) {
     setBindTotpType('bindSuccess')
-    // } else {
-    //   setUser(user)
-    //   setBindTotpType(BindTotpType.BIND_SUCCESS)
-    // }
   }
 
   useEffect(() => {
@@ -113,7 +95,7 @@ export const GuardBindTotpView = forwardRef((props: GuardBindTotpProps, ref) => 
     return {
       securityCode: props => <SecurityCode {...props} onDownload={onDownload} />,
       bindSuccess: props => <BindSuccess {...props} />,
-      downloadAuthenticator: () => <GuardDownloadATView authingPublicConfig={authingPublicConfig} />
+      downloadAuthenticator: () => <AuthingMFADownloadATView publicConfig={publicConfig} />
     }
   }, [])
 
@@ -129,24 +111,32 @@ export const GuardBindTotpView = forwardRef((props: GuardBindTotpProps, ref) => 
     if (bindInfo.loading) {
       return 'loading'
     }
+
     return renderContent[bindTotpType]({
-      mfaToken: initData.mfaToken,
+      mfaToken: mfaTriggerData.mfaToken,
       qrcode,
       secret,
       onBind,
       onNext
     })
-  }, [bindInfo.loading])
+  }, [bindInfo.loading, bindTotpType])
+
+  if (bindInfo.loading) {
+    return (
+      <Spin
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}
+      />
+    )
+  }
 
   return (
-    <>
-      {bindInfo.loading ? (
-        <Spin />
-      ) : (
-        <div className="g2-view-container g2-bind-totp">
-          <div className="g2-mfa-content g2-mfa-bindTotp">{component}</div>
-        </div>
-      )}
-    </>
+    <div className="g2-view-container g2-bind-totp">
+      <div className="g2-mfa-content g2-mfa-bindTotp">{component}</div>
+    </div>
   )
 })
