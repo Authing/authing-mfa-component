@@ -12,7 +12,7 @@ import { MFASelector } from './MFASelector'
 
 import { Back } from './Back'
 
-// import { useIconfont } from '../IconFont'
+import { useIconfont } from '../IconFont'
 
 import { initAuthingMFAI18n } from '../locales'
 
@@ -87,8 +87,6 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
 
   const [publicConfig, setPublicConfig] = useState<null | IAuthingPublicConfig>(null)
 
-  const [, setCdnBase] = useState<string>('')
-
   const _getPublicConfig = useCallback(async () => {
     const publicConfig = await getPublicConfig(appId)
     setPublicConfig(publicConfig)
@@ -104,11 +102,10 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
     }
     setAppId(appId)
     setUserpoolId(publicConfig.userPoolId)
-    setCdnBase(publicConfig.cdnBase)
     setRequestBaseUrl(`https://${publicConfig.requestHostname || 'core.authing.cn'}`)
   }, [publicConfig])
 
-  // useIconfont(cdnBase)
+  useIconfont(publicConfig?.cdnBase || '')
 
   initAuthingMFAI18n({
     defaultLanguage: lang || 'browser'
