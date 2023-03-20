@@ -7,6 +7,9 @@ import { SubmitButton } from './SubmitButton'
 import { VerifyCodeInput, VerifyCodeFormItem } from './VerifyCode'
 import { MFAButton } from './MFAButton'
 import { GuardRecoveryCodeView } from './RecoveryCode'
+import { IconFont } from '../IconFont'
+import { GuardBindTotpView } from './BindTotp'
+import { BackCustom } from './Back'
 
 const { useRef, useState, useEffect, useMemo } = React
 
@@ -18,7 +21,103 @@ interface IOTPProps {
   updateBackComponent: (component: React.ReactNode) => void
 }
 
-export function OTP(props: IOTPProps) {
+export type BackType = 'mfa' | 'verify'
+
+export interface BindMFATotpProps {
+  initData: IMFATriggerData
+}
+
+export const BindMFATotp: React.FC<IOTPProps> = ({
+  mfaTriggerData,
+  publicConfig,
+  updateBackComponent,
+  setMFASelectorVisible
+}) => {
+  const [isMFAPage, setIsMFAPage] = useState(true)
+  const bindRef = useRef<{ update: () => void }>(null)
+
+  const MFACustomBack = useMemo(
+    () => (
+      <>
+        <BackCustom
+          onBack={() => {
+            updateBackComponent(null)
+            setMFASelectorVisible(true)
+            setIsMFAPage(true)
+          }}
+        >
+          {i18n.t('mfa.backToVerify')}
+        </BackCustom>
+      </>
+    ),
+    []
+  )
+
+  const VerifyCustomBack = useMemo(
+    () => (
+      <>
+        <BackCustom
+          onBack={() => {
+            updateBackComponent(MFACustomBack)
+            // 修改绑定页状态
+            bindRef?.current?.update()
+          }}
+        >
+          {i18n.t('mfa.backToMFA')}
+        </BackCustom>
+      </>
+    ),
+    []
+  )
+
+  const resetBackType = (type: BackType) => {
+    // 返回 mfa 页面或绑定页面
+    if (type === 'mfa') {
+      updateBackComponent(MFACustomBack)
+    } else {
+      updateBackComponent(VerifyCustomBack)
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      updateBackComponent(null)
+    }
+  }, [])
+
+  return (
+    <>
+      {isMFAPage ? (
+        <>
+          <p className="authing-mfa-title">{i18n.t('mfa.mfaCertification')}</p>
+          <p className="authing-mfa-tips">{i18n.t('mfa.otpText1')}</p>
+
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <IconFont type="authing-otp" style={{ width: 247, height: 131 }} />
+          </div>
+          <SubmitButton
+            text={i18n.t('mfa.sure')}
+            onClick={() => {
+              updateBackComponent(MFACustomBack)
+              setMFASelectorVisible(false)
+              setIsMFAPage(false)
+            }}
+            className="g2-mfa-submit-button bind-totp"
+          />
+        </>
+      ) : (
+        <GuardBindTotpView
+          initData={mfaTriggerData}
+          authingPublicConfig={publicConfig}
+          resetBackType={resetBackType}
+          ref={bindRef}
+        />
+      )}
+    </>
+  )
+}
+
+export function VerifyMFAOtp(props: IOTPProps) {
   const { mfaTriggerData, setMFASelectorVisible, updateBackComponent } = props
 
   const { mfaToken } = mfaTriggerData
@@ -42,15 +141,15 @@ export function OTP(props: IOTPProps) {
   const CustomBack = useMemo(
     () => (
       <>
-        <p
-          onClick={() => {
+        <BackCustom
+          onBack={() => {
             updateBackComponent(null)
             setMFASelectorVisible(true)
             setIsMFAPage(true)
           }}
         >
           {i18n.t('mfa.backToVerify')}
-        </p>
+        </BackCustom>
       </>
     ),
     []
@@ -101,5 +200,13 @@ export function OTP(props: IOTPProps) {
         <GuardRecoveryCodeView mfaTriggerData={mfaTriggerData} />
       )}
     </>
+  )
+}
+
+export const OTP = (props: IOTPProps) => {
+  const { mfaTriggerData } = props
+
+  return (
+    <>{mfaTriggerData.totpMfaEnabled ? <VerifyMFAOtp {...props} /> : <BindMFATotp {...props} />}</>
   )
 }

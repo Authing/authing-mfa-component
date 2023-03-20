@@ -28,7 +28,7 @@ export interface IGetProps {
 }
 
 export async function get<T>(props: IGetProps): Promise<IAuthingResponse<T>> {
-  const { host, path, query = '', config } = props
+  const { host = 'https://core.authing.cn', path, query = '', config } = props
 
   const headers: Record<string, any> = {
     ...config?.headers,
