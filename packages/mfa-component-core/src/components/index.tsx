@@ -153,7 +153,7 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
               ></MFASelector>
             )}
           </>
-        )) || <Spin></Spin>}
+        )) || <Spin className="authing-mfa-container-placeholder"></Spin>}
       </div>
     </ConfigProvider>
   )
