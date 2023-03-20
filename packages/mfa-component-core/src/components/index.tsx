@@ -19,24 +19,25 @@ import {
   IAuthingPublicConfig,
   IMFAInitData,
   IOnMFAVerify,
-  MFAType,
-  MFAVerifyPage
+  MFAType
 } from '../types'
-import { GuardRecoveryCodeView } from './RecoveryCode'
-import { ConfigProvider } from 'shim-antd'
+import { ConfigProvider, message } from 'shim-antd'
 
 export interface IMFAFuncProps {
   initData: IMFAInitData
   setMFASelectorVisible: React.Dispatch<React.SetStateAction<boolean>>
   authingPublicConfig: IAuthingPublicConfig
   onVerify: IOnMFAVerify
-  onChange?: (type: MFAType | MFAVerifyPage) => void
+  updateBackComponent: (component: React.ReactNode) => void // 自定义 back
 }
 
-const ComponentsMapping: Record<
-  MFAType | MFAVerifyPage,
-  (props: IMFAFuncProps) => React.ReactNode
-> = {
+const PREFIX_CLS = 'authing-ant'
+
+message.config({
+  prefixCls: `${PREFIX_CLS}-message`
+})
+
+const ComponentsMapping: Record<MFAType, (props: IMFAFuncProps) => React.ReactNode> = {
   EMAIL: (props: IMFAFuncProps) => {
     const { initData, authingPublicConfig, onVerify } = props
     return (
@@ -48,13 +49,14 @@ const ComponentsMapping: Record<
     return <SMS authingPublicConfig={authingPublicConfig} initData={initData} onVerify={onVerify} />
   },
   OTP: (props: IMFAFuncProps) => {
-    const { initData, authingPublicConfig, onVerify, onChange, setMFASelectorVisible } = props
+    const { initData, authingPublicConfig, onVerify, setMFASelectorVisible, updateBackComponent } =
+      props
     return (
       <OTP
         authingPublicConfig={authingPublicConfig}
         initData={initData}
         onVerify={onVerify}
-        onChange={onChange}
+        updateBackComponent={updateBackComponent}
         setMFASelectorVisible={setMFASelectorVisible}
       />
     )
@@ -69,10 +71,6 @@ const ComponentsMapping: Record<
         setMFASelectorVisible={setMFASelectorVisible}
       />
     )
-  },
-  RECOVERY: (props: IMFAFuncProps) => {
-    const { initData } = props
-    return <GuardRecoveryCodeView initData={initData} />
   }
 }
 
@@ -89,7 +87,7 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
 
   const { t } = i18n
 
-  const [currentMFAType, setCurrentMFAType] = useState<MFAType | MFAVerifyPage>(
+  const [currentMFAType, setCurrentMFAType] = useState<MFAType>(
     initData.current ||
       initData.applicationMfa.sort((a, b) => a.sort - b.sort)[0].mfaPolicy ||
       'EMAIL'
@@ -103,19 +101,24 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
     console.log(code, data, message)
   }
 
-  const onChange = (type: MFAType | MFAVerifyPage) => setCurrentMFAType(type)
+  const onChange = (type: MFAType) => setCurrentMFAType(type)
+
+  const [CustomBack, setCustomBack] = useState<React.ReactNode>(null)
+  const updateBackComponent = (component: React.ReactNode) => {
+    setCustomBack(component)
+  }
 
   return (
-    <ConfigProvider prefixCls="authing-ant">
+    <ConfigProvider prefixCls={PREFIX_CLS}>
       <div className="authing-mfa-container">
-        <Back></Back>
+        {CustomBack ?? <Back></Back>}
         <div className="authing-mfa-content">
           {ComponentsMapping[currentMFAType]({
             initData,
             setMFASelectorVisible,
             authingPublicConfig,
             onVerify,
-            onChange
+            updateBackComponent
           })}
         </div>
         {MFASelectorVisible && (

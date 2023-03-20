@@ -30,8 +30,8 @@ export const UseCode: React.FC<UseCodeProps> = () => {
 
   return (
     <>
-      <p className="authing-g2-mfa-title">{i18n.t('mfa.useRecoverCode')}</p>
-      <p className="authing-g2-mfa-tips">{i18n.t('mfa.mfaAfterReset')}</p>
+      <p className="authing-mfa-title">{i18n.t('mfa.useRecoverCode')}</p>
+      <p className="authing-mfa-tips">{i18n.t('mfa.mfaAfterReset')}</p>
       <Form
         form={form}
         onFinish={onFinish}
@@ -39,7 +39,7 @@ export const UseCode: React.FC<UseCodeProps> = () => {
       >
         <Form.Item
           validateTrigger={['onBlur', 'onChange']}
-          className="authing-g2-input-form"
+          className="authing-mfa-input-form"
           name="recoveryCode"
           rules={[
             {
@@ -49,7 +49,7 @@ export const UseCode: React.FC<UseCodeProps> = () => {
           ]}
         >
           <Input
-            className="authing-g2-input"
+            className="authing-mfa-input"
             autoComplete="off"
             size="large"
             placeholder={i18n.t('mfa.inputRecoverCode')}
