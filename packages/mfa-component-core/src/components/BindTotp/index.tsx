@@ -15,6 +15,7 @@ import './styles.less'
 import { IAuthingPublicConfig, IMFATriggerData } from '../../types'
 // import axios from 'axios'
 import { GuardDownloadATView } from '../DownloadAuthenticator'
+import { BackType } from '../OTP'
 // import {
 //   useGuardEvents,
 //   useGuardInitData,
@@ -26,7 +27,7 @@ import { GuardDownloadATView } from '../DownloadAuthenticator'
 
 // import { useGuardView } from '../Guard/core/hooks/useGuardView'
 
-const { useEffect, useState, useMemo } = React
+const { useEffect, useState, useMemo, forwardRef, useImperativeHandle } = React
 
 // enum BindTotpType {
 //   SECURITY_CODE = 'securityCode',
@@ -38,12 +39,11 @@ type BindTotpType = 'securityCode' | 'bindSuccess' | 'downloadAuthenticator'
 interface GuardBindTotpProps {
   initData: IMFATriggerData
   authingPublicConfig: IAuthingPublicConfig
+  resetBackType: (type: BackType) => void
 }
 
-export const GuardBindTotpView: React.FC<GuardBindTotpProps> = ({
-  initData,
-  authingPublicConfig
-}) => {
+export const GuardBindTotpView = forwardRef((props: GuardBindTotpProps, ref) => {
+  const { initData, authingPublicConfig, resetBackType } = props
   // const initData = useGuardInitData<GuardBindTotpInitData>()
 
   // const events = useGuardEvents()
@@ -67,6 +67,13 @@ export const GuardBindTotpView: React.FC<GuardBindTotpProps> = ({
   const [bindTotpType, setBindTotpType] = useState<BindTotpType>('securityCode')
 
   // const authClient = useGuardAuthClient()
+  useImperativeHandle(
+    ref,
+    () => ({
+      update: () => { setBindTotpType('securityCode') }
+    }),
+    []
+  );
 
   const [bindInfo, fetchBindInfo] = useAsyncFn(async () => {
     // const query = {
@@ -152,6 +159,14 @@ export const GuardBindTotpView: React.FC<GuardBindTotpProps> = ({
     []
   )
 
+  useEffect(() => {
+    if (bindTotpType === 'downloadAuthenticator') {
+      resetBackType('verify')
+    } else {
+      resetBackType('mfa')
+    }
+  }, [bindTotpType])
+
   // const renderBack = useMemo(() => {
   //   const onBack = () => {
   //     changeModule?.(GuardModuleType.MFA, {
@@ -186,4 +201,4 @@ export const GuardBindTotpView: React.FC<GuardBindTotpProps> = ({
       )}
     </>
   )
-}
+})

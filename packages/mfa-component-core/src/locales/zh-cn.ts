@@ -50,6 +50,7 @@ export const mfa = {
   nextStep: '下一步',
   downloadTotpAppIOS: 'IOS 下载',
   downloadTotpAppAndroid: 'Android 下载',
+  backToMFA: "返回 MFA 绑定",
   downloadTotpAppDocs: '请使用手机扫码下载验证器',
   mfaAfterReset: '如果你没有恢复代码，请联系管理员处理',
   inputRecoverCode: '请输入恢复代码',

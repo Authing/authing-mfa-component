@@ -9,6 +9,7 @@ import { MFAButton } from './MFAButton'
 import { GuardRecoveryCodeView } from './RecoveryCode'
 import { IconFont } from '../IconFont'
 import { GuardBindTotpView } from './BindTotp'
+import { BackCustom } from './Back'
 
 const { useRef, useState, useEffect, useMemo } = React
 
@@ -19,6 +20,8 @@ interface IOTPProps {
   setMFASelectorVisible: React.Dispatch<React.SetStateAction<boolean>>
   updateBackComponent: (component: React.ReactNode) => void
 }
+
+export type BackType = 'mfa' | 'verify'
 
 export interface BindMFATotpProps {
   initData: IMFATriggerData
@@ -31,23 +34,43 @@ export const BindMFATotp: React.FC<IOTPProps> = ({
   setMFASelectorVisible
 }) => {
   const [isMFAPage, setIsMFAPage] = useState(true)
+  const bindRef = useRef<{ update: () => void }>(null)
 
-  const CustomBack = useMemo(
+  const MFACustomBack = useMemo(
     () => (
       <>
-        <p
-          onClick={() => {
-            updateBackComponent(null)
-            setMFASelectorVisible(true)
-            setIsMFAPage(true)
-          }}
-        >
+        <BackCustom onBack={() => {
+          updateBackComponent(null)
+          setMFASelectorVisible(true)
+          setIsMFAPage(true)
+        }}>
           {i18n.t('mfa.backToVerify')}
-        </p>
+        </BackCustom>
       </>
     ),
     []
   )
+
+  const VerifyCustomBack = useMemo(() => (
+    <>
+      <BackCustom onBack={() => {
+        updateBackComponent(MFACustomBack)
+        // 修改绑定页状态
+        bindRef?.current?.update()
+      }}>
+        {i18n.t("mfa.backToMFA")}
+      </BackCustom>
+    </>
+  ), [])
+
+  const resetBackType = (type: BackType) => {
+    // 返回 mfa 页面或绑定页面
+    if (type === 'mfa') {
+      updateBackComponent(MFACustomBack)
+    } else {
+      updateBackComponent(VerifyCustomBack)
+    }
+  }
 
   useEffect(() => {
     return () => {
@@ -68,7 +91,7 @@ export const BindMFATotp: React.FC<IOTPProps> = ({
           <SubmitButton
             text={i18n.t('mfa.sure')}
             onClick={() => {
-              updateBackComponent(CustomBack)
+              updateBackComponent(MFACustomBack)
               setMFASelectorVisible(false)
               setIsMFAPage(false)
             }}
@@ -76,7 +99,7 @@ export const BindMFATotp: React.FC<IOTPProps> = ({
           />
         </>
       ) : (
-        <GuardBindTotpView initData={mfaTriggerData} authingPublicConfig={publicConfig} />
+        <GuardBindTotpView initData={mfaTriggerData} authingPublicConfig={publicConfig} resetBackType={resetBackType} ref={bindRef} />
       )}
     </>
   )
@@ -106,15 +129,13 @@ export function VerifyMFAOtp(props: IOTPProps) {
   const CustomBack = useMemo(
     () => (
       <>
-        <p
-          onClick={() => {
-            updateBackComponent(null)
-            setMFASelectorVisible(true)
-            setIsMFAPage(true)
-          }}
-        >
+        <BackCustom onBack={() => {
+          updateBackComponent(null)
+          setMFASelectorVisible(true)
+          setIsMFAPage(true)
+        }}>
           {i18n.t('mfa.backToVerify')}
-        </p>
+        </BackCustom>
       </>
     ),
     []
