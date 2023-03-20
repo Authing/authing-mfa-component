@@ -18,24 +18,18 @@ export const BackCustom: React.FC<
   BackCustomProps & {
     children: any
   }
-> = (props) => {
-
-  const {
-    onBack,
-    isRender = true,
-    children = i18n.t('common.backLoginPage'),
-  } = props
+> = props => {
+  const { onBack, isRender = true, children = i18n.t('common.backLoginPage') } = props
 
   const renderBack = useMemo(() => {
     if (!isRender) return null
 
     return (
-      <MFAButton
-        type="link"
-        onClick={onBack}
-        className="g2-view-mfa-back-hover"
-      >
-        <IconFont type="authing-arrow-left-s-line" style={{ fontSize: 24, width: 24, height: 24, marginRight: 0 }} />
+      <MFAButton type="link" onClick={onBack} className="g2-view-mfa-back-hover">
+        <IconFont
+          type="authing-arrow-left-s-line"
+          style={{ fontSize: 24, width: 24, height: 24, marginRight: 0 }}
+        />
         <span>{children}</span>
       </MFAButton>
     )

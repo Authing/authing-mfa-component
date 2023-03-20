@@ -113,8 +113,8 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
 
   const [currentMFAType, setCurrentMFAType] = useState<MFAType>(
     mfaTriggerData.current ||
-    mfaTriggerData.applicationMfa.sort((a, b) => a.sort - b.sort)[0].mfaPolicy ||
-    'EMAIL'
+      mfaTriggerData.applicationMfa.sort((a, b) => a.sort - b.sort)[0].mfaPolicy ||
+      'EMAIL'
   )
 
   const [MFASelectorVisible, setMFASelectorVisible] = useState<boolean>(true)

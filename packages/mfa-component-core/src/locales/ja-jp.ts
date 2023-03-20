@@ -50,7 +50,7 @@ export const mfa = {
   nextStep: '次のステップ',
   downloadTotpAppIOS: 'IOS のダウンロード',
   downloadTotpAppAndroid: 'Android ダウンロード',
-  backToMFA: "MFA バインディングを戻す",
+  backToMFA: 'MFA バインディングを戻す',
   downloadTotpAppDocs: '携帯電話のコードを使って検証をダウンロードしてください',
   mfaAfterReset: '復旧コードがない場合は管理者に連絡してください',
   inputRecoverCode: '復旧コードを入力してください',

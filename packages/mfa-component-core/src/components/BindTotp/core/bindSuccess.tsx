@@ -1,10 +1,7 @@
 import { Form, Checkbox, Typography } from 'shim-antd'
 import { React } from 'shim-react'
-// import { useTranslation } from 'react-i18next'
 import { i18n } from '../../../locales'
 import { SubmitButton } from '../../SubmitButton'
-// import { useGuardIsAuthFlow } from '../../_utils/context'
-// import { authFlow, BindTotpBusinessAction } from '../businessRequest'
 
 const { Paragraph } = Typography
 
@@ -16,14 +13,9 @@ export interface BindSuccessProps {
 const { useRef } = React
 
 export const BindSuccess: React.FC<BindSuccessProps> = ({ secret, onBind }) => {
-  // const [isSaved, setIsSaved] = useState(false)
   const submitButtonRef = useRef<any>(null)
 
   const [form] = Form.useForm()
-
-  // const { t } = useTranslation()
-
-  // const isAuthFlow = useGuardIsAuthFlow()
 
   const bindSuccess = async () => {
     submitButtonRef.current?.onSpin(true)

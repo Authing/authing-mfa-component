@@ -1,17 +1,10 @@
 import { Form } from 'shim-antd'
 import { React } from 'shim-react'
-// import { useTranslation } from 'react-i18next'
 import { i18n } from '../../../locales'
 import { useAsyncFn } from 'react-use'
-
-// import { GuardModuleType } from '../../Guard/module'
-// import { useGuardHttp } from '../../_utils/guardHttp'
 import { SubmitButton } from '../../SubmitButton'
-// import { ImagePro } from '../../ImagePro'
 import { VerifyCodeFormItem, VerifyCodeInput } from '../../VerifyCode'
 import { ImagePro } from '../../../components/ImagePro'
-// import { useGuardIsAuthFlow } from '../../_utils/context'
-// import { authFlow, BindTotpBusinessAction } from '../businessRequest'
 export interface SecurityCodeProps {
   mfaToken: string
   qrcode: string
@@ -32,16 +25,9 @@ export const SecurityCode: React.FC<SecurityCodeProps> = ({
   const [form] = Form.useForm()
   const submitButtonRef = useRef<any>(null)
 
-  // const { t } = useTranslation()
-
-  // const { post } = useGuardHttp()
-
-  // const isAuthFlow = useGuardIsAuthFlow()
-
   // 下载认证器
   const onJump = () => {
     onDownload?.()
-    // changeModule?.(GuardModuleType.DOWNLOAD_AT)
   }
 
   const [, bindTotp] = useAsyncFn(async () => {
@@ -91,7 +77,7 @@ export const SecurityCode: React.FC<SecurityCodeProps> = ({
     // }
     try {
       submitButtonRef.current?.onSpin(false)
-      onNext("")
+      onNext('')
     } catch (error) {
       submitButtonRef.current?.onError()
     }
