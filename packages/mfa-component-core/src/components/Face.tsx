@@ -1,6 +1,6 @@
 import { React } from 'shim-react'
 
-import { message } from 'shim-antd'
+import { message, Spin } from 'shim-antd'
 
 import { IAuthingPublicConfig, IMFAInitData, IOnMFAVerify } from '../types'
 
@@ -13,6 +13,8 @@ import { postForm } from '../request'
 import { AssociateFace, VerifyFace } from '../apis'
 
 import { SubmitButton } from './SubmitButton'
+
+import { LazyloadImage } from './LazyloadImage'
 
 const { useState, useRef, useEffect, useCallback } = React
 
@@ -251,12 +253,13 @@ export function Face(props: IFaceProps) {
             {props.initData?.faceMfaEnabled ? t('mfa.faceCheck') : t('mfa.faceText2')}
           </p>
 
-          <img
+          <LazyloadImage
             src={`${cdnBase}/face.png`}
+            placeholder={<Spin className="authing-mfa-face-image" />}
             className="authing-mfa-face-image"
             width={247}
             height={131}
-          />
+          ></LazyloadImage>
 
           <SubmitButton
             onClick={() => {
