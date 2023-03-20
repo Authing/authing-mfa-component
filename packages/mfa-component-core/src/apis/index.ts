@@ -10,5 +10,6 @@ export * from './verify-sms'
 
 export * from './associate-face'
 export * from './verify-face'
+export * from './upload-file'
 
 export * from './verify-totp'

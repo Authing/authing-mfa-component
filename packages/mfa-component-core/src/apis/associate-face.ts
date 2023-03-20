@@ -7,8 +7,8 @@ interface AssociateFaceContent {
   mfaToken?: string
 }
 
-export const associateFace = async (content: AssociateFaceContent) => {
-  const { photoA, photoB, isExternalPhoto, mfaToken } = content
+export const associateFace = async (data: AssociateFaceContent) => {
+  const { photoA, photoB, isExternalPhoto, mfaToken } = data
   return await post({
     path: '/api/v2/mfa/face/associate',
     data: {
