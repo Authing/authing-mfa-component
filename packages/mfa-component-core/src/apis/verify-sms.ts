@@ -1,24 +1,25 @@
-interface VerifySmsContent {
+import { post } from '../request'
+
+interface VerifySmsData {
   phone: string
   code: string
   mfaToken?: string
   phoneCountryCode?: string
 }
 
-export const verifySms = async (content: VerifySmsContent) => {
-  return Promise.resolve(content)
-
-  // return await post(
-  //   '/api/v2/applications/mfa/sms/verify',
-  //   {
-  //     phone,
-  //     code,
-  //     phoneCountryCode,
-  //   },
-  //   {
-  //     headers: {
-  //       authorization: `Bearer ${mfaToken}`,
-  //     },
-  //   }
-  // )
+export const verifySms = async (data: VerifySmsData) => {
+  const { phone, code, mfaToken, phoneCountryCode } = data
+  return await post({
+    path: '/api/v2/applications/mfa/sms/verify',
+    data: {
+      phone,
+      code,
+      phoneCountryCode
+    },
+    config: {
+      headers: {
+        authorization: `Bearer ${mfaToken}`
+      }
+    }
+  })
 }

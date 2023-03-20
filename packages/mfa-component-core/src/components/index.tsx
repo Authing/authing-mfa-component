@@ -158,5 +158,3 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
     </ConfigProvider>
   )
 }
-
-// AuthingMFAComponent.name = 'authing-mfa-component'

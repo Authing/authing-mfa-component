@@ -18,7 +18,7 @@ import { VerifyCodeInput, VerifyCodeFormItem } from './VerifyCode'
 
 import { SendCodeBtn } from './SendCode'
 
-import { sendEmail } from '../apis'
+import { sendEmail, verifyEmail } from '../apis'
 
 const { useState, useRef } = React
 
@@ -140,8 +140,6 @@ function VerifyMFAEmail(props: VerifyMFAEmailProps) {
 
   const { mfaToken } = mfaTriggerData
 
-  console.log(onVerify, mfaToken)
-
   const submitButtonRef = useRef<any>(null)
 
   const [form] = Form.useForm()
@@ -161,9 +159,21 @@ function VerifyMFAEmail(props: VerifyMFAEmailProps) {
 
     const mfaCode = form.getFieldValue('mfaCode')
 
-    console.log('mfaCode: ', mfaCode)
+    const requestData = {
+      mfaToken,
+      email: email,
+      code: mfaCode.join('')
+    }
+
+    const { code, data, message: tips } = await verifyEmail(requestData)
 
     submitButtonRef.current?.onSpin(false)
+
+    if (code === 200 && data) {
+      return onVerify(code, data)
+    }
+
+    message.error(tips)
   }
 
   return (
