@@ -8,9 +8,7 @@ import { i18n } from '../locales'
 
 import * as facePlugin from 'face-api.js'
 
-import { postForm } from '../request'
-
-import { associateFace, verifyFace } from '../apis'
+import { associateFace, verifyFace, uploadFile } from '../apis'
 
 import { SubmitButton } from './SubmitButton'
 
@@ -41,7 +39,7 @@ const devicesConstraints = {
 }
 
 export function Face(props: IFaceProps) {
-  const { publicConfig } = props
+  const { publicConfig, mfaTriggerData, onVerify } = props
 
   const { t } = i18n
 
@@ -107,12 +105,12 @@ export function Face(props: IFaceProps) {
     formData.append('folder', 'photos')
     formData.append('file', blob, 'personal.jpeg')
 
-    const path = '/api/v2/upload?folder=photos&private=true'
-    const result = await postForm<any>({
-      path,
+    const result = await uploadFile({
+      query: '?folder=photos&private=true',
       formData
     })
-    const key = result.data?.key
+
+    const key = result.data?.key as string
 
     return key
   }
@@ -135,7 +133,11 @@ export function Face(props: IFaceProps) {
     }
     const result = await associateFace(requestData)
 
-    const { code, data } = result
+    const { code, data, message: tips } = result
+
+    if (code === 200) {
+      return onVerify(code, data)
+    }
 
     if (code === 1700 || code === 1701 || code === 1702) {
       p1.current = undefined
@@ -146,10 +148,10 @@ export function Face(props: IFaceProps) {
 
       cooldown.current = 0
 
-      setFaceState('retry')
-    } else {
-      console.log(data)
+      return setFaceState('retry')
     }
+
+    message.error(tips)
   }
 
   const faceCheck = async () => {
@@ -161,6 +163,8 @@ export function Face(props: IFaceProps) {
     const result = await verifyFace(requestData)
 
     const { data, code } = result
+
+    console.log(333)
 
     if (code === 1700 || code === 1701 || code === 1702) {
       p1.current = undefined
@@ -179,6 +183,7 @@ export function Face(props: IFaceProps) {
 
   // bind 的情况
   const goToBindScene = (key: string) => {
+    console.log(444, p1, cooldown)
     if (!p1.current) {
       p1.current = key
     } else {
@@ -205,9 +210,11 @@ export function Face(props: IFaceProps) {
   const quitIdentifying = (blob: Blob) => {
     setPercent(100)
     uploadImage(blob).then(key => {
-      if (props.mfaTriggerData?.faceMfaEnabled === true) {
+      if (mfaTriggerData.faceMfaEnabled === true) {
+        console.log(111)
         goToCheckScene(key)
       } else {
+        console.log(222)
         goToBindScene(key)
       }
     })

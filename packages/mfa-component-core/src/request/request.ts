@@ -63,6 +63,7 @@ export async function get<T>(props: IGetProps): Promise<IAuthingResponse<T>> {
 
 export interface IPostProps {
   path: string
+  query?: string
   data: any
   config?: {
     headers: any
@@ -70,14 +71,14 @@ export interface IPostProps {
 }
 
 export async function post<T>(props: IPostProps): Promise<IAuthingResponse<T>> {
-  const { path, data, config } = props
+  const { path, data, config, query = '' } = props
 
   const headers: Record<string, any> = {
-    ...config?.headers,
     'Content-Type': 'application/json',
     [LANG_HEADER_KEY]: i18n.language,
     [APP_ID_KEY]: _appId,
-    [USERPOOL_ID_KEY]: _userpoolId
+    [USERPOOL_ID_KEY]: _userpoolId,
+    ...config?.headers
   }
 
   try {
@@ -86,7 +87,7 @@ export async function post<T>(props: IPostProps): Promise<IAuthingResponse<T>> {
 
     const res: any = await Promise.race([
       timeoutAction(source.cancel),
-      axios(`${_baseUrl}${path}`, {
+      axios(`${_baseUrl}${path}${query}`, {
         data,
         method: 'POST',
         withCredentials: true,

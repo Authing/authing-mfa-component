@@ -1,6 +1,6 @@
 import { React } from 'shim-react'
 
-import { Form } from 'shim-antd'
+import { Form, message } from 'shim-antd'
 
 import { IMFATriggerData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
 
@@ -21,6 +21,8 @@ import { parsePhone, phoneDesensitization } from '../helpers'
 import { VerifyCodeInput, VerifyCodeFormItem } from './VerifyCode'
 
 import { SendCodeBtn } from './SendCode'
+
+import { sendSMS, verifySms } from '../apis'
 
 const { useState, useRef, useCallback, useMemo } = React
 
@@ -177,7 +179,8 @@ interface VerifyMFASmsProps {
 }
 
 function VerifyMFASms(props: VerifyMFASmsProps) {
-  const { isInternationSms, mfaTriggerData, areaCode, phone, publicConfig, sendCodeRef } = props
+  const { isInternationSms, mfaTriggerData, areaCode, phone, publicConfig, sendCodeRef, onVerify } =
+    props
 
   const { phoneCountryCode } = mfaTriggerData
 
@@ -193,10 +196,27 @@ function VerifyMFASms(props: VerifyMFASmsProps) {
 
   const codeLength = publicConfig.verifyCodeLength || 4
 
-  console.log('phoneNumber: ', phoneNumber)
-
   const onFinish = async () => {
-    console.log('sms onfinish')
+    submitButtonRef.current?.onSpin(true)
+
+    const mfaCode = form.getFieldValue('mfaCode')
+
+    const requestData: any = {
+      mfaToken: mfaTriggerData.mfaToken,
+      phone: phone!,
+      code: mfaCode.join(''),
+      phoneCountryCode: phoneCountryCode || countryCode
+    }
+
+    const { code, data, message: tips } = await verifySms(requestData)
+
+    submitButtonRef.current?.onSpin(false)
+
+    if (code === 200 && data) {
+      return onVerify(code, data)
+    }
+
+    message.error(tips)
   }
 
   const tips = useMemo(() => {
@@ -209,7 +229,11 @@ function VerifyMFASms(props: VerifyMFASmsProps) {
   }, [countryCode, isInternationSms, phone, phoneCountryCode, sent, t])
 
   const sendVerifyCode = async () => {
-    return true
+    const res = await sendSMS({
+      phoneNumber: phone || phoneNumber,
+      phoneCountryCode: phoneCountryCode || countryCode
+    })
+    return res
   }
 
   return (
