@@ -53,8 +53,8 @@ export const BindSuccess: React.FC<BindSuccessProps> = ({ secret, onBind }) => {
 
   return (
     <>
-      <p className="authing-g2-mfa-title">{i18n.t('common.totpText1')}</p>
-      <p className="authing-g2-mfa-tips">{i18n.t('common.totpText2')}</p>
+      <p className="authing-mfa-title">{i18n.t('mfa.totpText1')}</p>
+      <p className="authing-mfa-tips">{i18n.t('mfa.totpText2')}</p>
 
       <div className="g2-mfa-bindTotp-copySecret">
         <Paragraph copyable>{secret}</Paragraph>
@@ -82,11 +82,11 @@ export const BindSuccess: React.FC<BindSuccessProps> = ({ secret, onBind }) => {
           valuePropName="checked"
         >
           <Checkbox className="g2-mfa-bindTotp-secretSave">
-            {i18n.t('login.rememberedSecret')}
+            {i18n.t('mfa.rememberedSecret')}
           </Checkbox>
         </Form.Item>
 
-        <SubmitButton text={i18n.t('common.bindSuccess')} ref={submitButtonRef} />
+        <SubmitButton text={i18n.t('mfa.bindSuccess')} ref={submitButtonRef} />
       </Form>
     </>
   )

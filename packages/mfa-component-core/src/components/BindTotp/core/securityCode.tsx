@@ -25,7 +25,7 @@ const { useRef } = React
 export const SecurityCode: React.FC<SecurityCodeProps> = ({
   mfaToken,
   qrcode,
-  // onNext,
+  onNext,
   // changeModule,
   onDownload
 }) => {
@@ -89,6 +89,12 @@ export const SecurityCode: React.FC<SecurityCodeProps> = ({
     //     onGuardHandling?.()
     //   }
     // }
+    try {
+      submitButtonRef.current?.onSpin(false)
+      onNext("")
+    } catch (error) {
+      submitButtonRef.current?.onError()
+    }
   }, [mfaToken])
 
   return (

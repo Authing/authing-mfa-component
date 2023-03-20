@@ -12,7 +12,7 @@ import { SecurityCode } from './core/securityCode'
 // import { GuardBindTotpInitData } from './interface'
 // import { useTranslation } from 'react-i18next'
 import './styles.less'
-import { IAuthingPublicConfig, IMFAInitData } from '../../types'
+import { IAuthingPublicConfig, IMFATriggerData } from '../../types'
 // import axios from 'axios'
 import { GuardDownloadATView } from '../DownloadAuthenticator'
 // import {
@@ -36,7 +36,7 @@ const { useEffect, useState, useMemo } = React
 type BindTotpType = 'securityCode' | 'bindSuccess' | 'downloadAuthenticator'
 
 interface GuardBindTotpProps {
-  initData: IMFAInitData
+  initData: IMFATriggerData
   authingPublicConfig: IAuthingPublicConfig
 }
 
