@@ -63,6 +63,10 @@ export interface IAuthingMFAComponentProps {
   lang?: Lang
 }
 
+export interface ContainerProps extends IAuthingMFAComponentProps {
+  customBack?: React.ReactNode
+}
+
 export interface IOnMFAVerify {
   (code: number, data: any, message?: string): void
 }
