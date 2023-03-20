@@ -49,13 +49,12 @@ const ComponentsMapping: Record<MFAType, (props: IMFAFuncProps) => React.ReactNo
     return <SMS authingPublicConfig={authingPublicConfig} initData={initData} onVerify={onVerify} />
   },
   OTP: (props: IMFAFuncProps) => {
-    const { initData, authingPublicConfig, onVerify, setMFASelectorVisible, updateBackComponent } =
-      props
+    const { initData, authingPublicConfig, setMFASelectorVisible, updateBackComponent } = props
     return (
       <OTP
         authingPublicConfig={authingPublicConfig}
         initData={initData}
-        onVerify={onVerify}
+        // onVerify={onVerify}
         updateBackComponent={updateBackComponent}
         setMFASelectorVisible={setMFASelectorVisible}
       />

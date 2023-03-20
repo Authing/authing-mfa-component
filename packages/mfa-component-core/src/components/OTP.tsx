@@ -1,24 +1,88 @@
 import { React } from 'shim-react'
 import { Form } from 'shim-antd'
-import { IMFAInitData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
+import { IMFAInitData, IAuthingPublicConfig } from '../types'
 import { i18n } from '../locales'
 import { useAsyncFn } from 'react-use'
 import { SubmitButton } from './SubmitButton'
 import { VerifyCodeInput, VerifyCodeFormItem } from './VerifyCode'
 import { MFAButton } from './MFAButton'
 import { GuardRecoveryCodeView } from './RecoveryCode'
+import { IconFont } from '../IconFont'
+import { GuardBindTotpView } from './BindTotp'
 
 const { useRef, useState, useEffect, useMemo } = React
 
 interface IOTPProps {
   initData: IMFAInitData
   authingPublicConfig: IAuthingPublicConfig
-  onVerify: IOnMFAVerify
+  // onVerify: IOnMFAVerify
   setMFASelectorVisible: React.Dispatch<React.SetStateAction<boolean>>
   updateBackComponent: (component: React.ReactNode) => void
 }
 
-export function OTP(props: IOTPProps) {
+export interface BindMFATotpProps {
+  initData: IMFAInitData
+}
+
+export const BindMFATotp: React.FC<IOTPProps> = ({
+  initData,
+  authingPublicConfig,
+  updateBackComponent,
+  setMFASelectorVisible
+}) => {
+  const [isMFAPage, setIsMFAPage] = useState(true)
+
+  const CustomBack = useMemo(
+    () => (
+      <>
+        <p
+          onClick={() => {
+            updateBackComponent(null)
+            setMFASelectorVisible(true)
+            setIsMFAPage(true)
+          }}
+        >
+          {i18n.t('mfa.backToVerify')}
+        </p>
+      </>
+    ),
+    []
+  )
+
+  useEffect(() => {
+    return () => {
+      updateBackComponent(null)
+    }
+  }, [])
+
+  return (
+    <>
+      {isMFAPage ? (
+        <>
+          <p className="authing-mfa-title">{i18n.t('mfa.mfaCertification')}</p>
+          <p className="authing-mfa-tips">{i18n.t('mfa.otpText1')}</p>
+
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <IconFont type="authing-otp" style={{ width: 247, height: 131 }} />
+          </div>
+          <SubmitButton
+            text={i18n.t('mfa.sure')}
+            onClick={() => {
+              updateBackComponent(CustomBack)
+              setMFASelectorVisible(false)
+              setIsMFAPage(false)
+            }}
+            className="g2-mfa-submit-button bind-totp"
+          />
+        </>
+      ) : (
+        <GuardBindTotpView initData={initData} authingPublicConfig={authingPublicConfig} />
+      )}
+    </>
+  )
+}
+
+export function VerifyMFAOtp(props: IOTPProps) {
   const { initData, setMFASelectorVisible, updateBackComponent } = props
 
   const { mfaToken } = initData
@@ -102,4 +166,10 @@ export function OTP(props: IOTPProps) {
       )}
     </>
   )
+}
+
+export const OTP = (props: IOTPProps) => {
+  const { initData } = props
+
+  return <>{initData.totpMfaEnabled ? <VerifyMFAOtp {...props} /> : <BindMFATotp {...props} />}</>
 }
