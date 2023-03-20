@@ -109,14 +109,13 @@ export const GuardBindTotpView = forwardRef((props: GuardBindTotpProps, ref) => 
     setBindTotpType('downloadAuthenticator')
   }
 
-  const renderContent = useMemo<Record<BindTotpType, (props: any) => React.ReactNode>>(
-    () => ({
+  const renderContent = useMemo<Record<BindTotpType, (props: any) => React.ReactNode>>(() => {
+    return {
       securityCode: props => <SecurityCode {...props} onDownload={onDownload} />,
       bindSuccess: props => <BindSuccess {...props} />,
       downloadAuthenticator: () => <GuardDownloadATView authingPublicConfig={authingPublicConfig} />
-    }),
-    []
-  )
+    }
+  }, [])
 
   useEffect(() => {
     if (bindTotpType === 'downloadAuthenticator') {
@@ -126,23 +125,26 @@ export const GuardBindTotpView = forwardRef((props: GuardBindTotpProps, ref) => 
     }
   }, [bindTotpType])
 
+  const renderer = useMemo(() => {
+    if (bindInfo.loading) {
+      return 'loading'
+    }
+    return renderContent[bindTotpType]({
+      mfaToken: initData.mfaToken,
+      qrcode,
+      secret,
+      onBind,
+      onNext
+    })
+  }, [bindInfo.loading])
+
   return (
     <>
       {bindInfo.loading ? (
         <Spin />
       ) : (
         <div className="g2-view-container g2-bind-totp">
-          <div className="g2-mfa-content g2-mfa-bindTotp">
-            {bindInfo.loading
-              ? 'loading'
-              : renderContent[bindTotpType]({
-                mfaToken: initData.mfaToken,
-                qrcode,
-                secret,
-                onBind,
-                onNext
-              })}
-          </div>
+          <div className="g2-mfa-content g2-mfa-bindTotp">{renderer}</div>
         </div>
       )}
     </>

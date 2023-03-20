@@ -12,7 +12,8 @@ try {
 readyGo()
 
 function readyGo () {
-  webpack(webpackEsmBundlerConfig, (error) => {
+  webpack(webpackEsmBundlerConfig, (error, stats) => {
+    console.log(stats)
     if (error) {
       console.error('build Authing MFA esm bundler error: ', error)
     }
