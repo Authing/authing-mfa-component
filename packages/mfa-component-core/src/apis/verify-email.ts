@@ -1,19 +1,17 @@
-interface VerifySmsContent {
-  phone: string
+interface VerifyEmailContent {
+  email: string
   code: string
   mfaToken?: string
-  phoneCountryCode?: string
 }
 
-export const VerifySms = async (content: VerifySmsContent) => {
+export const verifyEmail = async (content: VerifyEmailContent) => {
   return Promise.resolve(content)
 
   // return await post(
-  //   '/api/v2/applications/mfa/sms/verify',
+  //   '/api/v2/applications/mfa/email/verify',
   //   {
-  //     phone,
+  //     email,
   //     code,
-  //     phoneCountryCode,
   //   },
   //   {
   //     headers: {

@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { Form } from 'shim-antd'
 
-import { IMFAInitData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
+import { IMFATriggerData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
 
 import { i18n } from '../locales'
 
@@ -25,25 +25,25 @@ import { SendCodeBtn } from './SendCode'
 const { useState, useRef, useCallback, useMemo } = React
 
 interface SMSProps {
-  initData: IMFAInitData
-  authingPublicConfig: IAuthingPublicConfig
+  mfaTriggerData: IMFATriggerData
+  publicConfig: IAuthingPublicConfig
   onVerify: IOnMFAVerify
 }
 
 export function SMS(props: SMSProps) {
-  const { initData, authingPublicConfig, onVerify } = props
+  const { mfaTriggerData, publicConfig, onVerify } = props
 
-  const { mfaPhone } = initData
+  const { mfaPhone } = mfaTriggerData
 
   const [phone, setPhone] = useState<string | undefined>(mfaPhone)
 
   const sendCodeRef = useRef<HTMLButtonElement>(null)
 
   const [areaCode, setAreaCode] = useState(
-    authingPublicConfig.internationalSmsConfig?.defaultISOType || 'CN'
+    publicConfig.internationalSmsConfig?.defaultISOType || 'CN'
   )
 
-  const isInternationSms = Boolean(authingPublicConfig.internationalSmsConfig?.enabled)
+  const isInternationSms = Boolean(publicConfig.internationalSmsConfig?.enabled)
 
   if (phone) {
     return (
@@ -53,9 +53,9 @@ export function SMS(props: SMSProps) {
         onVerify={(code: number, data: any) => {
           onVerify(code, data)
         }}
-        authingPublicConfig={authingPublicConfig}
+        publicConfig={publicConfig}
         sendCodeRef={sendCodeRef}
-        initData={initData}
+        mfaTriggerData={mfaTriggerData}
         areaCode={areaCode}
       />
     )
@@ -63,8 +63,8 @@ export function SMS(props: SMSProps) {
 
   return (
     <BindMFASms
-      authingPublicConfig={authingPublicConfig}
-      initData={initData}
+      publicConfig={publicConfig}
+      mfaTriggerData={mfaTriggerData}
       areaCode={areaCode}
       setAreaCode={setAreaCode}
       isInternationSms={isInternationSms}
@@ -77,8 +77,8 @@ export function SMS(props: SMSProps) {
 }
 
 interface BindMFASmsProps {
-  authingPublicConfig: IAuthingPublicConfig
-  initData: IMFAInitData
+  publicConfig: IAuthingPublicConfig
+  mfaTriggerData: IMFATriggerData
   areaCode: string
   setAreaCode: (areaCode: string) => void
   isInternationSms: boolean
@@ -86,7 +86,7 @@ interface BindMFASmsProps {
 }
 
 function BindMFASms(props: BindMFASmsProps) {
-  const { onBind, isInternationSms, areaCode, setAreaCode, initData, authingPublicConfig } = props
+  const { onBind, isInternationSms, areaCode, setAreaCode, mfaTriggerData, publicConfig } = props
 
   const submitButtonRef = useRef<any>(null)
 
@@ -155,8 +155,8 @@ function BindMFASms(props: BindMFASmsProps) {
           form={form}
           required={true}
           areaCode={areaCode}
-          initData={initData}
-          authingPublicConfig={authingPublicConfig}
+          mfaTriggerData={mfaTriggerData}
+          publicConfig={publicConfig}
         >
           <PhoneAccount />
         </CustomFormItem.Phone>
@@ -170,16 +170,16 @@ interface VerifyMFASmsProps {
   phone: string
   isInternationSms: boolean
   onVerify: (code: number, data: any) => void
-  authingPublicConfig: IAuthingPublicConfig
+  publicConfig: IAuthingPublicConfig
   sendCodeRef: React.RefObject<HTMLButtonElement>
-  initData: IMFAInitData
+  mfaTriggerData: IMFATriggerData
   areaCode: string
 }
 
 function VerifyMFASms(props: VerifyMFASmsProps) {
-  const { isInternationSms, initData, areaCode, phone, authingPublicConfig, sendCodeRef } = props
+  const { isInternationSms, mfaTriggerData, areaCode, phone, publicConfig, sendCodeRef } = props
 
-  const { phoneCountryCode } = initData
+  const { phoneCountryCode } = mfaTriggerData
 
   const submitButtonRef = useRef<any>(null)
 
@@ -191,7 +191,7 @@ function VerifyMFASms(props: VerifyMFASmsProps) {
 
   const { phoneNumber, countryCode } = parsePhone(isInternationSms, phone, areaCode)
 
-  const codeLength = authingPublicConfig.verifyCodeLength || 4
+  const codeLength = publicConfig.verifyCodeLength || 4
 
   console.log('phoneNumber: ', phoneNumber)
 

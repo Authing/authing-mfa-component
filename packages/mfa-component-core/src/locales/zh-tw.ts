@@ -60,5 +60,7 @@ export const mfa = {
   AuthorizationCamera: '請先開啟授權',
   checkPreferences: '請檢查偏好設置',
   requireError: '無法滿足要求錯誤',
-  hardwareSupport: '硬件不支持'
+  hardwareSupport: '硬件不支持',
+  sendCodeTimeout: '發送失敗,請稍後嘗試',
+  emailMfaCheck: '請輸入電子郵箱驗證碼'
 }

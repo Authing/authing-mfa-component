@@ -12,7 +12,7 @@ import { useCheckRepeat } from './useCheckRepeat'
 
 import { i18n } from '../../locales'
 
-import { IAuthingPublicConfig, IMFAInitData } from '../../types'
+import { IAuthingPublicConfig, IMFATriggerData } from '../../types'
 
 interface ValidatorFormItemProps extends FormItemProps {
   checkRepeat?: boolean
@@ -21,7 +21,7 @@ interface ValidatorFormItemProps extends FormItemProps {
   name: string
   areaCode?: string
   isCheckPattern?: boolean
-  authingPublicConfig: IAuthingPublicConfig
+  publicConfig: IAuthingPublicConfig
   validatorRules?: []
 }
 
@@ -38,18 +38,16 @@ function ValidatorFormItem(props: ValidatorFormItemProps) {
     required,
     areaCode, //国际化区号
     isCheckPattern = true,
-    authingPublicConfig,
+    publicConfig,
     validatorRules = [],
     ...formItemProps
   } = props
 
   const checkInternationalSms = useMemo(() => {
     return (
-      authingPublicConfig.internationalSmsConfig?.enabled &&
-      validatorType === 'phone' &&
-      isCheckPattern
+      publicConfig.internationalSmsConfig?.enabled && validatorType === 'phone' && isCheckPattern
     )
-  }, [isCheckPattern, validatorType, authingPublicConfig.internationalSmsConfig?.enabled])
+  }, [isCheckPattern, validatorType, publicConfig.internationalSmsConfig?.enabled])
 
   const methodContent = useMemo(() => {
     if (validatorType === 'email') {
@@ -69,7 +67,7 @@ function ValidatorFormItem(props: ValidatorFormItemProps) {
         checkExistErrorMessage: t('mfa.noFindPhone'),
         formatErrorMessage: t('mfa.phoneFormateError'),
         pattern:
-          !isCheckPattern && authingPublicConfig.internationalSmsConfig?.enabled
+          !isCheckPattern && publicConfig.internationalSmsConfig?.enabled
             ? /^[0-9]*$/
             : VALIDATE_PATTERN.phone
       }
@@ -83,7 +81,7 @@ function ValidatorFormItem(props: ValidatorFormItemProps) {
       formatErrorMessage: t('mfa.customNameFormatError'),
       pattern: VALIDATE_PATTERN.username
     }
-  }, [isCheckPattern, validatorType, authingPublicConfig.internationalSmsConfig?.enabled, i18n])
+  }, [isCheckPattern, validatorType, publicConfig.internationalSmsConfig?.enabled, i18n])
 
   const checkRepeatRet = (
     value: any,
@@ -92,7 +90,7 @@ function ValidatorFormItem(props: ValidatorFormItemProps) {
   ) => {
     console.log(value, resolve, reject)
     // get<boolean>('/api/v2/users/find', {
-    //   userPoolId: authingPublicConfig?.userPoolId,
+    //   userPoolId: publicConfig?.userPoolId,
     //   key: value,
     //   type: validatorType
     // }).then(({ data }) => {
@@ -162,8 +160,8 @@ function ValidatorFormItem(props: ValidatorFormItemProps) {
 interface EmailFormItemProps extends FormItemProps {
   name: string
   form?: FormInstance
-  initData: IMFAInitData
-  authingPublicConfig: IAuthingPublicConfig
+  mfaTriggerData: IMFATriggerData
+  publicConfig: IAuthingPublicConfig
 }
 
 export function EmailFormItem(props: EmailFormItemProps) {

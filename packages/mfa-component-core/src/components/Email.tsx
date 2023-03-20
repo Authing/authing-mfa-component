@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { Input, message, Form } from 'shim-antd'
 
-import { IMFAInitData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
+import { IMFATriggerData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
 
 import { IconFont } from '../IconFont'
 
@@ -18,29 +18,31 @@ import { VerifyCodeInput, VerifyCodeFormItem } from './VerifyCode'
 
 import { SendCodeBtn } from './SendCode'
 
+import { sendEmail } from '../apis'
+
 const { useState, useRef } = React
 
 interface IEmailProps {
-  initData: IMFAInitData
-  authingPublicConfig: IAuthingPublicConfig
+  mfaTriggerData: IMFATriggerData
+  publicConfig: IAuthingPublicConfig
   onVerify: IOnMFAVerify
 }
 
 export function Email(props: IEmailProps) {
-  const { initData, authingPublicConfig, onVerify } = props
+  const { mfaTriggerData, publicConfig, onVerify } = props
 
-  const { mfaEmail } = initData
+  const { mfaEmail } = mfaTriggerData
 
   const [email, setEmail] = useState<string | undefined>(mfaEmail)
 
   const sendCodeRef = useRef<HTMLButtonElement>(null)
 
-  const codeLength = authingPublicConfig.verifyCodeLength
+  const codeLength = publicConfig.verifyCodeLength
 
   if (email) {
     return (
       <VerifyMFAEmail
-        initData={initData}
+        mfaTriggerData={mfaTriggerData}
         email={email}
         onVerify={(code: number, data: any) => {
           onVerify(code, data)
@@ -53,24 +55,24 @@ export function Email(props: IEmailProps) {
 
   return (
     <BindMFAEmail
-      initData={initData}
+      mfaTriggerData={mfaTriggerData}
       onBind={(email: string) => {
         setEmail(email)
         sendCodeRef.current?.click()
       }}
-      authingPublicConfig={authingPublicConfig}
+      publicConfig={publicConfig}
     ></BindMFAEmail>
   )
 }
 
 interface BindMFAEmailProps {
-  initData: IMFAInitData
+  mfaTriggerData: IMFATriggerData
   onBind: (email: string) => void
-  authingPublicConfig: IAuthingPublicConfig
+  publicConfig: IAuthingPublicConfig
 }
 
 function BindMFAEmail(props: BindMFAEmailProps) {
-  const { onBind, initData, authingPublicConfig } = props
+  const { onBind, mfaTriggerData, publicConfig } = props
 
   const { useRef } = React
 
@@ -107,8 +109,8 @@ function BindMFAEmail(props: BindMFAEmailProps) {
           name="email"
           form={form}
           required={true}
-          initData={initData}
-          authingPublicConfig={authingPublicConfig}
+          mfaTriggerData={mfaTriggerData}
+          publicConfig={publicConfig}
         >
           <Input
             className="authing-mfa-input"
@@ -126,7 +128,7 @@ function BindMFAEmail(props: BindMFAEmailProps) {
 }
 
 interface VerifyMFAEmailProps {
-  initData: IMFAInitData
+  mfaTriggerData: IMFATriggerData
   email: string
   onVerify: (code: number, data: any) => void
   codeLength: number
@@ -134,9 +136,9 @@ interface VerifyMFAEmailProps {
 }
 
 function VerifyMFAEmail(props: VerifyMFAEmailProps) {
-  const { initData, email, onVerify, codeLength, sendCodeRef } = props
+  const { mfaTriggerData, email, onVerify, codeLength, sendCodeRef } = props
 
-  const { mfaToken } = initData
+  const { mfaToken } = mfaTriggerData
 
   console.log(onVerify, mfaToken)
 
@@ -147,7 +149,11 @@ function VerifyMFAEmail(props: VerifyMFAEmailProps) {
   const [sent, setSent] = useState(false)
 
   const sendVerifyCode = async () => {
-    return true
+    const res = await sendEmail({
+      email
+    })
+    setSent(res)
+    return res
   }
 
   const onFinish = async () => {
@@ -162,8 +168,8 @@ function VerifyMFAEmail(props: VerifyMFAEmailProps) {
 
   return (
     <>
-      <p className="authing-g2-mfa-title">{i18n.t('mfa.mfaCertification')}</p>
-      <p className="authing-g2-mfa-tips">
+      <p className="authing-mfa-title">{i18n.t('mfa.mfaCertification')}</p>
+      <p className="authing-mfa-tips">
         {sent
           ? `${i18n.t('mfa.verifyCodeSended')} ${mailDesensitization(email)}`
           : i18n.t('mfa.emailMfaCheck')}

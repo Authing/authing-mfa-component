@@ -1,6 +1,6 @@
 import { React } from 'shim-react'
 import { Form } from 'shim-antd'
-import { IMFAInitData, IAuthingPublicConfig } from '../types'
+import { IMFATriggerData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
 import { i18n } from '../locales'
 import { useAsyncFn } from 'react-use'
 import { SubmitButton } from './SubmitButton'
@@ -13,20 +13,20 @@ import { GuardBindTotpView } from './BindTotp'
 const { useRef, useState, useEffect, useMemo } = React
 
 interface IOTPProps {
-  initData: IMFAInitData
-  authingPublicConfig: IAuthingPublicConfig
-  // onVerify: IOnMFAVerify
+  mfaTriggerData: IMFATriggerData
+  publicConfig: IAuthingPublicConfig
+  onVerify: IOnMFAVerify
   setMFASelectorVisible: React.Dispatch<React.SetStateAction<boolean>>
   updateBackComponent: (component: React.ReactNode) => void
 }
 
 export interface BindMFATotpProps {
-  initData: IMFAInitData
+  initData: IMFATriggerData
 }
 
 export const BindMFATotp: React.FC<IOTPProps> = ({
-  initData,
-  authingPublicConfig,
+  mfaTriggerData,
+  publicConfig,
   updateBackComponent,
   setMFASelectorVisible
 }) => {
@@ -76,16 +76,16 @@ export const BindMFATotp: React.FC<IOTPProps> = ({
           />
         </>
       ) : (
-        <GuardBindTotpView initData={initData} authingPublicConfig={authingPublicConfig} />
+        <GuardBindTotpView initData={mfaTriggerData} authingPublicConfig={publicConfig} />
       )}
     </>
   )
 }
 
 export function VerifyMFAOtp(props: IOTPProps) {
-  const { initData, setMFASelectorVisible, updateBackComponent } = props
+  const { mfaTriggerData, setMFASelectorVisible, updateBackComponent } = props
 
-  const { mfaToken } = initData
+  const { mfaToken } = mfaTriggerData
 
   const [isMFAPage, setIsMFAPage] = useState(true)
 
@@ -162,14 +162,14 @@ export function VerifyMFAOtp(props: IOTPProps) {
           </Form>
         </>
       ) : (
-        <GuardRecoveryCodeView initData={initData} />
+        <GuardRecoveryCodeView mfaTriggerData={mfaTriggerData} />
       )}
     </>
   )
 }
 
 export const OTP = (props: IOTPProps) => {
-  const { initData } = props
+  const { mfaTriggerData } = props
 
-  return <>{initData.totpMfaEnabled ? <VerifyMFAOtp {...props} /> : <BindMFATotp {...props} />}</>
+  return <>{mfaTriggerData.totpMfaEnabled ? <VerifyMFAOtp {...props} /> : <BindMFATotp {...props} />}</>
 }

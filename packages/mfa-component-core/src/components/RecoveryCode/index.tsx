@@ -1,5 +1,5 @@
 import { React } from 'shim-react'
-import { IMFAInitData } from '../../types'
+import { IMFATriggerData } from '../../types'
 import { SaveCode } from './core/saveCode'
 import { UseCode } from './core/useCode'
 import './style.less'
@@ -7,11 +7,11 @@ import './style.less'
 const { useState } = React
 
 interface IRecoveryCodeProps {
-  initData: IMFAInitData
+  mfaTriggerData: IMFATriggerData
 }
 // OTP 恢复码
-export const GuardRecoveryCodeView: React.FC<IRecoveryCodeProps> = ({ initData }) => {
-  const { mfaToken } = initData
+export const GuardRecoveryCodeView: React.FC<IRecoveryCodeProps> = ({ mfaTriggerData }) => {
+  const { mfaToken } = mfaTriggerData
   const [recoveryCode, setRecoveryCode] = useState<string>()
 
   return (

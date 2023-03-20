@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { message, Spin } from 'shim-antd'
 
-import { IAuthingPublicConfig, IMFAInitData, IOnMFAVerify } from '../types'
+import { IAuthingPublicConfig, IMFATriggerData, IOnMFAVerify } from '../types'
 
 import { i18n } from '../locales'
 
@@ -10,7 +10,7 @@ import * as facePlugin from 'face-api.js'
 
 import { postForm } from '../request'
 
-import { AssociateFace, VerifyFace } from '../apis'
+import { associateFace, verifyFace } from '../apis'
 
 import { SubmitButton } from './SubmitButton'
 
@@ -19,8 +19,8 @@ import { LazyloadImage } from './LazyloadImage'
 const { useState, useRef, useEffect, useCallback } = React
 
 interface IFaceProps {
-  initData: IMFAInitData
-  authingPublicConfig: IAuthingPublicConfig
+  mfaTriggerData: IMFATriggerData
+  publicConfig: IAuthingPublicConfig
   onVerify: IOnMFAVerify
   setMFASelectorVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -41,7 +41,7 @@ const devicesConstraints = {
 }
 
 export function Face(props: IFaceProps) {
-  const { authingPublicConfig } = props
+  const { publicConfig } = props
 
   const { t } = i18n
 
@@ -61,7 +61,7 @@ export function Face(props: IFaceProps) {
 
   const cooldown = useRef<number>(0) // p2 cooldown, * 500ms
 
-  const cdnBase = authingPublicConfig.cdnBase
+  const cdnBase = publicConfig.cdnBase
 
   const useDashoffset = (percent: number) => {
     // 接受 0 - 1，返回 0-700 之间的偏移量
@@ -73,7 +73,7 @@ export function Face(props: IFaceProps) {
 
   const { offset, dashStyle } = useDashoffset(percent)
 
-  const _FACE_SCORE = authingPublicConfig?.mfa?.faceScore ?? FACE_SCORE
+  const _FACE_SCORE = publicConfig?.mfa?.faceScore ?? FACE_SCORE
 
   useEffect(() => {
     // 载入 cdn
@@ -99,7 +99,7 @@ export function Face(props: IFaceProps) {
     return () => {
       interval.current && clearInterval(interval.current)
     }
-  }, [faceState, interval, authingPublicConfig, cdnBase, t])
+  }, [faceState, interval, publicConfig, cdnBase, t])
 
   // 上传文件
   const uploadImage = async (blob: Blob) => {
@@ -131,9 +131,9 @@ export function Face(props: IFaceProps) {
     const requestData = {
       photoA: p1.current!,
       photoB: p2.current!,
-      mfaToken: props.initData.mfaToken
+      mfaToken: props.mfaTriggerData.mfaToken
     }
-    const result = await AssociateFace(requestData)
+    const result = await associateFace(requestData)
 
     const { code, data } = result
 
@@ -155,10 +155,10 @@ export function Face(props: IFaceProps) {
   const faceCheck = async () => {
     const requestData = {
       photo: p1.current!,
-      mfaToken: props.initData.mfaToken
+      mfaToken: props.mfaTriggerData.mfaToken
     }
 
-    const result = await VerifyFace(requestData)
+    const result = await verifyFace(requestData)
 
     const { data, code } = result
 
@@ -205,7 +205,7 @@ export function Face(props: IFaceProps) {
   const quitIdentifying = (blob: Blob) => {
     setPercent(100)
     uploadImage(blob).then(key => {
-      if (props.initData?.faceMfaEnabled === true) {
+      if (props.mfaTriggerData?.faceMfaEnabled === true) {
         goToCheckScene(key)
       } else {
         goToBindScene(key)
@@ -250,7 +250,7 @@ export function Face(props: IFaceProps) {
       {faceState === 'ready' ? (
         <>
           <p className="authing-mfa-tips">
-            {props.initData?.faceMfaEnabled ? t('mfa.faceCheck') : t('mfa.faceText2')}
+            {props.mfaTriggerData?.faceMfaEnabled ? t('mfa.faceCheck') : t('mfa.faceText2')}
           </p>
 
           <LazyloadImage

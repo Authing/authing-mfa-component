@@ -10,6 +10,10 @@ export const useIconfont = (cdnBase: string, setError?: any) => {
   const [loaded, setLoaded] = useState<boolean>(false)
 
   const initIconfont = useCallback(async () => {
+    if (!cdnBase) {
+      return
+    }
+
     try {
       const res = await Axios(`${cdnBase}/svg-string/guard`)
       GenerateSvg(res.data)

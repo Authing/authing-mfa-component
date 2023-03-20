@@ -15,7 +15,7 @@ export type MFAType = 'SMS' | 'EMAIL' | 'OTP' | 'FACE'
 
 export type MFAVerifyPage = 'RECOVERY'
 
-export interface IMFAInitData {
+export interface IMFATriggerData {
   applicationMfa: Array<{
     mfaPolicy: MFAType
     status: number
@@ -55,11 +55,12 @@ export interface IAuthingPublicConfig {
   mfa?: {
     faceScore?: number
   }
+  requestHostname?: string
 }
 
 export interface IAuthingMFAComponentProps {
-  initData: IMFAInitData
-  authingPublicConfig: IAuthingPublicConfig
+  appId: string
+  mfaTriggerData: IMFATriggerData
   lang?: Lang
 }
 

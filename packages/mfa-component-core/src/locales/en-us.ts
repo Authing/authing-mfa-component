@@ -60,5 +60,7 @@ export const mfa = {
   AuthorizationCamera: 'Please enable authorization first',
   checkPreferences: 'Please check preferences',
   requireError: 'Unable to satisfy request error',
-  hardwareSupport: 'Hardware not supported'
+  hardwareSupport: 'Hardware not supported',
+  sendCodeTimeout: 'Sending failed, please try later',
+  emailMfaCheck: 'Please enter email verification code'
 }
