@@ -179,15 +179,8 @@ interface VerifyMFASmsProps {
 }
 
 function VerifyMFASms(props: VerifyMFASmsProps) {
-  const {
-    isInternationSms,
-    mfaTriggerData,
-    areaCode,
-    phone,
-    publicConfig,
-    sendCodeRef,
-    onVerify
-  } = props
+  const { isInternationSms, mfaTriggerData, areaCode, phone, publicConfig, sendCodeRef, onVerify } =
+    props
 
   const { phoneCountryCode } = mfaTriggerData
 
