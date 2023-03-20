@@ -3,8 +3,12 @@ import axios, { AxiosRequestConfig, CancelTokenSource } from 'axios'
 import { i18n } from '../locales'
 
 const LANG_HEADER_KEY = 'x-authing-lang'
+const APP_ID_KEY = 'x-authing-app-id'
+const USERPOOL_ID_KEY = 'x-authing-userpool-id'
 
-let baseUrl = ''
+let _baseUrl = ''
+let _appId = ''
+let _userpoolId = ''
 
 export interface IAuthingResponse<T = any> {
   code?: number
@@ -17,18 +21,21 @@ export interface IAuthingResponse<T = any> {
 }
 
 export interface IGetProps {
+  host?: string
   path: string
-  query: string
+  query?: string
   config?: AxiosRequestConfig
 }
 
 export async function get<T>(props: IGetProps): Promise<IAuthingResponse<T>> {
-  const { path, query, config } = props
+  const { host, path, query = '', config } = props
 
   const headers: Record<string, any> = {
     ...config?.headers,
     'Content-Type': 'application/json',
-    [LANG_HEADER_KEY]: i18n.language
+    [LANG_HEADER_KEY]: i18n.language,
+    [APP_ID_KEY]: _appId,
+    [USERPOOL_ID_KEY]: _userpoolId
   }
 
   try {
@@ -37,7 +44,7 @@ export async function get<T>(props: IGetProps): Promise<IAuthingResponse<T>> {
 
     const res: any = await Promise.race([
       timeoutAction(source.cancel),
-      axios(`${baseUrl}${path}${query}`, {
+      axios(`${host || _baseUrl}${path}${query}`, {
         method: 'GET',
         ...config,
         withCredentials: true,
@@ -68,7 +75,9 @@ export async function post<T>(props: IPostProps): Promise<IAuthingResponse<T>> {
   const headers: Record<string, any> = {
     ...config?.headers,
     'Content-Type': 'application/json',
-    [LANG_HEADER_KEY]: i18n.language
+    [LANG_HEADER_KEY]: i18n.language,
+    [APP_ID_KEY]: _appId,
+    [USERPOOL_ID_KEY]: _userpoolId
   }
 
   try {
@@ -77,7 +86,7 @@ export async function post<T>(props: IPostProps): Promise<IAuthingResponse<T>> {
 
     const res: any = await Promise.race([
       timeoutAction(source.cancel),
-      axios(`${baseUrl}${path}`, {
+      axios(`${_baseUrl}${path}`, {
         data,
         method: 'POST',
         withCredentials: true,
@@ -109,14 +118,16 @@ export async function postForm<T>(props: IPostFormProps): Promise<IAuthingRespon
     const source = CancelToken.source()
     const res: any = await Promise.race([
       timeoutAction(source.cancel),
-      axios(`${baseUrl}${path}`, {
+      axios(`${_baseUrl}${path}`, {
         method: 'POST',
         data: formData,
         withCredentials: true,
         cancelToken: source.token,
         headers: {
           ...config?.headers,
-          [LANG_HEADER_KEY]: i18n.language
+          [LANG_HEADER_KEY]: i18n.language,
+          [APP_ID_KEY]: _appId,
+          [USERPOOL_ID_KEY]: _userpoolId
         }
       })
     ])
@@ -144,5 +155,13 @@ function timeoutAction(cancel: CancelTokenSource['cancel']) {
 }
 
 export function setRequestBaseUrl(url: string) {
-  baseUrl = url
+  _baseUrl = url
+}
+
+export function setAppId(appId: string) {
+  _appId = appId
+}
+
+export function setUserpoolId(userPoolId: string) {
+  _userpoolId = userPoolId
 }

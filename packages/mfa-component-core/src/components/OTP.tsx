@@ -1,6 +1,6 @@
 import { React } from 'shim-react'
 import { Form } from 'shim-antd'
-import { IMFAInitData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
+import { IMFATriggerData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
 import { i18n } from '../locales'
 import { useAsyncFn } from 'react-use'
 import { SubmitButton } from './SubmitButton'
@@ -11,17 +11,17 @@ import { GuardRecoveryCodeView } from './RecoveryCode'
 const { useRef, useState, useEffect, useMemo } = React
 
 interface IOTPProps {
-  initData: IMFAInitData
-  authingPublicConfig: IAuthingPublicConfig
+  mfaTriggerData: IMFATriggerData
+  publicConfig: IAuthingPublicConfig
   onVerify: IOnMFAVerify
   setMFASelectorVisible: React.Dispatch<React.SetStateAction<boolean>>
   updateBackComponent: (component: React.ReactNode) => void
 }
 
 export function OTP(props: IOTPProps) {
-  const { initData, setMFASelectorVisible, updateBackComponent } = props
+  const { mfaTriggerData, setMFASelectorVisible, updateBackComponent } = props
 
-  const { mfaToken } = initData
+  const { mfaToken } = mfaTriggerData
 
   const [isMFAPage, setIsMFAPage] = useState(true)
 
@@ -98,7 +98,7 @@ export function OTP(props: IOTPProps) {
           </Form>
         </>
       ) : (
-        <GuardRecoveryCodeView initData={initData} />
+        <GuardRecoveryCodeView mfaTriggerData={mfaTriggerData} />
       )}
     </>
   )

@@ -49,5 +49,7 @@ export const mfa = {
   AuthorizationCamera: '最初に認証を有効にしてください',
   checkPreferences: '設定を確認してください',
   requireError: '要求エラーを満たすことができません',
-  hardwareSupport: 'ハードウェアはサポートされていません'
+  hardwareSupport: 'ハードウェアはサポートされていません',
+  sendCodeTimeout: '送信に失敗した場合は後ほどお試しください',
+  emailMfaCheck: 'メール認証コードを入力してください'
 }

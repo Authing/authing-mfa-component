@@ -1,7 +1,11 @@
 export * from './types'
 
-export * from './AssociateFace'
-export * from './VerifyFace'
-export * from './VerifyEmail'
-export * from './VerifySms'
-export * from './VerifyTotp'
+export * from './get-public-config'
+
+export * from './associate-face'
+export * from './verify-face'
+export * from './verify-email'
+export * from './verify-sms'
+export * from './verify-totp'
+
+export * from './send-email'

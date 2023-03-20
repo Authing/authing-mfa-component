@@ -4,14 +4,14 @@ import { i18n } from '../../locales'
 
 import { IconFont } from '../../IconFont'
 
-import { IMFAInitData, MFAType } from '../../types'
+import { IMFATriggerData, MFAType } from '../../types'
 
 import { MFAButton } from '../MFAButton'
 
 import './style.less'
 
 interface MFASelectorProps {
-  initData: IMFAInitData
+  mfaTriggerData: IMFATriggerData
   current: MFAType
   onChange: (type: MFAType) => void
 }
@@ -43,9 +43,9 @@ const mfaTypeTitleMapping: Record<MFAType, MFAButtonMaterial> = {
 export function MFASelector(props: MFASelectorProps) {
   const { useMemo } = React
 
-  const { current, onChange, initData } = props
+  const { current, onChange, mfaTriggerData } = props
 
-  const { applicationMfa } = initData
+  const { applicationMfa } = mfaTriggerData
 
   const mfaSelectors = useMemo(() => {
     return applicationMfa
