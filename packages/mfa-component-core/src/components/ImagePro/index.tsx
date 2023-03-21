@@ -1,7 +1,11 @@
 import { React } from 'shim-react'
+
 import { MFAButton } from '../MFAButton'
-import { getClassnames } from '../utils'
+
+import { getClassnames } from '../../helpers'
+
 import { i18n } from '../../locales'
+
 import './styles.less'
 
 const { useRef, useState } = React
