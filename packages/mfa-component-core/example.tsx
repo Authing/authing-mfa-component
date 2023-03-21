@@ -2,11 +2,11 @@ import { React, render } from 'shim-react'
 
 import { AuthingMFAComponent } from './src/components'
 
-import { IMFATriggerData } from './src/types'
+import { IAuthingMFATriggerData } from './src/types'
 
 function Example() {
-  const mfaTriggerData: IMFATriggerData = {
-		"mfaToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJQb29sSWQiOiI2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzkiLCJ1c2VySWQiOiI2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJhcm4iOiJhcm46Y246YXV0aGluZzo2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzk6dXNlcjo2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJzdGFnZSI6MX0sImlhdCI6MTY3OTM4NTA2OCwiZXhwIjoxNjc5Mzg1NDI4fQ.tymKOZxwYpT31WW2cK-F01juHIPuaaBBL63b4PF-Jfc",
+  const mfaTriggerData: IAuthingMFATriggerData = {
+		"mfaToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJQb29sSWQiOiI2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzkiLCJ1c2VySWQiOiI2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJhcm4iOiJhcm46Y246YXV0aGluZzo2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzk6dXNlcjo2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJzdGFnZSI6MX0sImlhdCI6MTY3OTM5NTc4OSwiZXhwIjoxNjc5Mzk2MTQ5fQ.IWOsgJah2dm5eBk2aIs0Q92nSipyXCilDLWvqk1iwbY",
 		"nickname": '',
 		"email": '',
 		"phone": '',
@@ -46,7 +46,22 @@ function Example() {
 	}
 
   return <>
-    <AuthingMFAComponent appId="630ed3137dd6f2fd7001da24" mfaTriggerData={mfaTriggerData}></AuthingMFAComponent>
+    <AuthingMFAComponent
+			appId="630ed3137dd6f2fd7001da24"
+			mfaTriggerData={mfaTriggerData}
+			onLoad={() => {
+				console.log('Authing MFA onLoad')
+			}}
+			onMount={() => {
+				console.log('Authing MFA onMount')
+			}}
+			onSuccess={(code, data) => {
+				console.log('Authing MFA onSuccess: ', code, data)
+			}}
+			onFail={(message) => {
+				console.log('Authing MFA onFail: ', message)
+			}}>
+		</AuthingMFAComponent>
   </>
 }
 

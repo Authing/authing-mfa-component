@@ -1,5 +1,7 @@
 import { React } from 'shim-react'
 
+import { ConfigProvider, message, Spin } from 'shim-antd'
+
 import { Email } from './Email'
 
 import { SMS } from './SMS'
@@ -12,28 +14,31 @@ import { MFASelector } from './MFASelector'
 
 import { useIconfont } from '../IconFont'
 
-import { initAuthingMFAI18n } from '../locales'
+import { i18n, initAuthingMFAI18n } from '../locales'
 
 import { setRequestBaseUrl, setAppId, setUserpoolId } from '../request'
 
 import { getPublicConfig } from '../apis'
+
+import { noop } from '../helpers'
+
+import { AuthingMFAContext } from '../contexts'
 
 import './style.less'
 
 import {
   IAuthingMFAComponentProps,
   IAuthingPublicConfig,
-  IMFATriggerData,
-  IOnMFAVerify,
+  IAuthingMFATriggerData,
   MFAType
 } from '../types'
-import { ConfigProvider, message, Spin } from 'shim-antd'
+
+const { useState, useEffect, useCallback, useMemo } = React
 
 export interface IMFAFuncProps {
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   setMFASelectorVisible: React.Dispatch<React.SetStateAction<boolean>>
   publicConfig: IAuthingPublicConfig
-  onVerify: IOnMFAVerify
   updateBackComponent: (component: React.ReactNode) => void // 自定义 back
 }
 
@@ -45,33 +50,30 @@ message.config({
 
 const ComponentsMapping: Record<MFAType, (props: IMFAFuncProps) => React.ReactNode> = {
   EMAIL: (props: IMFAFuncProps) => {
-    const { mfaTriggerData, publicConfig, onVerify } = props
-    return <Email publicConfig={publicConfig} mfaTriggerData={mfaTriggerData} onVerify={onVerify} />
+    const { mfaTriggerData, publicConfig } = props
+    return <Email publicConfig={publicConfig} mfaTriggerData={mfaTriggerData} />
   },
   SMS: (props: IMFAFuncProps) => {
-    const { mfaTriggerData, publicConfig, onVerify } = props
-    return <SMS publicConfig={publicConfig} mfaTriggerData={mfaTriggerData} onVerify={onVerify} />
+    const { mfaTriggerData, publicConfig } = props
+    return <SMS publicConfig={publicConfig} mfaTriggerData={mfaTriggerData} />
   },
   OTP: (props: IMFAFuncProps) => {
-    const { mfaTriggerData, publicConfig, onVerify, setMFASelectorVisible, updateBackComponent } =
-      props
+    const { mfaTriggerData, publicConfig, setMFASelectorVisible, updateBackComponent } = props
     return (
       <OTP
         publicConfig={publicConfig}
         mfaTriggerData={mfaTriggerData}
-        onVerify={onVerify}
         updateBackComponent={updateBackComponent}
         setMFASelectorVisible={setMFASelectorVisible}
       />
     )
   },
   FACE: (props: IMFAFuncProps) => {
-    const { mfaTriggerData, publicConfig, onVerify, setMFASelectorVisible } = props
+    const { mfaTriggerData, publicConfig, setMFASelectorVisible } = props
     return (
       <Face
         publicConfig={publicConfig}
         mfaTriggerData={mfaTriggerData}
-        onVerify={onVerify}
         setMFASelectorVisible={setMFASelectorVisible}
       />
     )
@@ -79,9 +81,28 @@ const ComponentsMapping: Record<MFAType, (props: IMFAFuncProps) => React.ReactNo
 }
 
 export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
-  const { useState, useEffect, useCallback } = React
+  const {
+    appId,
+    mfaTriggerData,
+    lang,
+    onLoad = noop,
+    onMount = noop,
+    onUnmount = noop,
+    onSuccess = noop,
+    onFail = noop
+  } = props
 
-  const { appId, mfaTriggerData, lang } = props
+  const events = useMemo(() => {
+    return {
+      onLoad,
+      onMount,
+      onUnmount,
+      onSuccess,
+      onFail
+    }
+  }, [onLoad, onMount, onUnmount, onSuccess, onFail])
+
+  let timer: null | NodeJS.Timeout = null
 
   const [publicConfig, setPublicConfig] = useState<null | IAuthingPublicConfig>(null)
 
@@ -98,9 +119,25 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
     if (!publicConfig) {
       return
     }
+
     setAppId(appId)
     setUserpoolId(publicConfig.userPoolId)
     setRequestBaseUrl(`https://${publicConfig.requestHostname || 'core.authing.cn'}`)
+
+    events.onLoad()
+
+    timer = setTimeout(() => {
+      events.onMount()
+    })
+
+    return () => {
+      events.onUnmount()
+
+      if (timer) {
+        clearTimeout(timer)
+        timer = null
+      }
+    }
   }, [publicConfig])
 
   useIconfont(publicConfig?.cdnBase || '')
@@ -117,10 +154,6 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
 
   const [MFASelectorVisible, setMFASelectorVisible] = useState<boolean>(true)
 
-  const onVerify = (code: number, data: any, message?: string) => {
-    console.log(code, data, message)
-  }
-
   const onChange = (type: MFAType) => setCurrentMFAType(type)
 
   const [CustomBack, setCustomBack] = useState<React.ReactNode>(null)
@@ -129,31 +162,39 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
     setCustomBack(component)
   }
 
+  const context = useMemo(() => {
+    return {
+      events,
+      mfaTriggerData
+    }
+  }, [events, mfaTriggerData])
+
   return (
-    <ConfigProvider prefixCls={PREFIX_CLS}>
-      <div className="authing-mfa-container">
-        {(appId && mfaTriggerData && publicConfig && (
-          <>
-            {CustomBack}
-            <div className="authing-mfa-content">
-              {ComponentsMapping[currentMFAType]({
-                mfaTriggerData,
-                setMFASelectorVisible,
-                publicConfig,
-                onVerify,
-                updateBackComponent
-              })}
-            </div>
-            {MFASelectorVisible && (
-              <MFASelector
-                mfaTriggerData={mfaTriggerData}
-                current={currentMFAType as MFAType}
-                onChange={onChange}
-              ></MFASelector>
-            )}
-          </>
-        )) || <Spin className="authing-mfa-container-placeholder"></Spin>}
-      </div>
-    </ConfigProvider>
+    <AuthingMFAContext.Provider value={context}>
+      <ConfigProvider prefixCls={PREFIX_CLS} locale={i18n.language}>
+        <div className="authing-mfa-container">
+          {(appId && mfaTriggerData && publicConfig && (
+            <>
+              {CustomBack}
+              <div className="authing-mfa-content">
+                {ComponentsMapping[currentMFAType]({
+                  mfaTriggerData,
+                  setMFASelectorVisible,
+                  publicConfig,
+                  updateBackComponent
+                })}
+              </div>
+              {MFASelectorVisible && (
+                <MFASelector
+                  mfaTriggerData={mfaTriggerData}
+                  current={currentMFAType as MFAType}
+                  onChange={onChange}
+                ></MFASelector>
+              )}
+            </>
+          )) || <Spin className="authing-mfa-container-placeholder"></Spin>}
+        </div>
+      </ConfigProvider>
+    </AuthingMFAContext.Provider>
   )
 }

@@ -8,7 +8,7 @@ import { BindSuccess } from './core/bind'
 
 import { SecurityCode } from './core/securityCode'
 
-import { IAuthingPublicConfig, IMFATriggerData } from '../../types'
+import { IAuthingPublicConfig, IAuthingMFATriggerData } from '../../types'
 
 import { AuthingMFADownloadATView } from '../DownloadAuthenticator'
 
@@ -23,7 +23,7 @@ const { useEffect, useState, useMemo, forwardRef, useImperativeHandle } = React
 type BindTotpType = 'securityCode' | 'bindSuccess' | 'downloadAuthenticator'
 
 interface GuardBindTotpProps {
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   publicConfig: IAuthingPublicConfig
   resetBackType: (type: BackType) => void
 }

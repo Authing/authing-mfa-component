@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { Input, message, Form } from 'shim-antd'
 
-import { IMFATriggerData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
+import { IAuthingMFATriggerData, IAuthingPublicConfig } from '../types'
 
 import { IconFont } from '../IconFont'
 
@@ -20,16 +20,17 @@ import { SendCodeBtn } from './SendCode'
 
 import { sendEmail, verifyEmail } from '../apis'
 
+import { useAuthingMFAContext } from '../contexts'
+
 const { useState, useRef } = React
 
 interface IEmailProps {
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   publicConfig: IAuthingPublicConfig
-  onVerify: IOnMFAVerify
 }
 
 export function Email(props: IEmailProps) {
-  const { mfaTriggerData, publicConfig, onVerify } = props
+  const { mfaTriggerData, publicConfig } = props
 
   const { mfaEmail } = mfaTriggerData
 
@@ -44,9 +45,6 @@ export function Email(props: IEmailProps) {
       <VerifyMFAEmail
         mfaTriggerData={mfaTriggerData}
         email={email}
-        onVerify={(code: number, data: any) => {
-          onVerify(code, data)
-        }}
         sendCodeRef={sendCodeRef}
         codeLength={codeLength ?? 4}
       ></VerifyMFAEmail>
@@ -66,7 +64,7 @@ export function Email(props: IEmailProps) {
 }
 
 interface BindMFAEmailProps {
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   onBind: (email: string) => void
   publicConfig: IAuthingPublicConfig
 }
@@ -128,15 +126,16 @@ function BindMFAEmail(props: BindMFAEmailProps) {
 }
 
 interface VerifyMFAEmailProps {
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   email: string
-  onVerify: (code: number, data: any) => void
   codeLength: number
   sendCodeRef: React.RefObject<HTMLButtonElement>
 }
 
 function VerifyMFAEmail(props: VerifyMFAEmailProps) {
-  const { mfaTriggerData, email, onVerify, codeLength, sendCodeRef } = props
+  const { mfaTriggerData, email, codeLength, sendCodeRef } = props
+
+  const authingMFAContext = useAuthingMFAContext()
 
   const { mfaToken } = mfaTriggerData
 
@@ -159,21 +158,23 @@ function VerifyMFAEmail(props: VerifyMFAEmailProps) {
 
     const mfaCode = form.getFieldValue('mfaCode')
 
-    const requestData = {
+    const {
+      code,
+      data,
+      message: tips
+    } = await verifyEmail({
       mfaToken,
       email: email,
       code: mfaCode.join('')
-    }
-
-    const { code, data, message: tips } = await verifyEmail(requestData)
+    })
 
     submitButtonRef.current?.onSpin(false)
 
     if (code === 200 && data) {
-      return onVerify(code, data)
+      return authingMFAContext?.events.onSuccess?.(code, data)
     }
 
-    message.error(tips)
+    return authingMFAContext?.events.onFail?.(tips)
   }
 
   return (

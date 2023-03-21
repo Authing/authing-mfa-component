@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { message, Spin } from 'shim-antd'
 
-import { IAuthingPublicConfig, IMFATriggerData, IOnMFAVerify } from '../types'
+import { IAuthingPublicConfig, IAuthingMFATriggerData } from '../types'
 
 import { i18n } from '../locales'
 
@@ -14,12 +14,13 @@ import { SubmitButton } from './SubmitButton'
 
 import { LazyloadImage } from './LazyloadImage'
 
+import { useAuthingMFAContext } from '../contexts'
+
 const { useState, useRef, useEffect, useCallback } = React
 
 interface IFaceProps {
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   publicConfig: IAuthingPublicConfig
-  onVerify: IOnMFAVerify
   setMFASelectorVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -39,9 +40,11 @@ const devicesConstraints = {
 }
 
 export function Face(props: IFaceProps) {
-  const { publicConfig, mfaTriggerData, onVerify } = props
+  const { publicConfig, mfaTriggerData } = props
 
   const { t } = i18n
+
+  const authingMFAContext = useAuthingMFAContext()
 
   const [faceState, setFaceState] = useState<FaceState>('ready')
 
@@ -136,7 +139,7 @@ export function Face(props: IFaceProps) {
     const { code, data, message: tips } = result
 
     if (code === 200) {
-      return onVerify(code, data)
+      return authingMFAContext?.events.onSuccess?.(code, data)
     }
 
     if (code === 1700 || code === 1701 || code === 1702) {

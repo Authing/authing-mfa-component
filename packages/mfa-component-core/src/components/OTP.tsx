@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { Form } from 'shim-antd'
 
-import { IMFATriggerData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
+import { IAuthingMFATriggerData, IAuthingPublicConfig } from '../types'
 
 import { i18n } from '../locales'
 
@@ -24,12 +24,13 @@ import { BackCustom } from './Back'
 
 import { verifyTotp } from '../apis'
 
+import { useAuthingMFAContext } from '../contexts'
+
 const { useRef, useState, useEffect, useMemo } = React
 
 interface OTPProps {
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   publicConfig: IAuthingPublicConfig
-  onVerify: IOnMFAVerify
   setMFASelectorVisible: React.Dispatch<React.SetStateAction<boolean>>
   updateBackComponent: (component: React.ReactNode) => void
 }
@@ -133,6 +134,8 @@ function BindMFATotp(props: OTPProps) {
 function VerifyMFAOtp(props: OTPProps) {
   const { mfaTriggerData, setMFASelectorVisible, updateBackComponent } = props
 
+  const authingMFAContext = useAuthingMFAContext()
+
   const { mfaToken } = mfaTriggerData
 
   const [isMFAPage, setIsMFAPage] = useState(true)
@@ -146,14 +149,22 @@ function VerifyMFAOtp(props: OTPProps) {
 
     const mfaCode = form.getFieldValue('mfaCode')
 
-    const res = await verifyTotp({
+    const {
+      code,
+      data,
+      message: tips
+    } = await verifyTotp({
       totp: mfaCode.join(''),
       mfaToken
     })
 
-    console.log('verifyOtp res: ', res)
-
     submitButtonRef.current?.onSpin(false)
+
+    if (code === 200) {
+      return authingMFAContext?.events.onSuccess?.(code, data)
+    }
+
+    return authingMFAContext?.events.onFail?.(tips)
   }, [mfaToken])
 
   const CustomBack = useMemo(

@@ -208,3 +208,5 @@ export const phoneDesensitization = (phone: string) => {
 export const getClassnames = (classnames: (string | boolean | undefined)[]) => {
   return classnames.filter(Boolean).join(' ')
 }
+
+export function noop() {}

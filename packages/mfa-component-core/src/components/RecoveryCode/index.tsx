@@ -1,6 +1,6 @@
 import { React } from 'shim-react'
 
-import { IMFATriggerData } from '../../types'
+import { IAuthingMFATriggerData } from '../../types'
 
 import { SaveCode } from './core/saveCode'
 
@@ -11,7 +11,7 @@ import './style.less'
 const { useState } = React
 
 interface IRecoveryCodeProps {
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
 }
 
 // OTP 恢复码

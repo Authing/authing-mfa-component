@@ -12,7 +12,7 @@ import { useCheckRepeat } from './useCheckRepeat'
 
 import { i18n } from '../../locales'
 
-import { IAuthingPublicConfig, IMFATriggerData } from '../../types'
+import { IAuthingPublicConfig, IAuthingMFATriggerData } from '../../types'
 
 interface ValidatorFormItemProps extends FormItemProps {
   checkRepeat?: boolean
@@ -160,7 +160,7 @@ function ValidatorFormItem(props: ValidatorFormItemProps) {
 interface EmailFormItemProps extends FormItemProps {
   name: string
   form?: FormInstance
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   publicConfig: IAuthingPublicConfig
 }
 

@@ -4,14 +4,14 @@ import { i18n } from '../../locales'
 
 import { IconFont } from '../../IconFont'
 
-import { IMFATriggerData, MFAType } from '../../types'
+import { IAuthingMFATriggerData, MFAType } from '../../types'
 
 import { MFAButton } from '../MFAButton'
 
 import './style.less'
 
 interface MFASelectorProps {
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   current: MFAType
   onChange: (type: MFAType) => void
 }
@@ -51,14 +51,6 @@ export function MFASelector(props: MFASelectorProps) {
     return applicationMfa
       .filter(item => Object.keys(mfaTypeTitleMapping).includes(item.mfaPolicy))
       .filter(item => item.mfaPolicy !== current)
-      .filter(item => {
-        if (item.mfaPolicy === 'FACE') {
-          // const facePlugin = getFacePlugin()
-          // return Boolean(facePlugin)
-        }
-
-        return true
-      })
       .sort((a, b) => a.sort - b.sort)
       .map(item => (
         <MFAButton

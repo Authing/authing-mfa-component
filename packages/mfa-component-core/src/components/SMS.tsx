@@ -1,8 +1,8 @@
 import { React } from 'shim-react'
 
-import { Form, message } from 'shim-antd'
+import { Form } from 'shim-antd'
 
-import { IMFATriggerData, IAuthingPublicConfig, IOnMFAVerify } from '../types'
+import { IAuthingMFATriggerData, IAuthingPublicConfig } from '../types'
 
 import { i18n } from '../locales'
 
@@ -24,16 +24,17 @@ import { SendCodeBtn } from './SendCode'
 
 import { sendSMS, verifySms } from '../apis'
 
+import { useAuthingMFAContext } from '../contexts'
+
 const { useState, useRef, useCallback, useMemo } = React
 
 interface SMSProps {
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   publicConfig: IAuthingPublicConfig
-  onVerify: IOnMFAVerify
 }
 
 export function SMS(props: SMSProps) {
-  const { mfaTriggerData, publicConfig, onVerify } = props
+  const { mfaTriggerData, publicConfig } = props
 
   const { mfaPhone } = mfaTriggerData
 
@@ -52,9 +53,6 @@ export function SMS(props: SMSProps) {
       <VerifyMFASms
         phone={phone}
         isInternationSms={isInternationSms}
-        onVerify={(code: number, data: any) => {
-          onVerify(code, data)
-        }}
         publicConfig={publicConfig}
         sendCodeRef={sendCodeRef}
         mfaTriggerData={mfaTriggerData}
@@ -80,7 +78,7 @@ export function SMS(props: SMSProps) {
 
 interface BindMFASmsProps {
   publicConfig: IAuthingPublicConfig
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   areaCode: string
   setAreaCode: (areaCode: string) => void
   isInternationSms: boolean
@@ -171,16 +169,16 @@ function BindMFASms(props: BindMFASmsProps) {
 interface VerifyMFASmsProps {
   phone: string
   isInternationSms: boolean
-  onVerify: (code: number, data: any) => void
   publicConfig: IAuthingPublicConfig
   sendCodeRef: React.RefObject<HTMLButtonElement>
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   areaCode: string
 }
 
 function VerifyMFASms(props: VerifyMFASmsProps) {
-  const { isInternationSms, mfaTriggerData, areaCode, phone, publicConfig, sendCodeRef, onVerify } =
-    props
+  const { isInternationSms, mfaTriggerData, areaCode, phone, publicConfig, sendCodeRef } = props
+
+  const authingMFAContext = useAuthingMFAContext()
 
   const { phoneCountryCode } = mfaTriggerData
 
@@ -213,10 +211,10 @@ function VerifyMFASms(props: VerifyMFASmsProps) {
     submitButtonRef.current?.onSpin(false)
 
     if (code === 200 && data) {
-      return onVerify(code, data)
+      return authingMFAContext?.events.onSuccess?.(code, data)
     }
 
-    message.error(tips)
+    return authingMFAContext?.events.onFail?.(tips)
   }
 
   const tips = useMemo(() => {

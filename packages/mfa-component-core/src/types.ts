@@ -1,3 +1,5 @@
+import { ReactNode } from 'shim-react'
+
 import { FormInstance, FormItemProps } from 'shim-antd/lib/form'
 
 import { Lang } from './locales'
@@ -15,7 +17,7 @@ export type MFAType = 'SMS' | 'EMAIL' | 'OTP' | 'FACE'
 
 export type MFAVerifyPage = 'RECOVERY'
 
-export interface IMFATriggerData {
+export interface IAuthingMFATriggerData {
   applicationMfa: Array<{
     mfaPolicy: MFAType
     status: number
@@ -58,10 +60,19 @@ export interface IAuthingPublicConfig {
   requestHostname?: string
 }
 
-export interface IAuthingMFAComponentProps {
+export interface IAuthingMFAEventFunc {
+  onLoad?: () => void
+  onMount?: () => void
+  onUnmount?: () => void
+  onSuccess?: (code: number, data: any) => void
+  onFail?: (message?: string) => void
+}
+
+export interface IAuthingMFAComponentProps extends IAuthingMFAEventFunc {
   appId: string
-  mfaTriggerData: IMFATriggerData
+  mfaTriggerData: IAuthingMFATriggerData
   lang?: Lang
+  children?: ReactNode
 }
 
 export interface ContainerProps extends IAuthingMFAComponentProps {
@@ -89,4 +100,9 @@ export interface ValidatorFormItemMetaProps extends ValidatorFormItemProps {
 
 export interface ICheckProps {
   check: (values: any) => void
+}
+
+export interface IAuthingMFAContext {
+  events: IAuthingMFAEventFunc
+  mfaTriggerData: IAuthingMFATriggerData
 }
