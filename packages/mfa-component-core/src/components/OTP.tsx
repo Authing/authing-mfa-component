@@ -22,6 +22,8 @@ import { AuthingMFABindTotpView } from './BindTotp'
 
 import { BackCustom } from './Back'
 
+import { verifyTotp } from '../apis'
+
 const { useRef, useState, useEffect, useMemo } = React
 
 interface OTPProps {
@@ -44,7 +46,7 @@ export function OTP(props: OTPProps) {
   return <BindMFATotp {...props} />
 }
 
-export function BindMFATotp(props: OTPProps) {
+function BindMFATotp(props: OTPProps) {
   const { mfaTriggerData, publicConfig, updateBackComponent, setMFASelectorVisible } = props
 
   const [isMFAPage, setIsMFAPage] = useState(true)
@@ -144,7 +146,12 @@ function VerifyMFAOtp(props: OTPProps) {
 
     const mfaCode = form.getFieldValue('mfaCode')
 
-    console.log('mfaCode: ', mfaCode)
+    const res = await verifyTotp({
+      totp: mfaCode.join(''),
+      mfaToken
+    })
+
+    console.log('verifyOtp res: ', res)
 
     submitButtonRef.current?.onSpin(false)
   }, [mfaToken])
@@ -182,7 +189,7 @@ function VerifyMFAOtp(props: OTPProps) {
           <Form
             form={form}
             onSubmitCapture={() => {
-              console.log('cap')
+              onFinish()
             }}
             onFinish={onFinish}
             onFinishFailed={() => submitButtonRef.current.onError()}

@@ -8,6 +8,8 @@ import { SubmitButton } from '../../SubmitButton'
 
 import { i18n } from '../../../locales'
 
+import { recoveryTotp } from '../../../apis'
+
 const { useRef } = React
 
 export interface UseCodeProps {
@@ -15,20 +17,25 @@ export interface UseCodeProps {
   onSubmit: (recoveryCode: string, user?: any) => void
 }
 
-export const UseCode: React.FC<UseCodeProps> = () => {
+export const UseCode: React.FC<UseCodeProps> = props => {
+  const { mfaToken, onSubmit } = props
+
   const [form] = Form.useForm()
 
   const submitButtonRef = useRef<any>(null)
 
-  const onFinish = async (values: any) => {
-    console.log('values: ', values)
+  const onFinish = async () => {
+    // 特殊接口，标准接口 res 中没有 recoveryCode 字段
+    // @ts-ignore
+    const { code, data, recoveryCode } = await recoveryTotp({
+      recoveryCode: form.getFieldValue('recoveryCode'),
+      mfaToken
+    })
 
-    submitButtonRef.current?.onSpin(true)
-    try {
-    } catch (error) {
+    if (code === 200) {
+      onSubmit(recoveryCode, data)
+    } else {
       submitButtonRef.current?.onError()
-    } finally {
-      submitButtonRef.current?.onSpin(false)
     }
   }
 

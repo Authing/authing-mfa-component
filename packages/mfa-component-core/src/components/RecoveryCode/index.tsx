@@ -27,14 +27,14 @@ export function AuthingMFARecoveryCodeView(props: IRecoveryCodeProps) {
           <SaveCode
             secret={recoveryCode}
             onBind={() => {
-              console.log('bind')
+              // 加入事件回调
             }}
           />
         ) : (
           <UseCode
             mfaToken={mfaToken}
-            onSubmit={(code: string) => {
-              setRecoveryCode(code)
+            onSubmit={(recoveryCode: string) => {
+              setRecoveryCode(recoveryCode)
             }}
           />
         )}

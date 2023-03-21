@@ -1,11 +1,14 @@
 import { Form, Checkbox, Typography } from 'shim-antd'
+
 import { React } from 'shim-react'
+
 import { i18n } from '../../../locales'
+
 import { SubmitButton } from '../../SubmitButton'
 
 const { Paragraph } = Typography
 
-export interface BindSuccessProps {
+interface BindSuccessProps {
   onBind: any
   secret: string
 }
@@ -19,28 +22,9 @@ export const BindSuccess: React.FC<BindSuccessProps> = ({ secret, onBind }) => {
 
   const bindSuccess = async () => {
     submitButtonRef.current?.onSpin(true)
-
     await form.validateFields()
-
-    console.log('onBind', onBind)
-
-    //   if (isAuthFlow) {
-    //     const { data, isFlowEnd, onGuardHandling } = await authFlow(
-    //       BindTotpBusinessAction.ConfirmTotpRecoveryCode,
-    //       {}
-    //     )
-    //     submitButtonRef.current?.onSpin(false)
-    //     if (isFlowEnd) {
-    //       onBind(data)
-    //     } else {
-    //       // TODO 需要 onError 抖动吗 当 from 表单校验通过的时候 onError 是没有意义的
-    //       submitButtonRef.current?.onError()
-    //       onGuardHandling?.()
-    //     }
-    //   } else {
-    //     submitButtonRef.current?.onSpin(false)
-    //     onBind()
-    //   }
+    submitButtonRef.current?.onSpin(false)
+    onBind()
   }
 
   return (

@@ -16,7 +16,7 @@ import { confirmOtp } from '../../../apis'
 export interface SecurityCodeProps {
   mfaToken: string
   qrcode: string
-  onNext: any
+  onConfirmOTP: any
   onDownload: any
 }
 
@@ -25,7 +25,7 @@ const { useRef } = React
 export const SecurityCode: React.FC<SecurityCodeProps> = ({
   mfaToken,
   qrcode,
-  onNext,
+  onConfirmOTP,
   onDownload
 }) => {
   const [form] = Form.useForm()
@@ -47,7 +47,7 @@ export const SecurityCode: React.FC<SecurityCodeProps> = ({
         mfaToken
       })
       if (code === 200) {
-        onNext(data)
+        onConfirmOTP(data)
       } else {
         submitButtonRef.current?.onError()
       }

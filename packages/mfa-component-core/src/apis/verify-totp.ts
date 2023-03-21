@@ -1,19 +1,22 @@
-interface VerifyTotpContent {
+import { post } from '../request'
+
+interface VerifyTotpData {
   totp: string
-  mfaToken?: string
+  mfaToken: string
 }
 
-export const verifyTotp = async (content: VerifyTotpContent) => {
-  return Promise.resolve(content)
-  // return await post(
-  //   '/api/v2/applications/mfa/totp/verify',
-  //   {
-  //     totp,
-  //   },
-  //   {
-  //     headers: {
-  //       authorization: `Bearer ${mfaToken}`,
-  //     },
-  //   }
-  // )
+export const verifyTotp = async (data: VerifyTotpData) => {
+  const { totp, mfaToken } = data
+
+  return await post({
+    path: '/api/v3/mfa-totp-verify',
+    data: {
+      totp
+    },
+    config: {
+      headers: {
+        authorization: `Bearer ${mfaToken}`
+      }
+    }
+  })
 }

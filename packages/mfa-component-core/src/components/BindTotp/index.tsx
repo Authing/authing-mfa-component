@@ -4,7 +4,7 @@ import { React } from 'shim-react'
 
 import { useAsyncFn } from 'react-use'
 
-import { BindSuccess } from './core/bindSuccess'
+import { BindSuccess } from './core/bind'
 
 import { SecurityCode } from './core/securityCode'
 
@@ -35,7 +35,7 @@ export const AuthingMFABindTotpView = forwardRef((props: GuardBindTotpProps, ref
 
   const [qrcode, setQrcode] = useState('')
 
-  const [bindTotpType, setBindTotpType] = useState<BindTotpType>('securityCode')
+  const [bindTotpType, setBindTotpType] = useState<BindTotpType>('bindSuccess')
 
   useImperativeHandle(
     ref,
@@ -74,12 +74,12 @@ export const AuthingMFABindTotpView = forwardRef((props: GuardBindTotpProps, ref
     }
   }, [])
 
-  const onBind = (resUser: any) => {
-    console.log(resUser)
+  const onBind = () => {
+    console.log('onBind')
   }
 
-  const onNext = (user?: any) => {
-    console.log(user)
+  const onConfirmOTP = (user?: any) => {
+    console.log('onConfirmOTP: ', user)
     setBindTotpType('bindSuccess')
   }
 
@@ -116,8 +116,8 @@ export const AuthingMFABindTotpView = forwardRef((props: GuardBindTotpProps, ref
       mfaToken: mfaTriggerData.mfaToken,
       qrcode,
       secret,
-      onBind,
-      onNext
+      onConfirmOTP,
+      onBind
     })
   }, [bindInfo.loading, bindTotpType])
 
