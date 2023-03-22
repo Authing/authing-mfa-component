@@ -25,13 +25,6 @@ export interface IAuthingMFATriggerData {
   }>
   avatar?: string
   current?: MFAType
-  customPasswordStrength: {
-    enMessageOpen: boolean
-    enabled: boolean
-    jpMessageOpen: boolean
-    twMessageOpen: boolean
-    zhMessageOpen: boolean
-  }
   email?: string
   faceMfaEnabled: boolean
   mfaEmail?: string

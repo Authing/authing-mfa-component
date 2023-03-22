@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
     "baseUrl": ".",
     "outDir": "dist",
     "target": "es5",
@@ -15,25 +14,18 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "noEmit": false,
-    "jsx": "react",
-    "downlevelIteration": true,
     "declaration": true,
     "declarationDir": "./dist/typings",
-    "paths": {
-      "shim-react": ["./shim-react16/"],
-      "shim-antd": ["./shim-antd4/"],
-      "shim-antd/es/*": ["./shim-antd4/node_modules/antd/es/*"],
-      "shim-antd/lib/*": ["./shim-antd4/node_modules/antd/lib/*"]
-    }
+    "noEmit": false,
+    "jsx": "react",
+    "downlevelIteration": true
   },
   "include": [
-    "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.json"
+    "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules/**",
-    "example.tsx"
+    "node_modules",
+    "dist"
   ]
 }

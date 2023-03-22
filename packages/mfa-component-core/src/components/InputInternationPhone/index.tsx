@@ -36,7 +36,7 @@ export function InputInternationPhone(props: InputInternationPhoneProps) {
         autoComplete="off"
         pattern="[^a-zA-Z]*"
         value={value}
-        placeholder={t('login.inputPhone')}
+        placeholder={t('login.inputPhone') as string}
         {...inputProps}
         onChange={(e: any) => {
           const v = e.target.value

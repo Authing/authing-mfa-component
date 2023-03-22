@@ -62,7 +62,7 @@ export const BindSuccess: React.FC<BindSuccessProps> = ({ secret, onBind }) => {
           </Checkbox>
         </Form.Item>
 
-        <SubmitButton text={i18n.t('mfa.bindSuccess')} ref={submitButtonRef} />
+        <SubmitButton text={i18n.t('mfa.bindSuccess') as string} ref={submitButtonRef} />
       </Form>
     </>
   )

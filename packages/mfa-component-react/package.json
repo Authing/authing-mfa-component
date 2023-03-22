@@ -1,11 +1,13 @@
 {
   "name": "@authing/mfa-component-react",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha.0",
   "description": "Authing continuous adaptive mfa component for React",
-  "module": "dist/esm/authing-mfa-component-react.min.js",
+  "module": "dist/index.min.js",
   "types": "dist/typings/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "package.json",
+    "package-lock.json"
   ],
   "scripts": {
     "autoinstall": "npm ci",
@@ -13,6 +15,15 @@
     "release:official": "npm publish --verbose --access public",
     "release:alpha": "npm publish --verbose --tag=alpha --access public"
   },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "@authing/mfa-component-shim-react": "^1.0.0-alpha.0"
+  },
   "author": "https://github.com/authing",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0"
+  }
 }

@@ -25,9 +25,9 @@ export function fieldRequiredRule(
       validateTrigger: ['onChange'],
       message:
         fieldRequiredRuleMessage ||
-        i18n.t('mfa.isMissing', {
+        (i18n.t('mfa.isMissing', {
           name: fieldRequiredRule
-        }),
+        }) as string),
       whitespace: true
     }
   ]
@@ -71,83 +71,6 @@ const SYMBOL_TYPE_PATTERNS = [
 
 export function getSymbolTypeLength(pwd: string) {
   return SYMBOL_TYPE_PATTERNS.map(pattern => pattern.test(pwd)).filter(item => item).length
-}
-
-export function getPasswordValidate(
-  strength: PasswordStrength = 0,
-  customPasswordStrength: any = {},
-  fieldRequiredRuleMessage?: string
-): Rule[] {
-  const required = [...fieldRequiredRule(i18n.t('mfa.password'), fieldRequiredRuleMessage)]
-
-  const getCustomPassword = () => {
-    if (i18n.language === 'zh-CN' && customPasswordStrength?.zhMessageOpen) {
-      return customPasswordStrength?.zhMessage
-    }
-    if (i18n.language === 'en-US' && customPasswordStrength?.enMessageOpen) {
-      return customPasswordStrength?.enMessage
-    }
-    if (i18n.language === 'ja-JP' && customPasswordStrength?.jaMessageOpen) {
-      return customPasswordStrength?.jaMessage
-    }
-    if (i18n.language === 'ja-JP' && customPasswordStrength?.jpMessageOpen) {
-      return customPasswordStrength?.jpMessage
-    }
-    if (i18n.language === 'zh-TW' && customPasswordStrength?.twMessageOpen) {
-      return customPasswordStrength?.twMessage
-    }
-    return customPasswordStrength?.message
-  }
-
-  const validateMap: Record<PasswordStrength, Rule[]> = {
-    0: [...required],
-    1: [
-      ...required,
-      {
-        validateTrigger: 'onBlur',
-        validator(r, v) {
-          if (v && v.length < 6) {
-            return Promise.reject(PASSWORD_STRENGTH_TEXT_MAP[1].validateMessage())
-          }
-          return Promise.resolve()
-        }
-      }
-    ],
-    2: [
-      ...required,
-      {
-        validateTrigger: 'onBlur',
-        validator(r, v) {
-          if (v && (v.length < 6 || getSymbolTypeLength(v) < 2)) {
-            return Promise.reject(PASSWORD_STRENGTH_TEXT_MAP[2].validateMessage())
-          }
-          return Promise.resolve()
-        }
-      }
-    ],
-    3: [
-      ...required,
-      {
-        validateTrigger: 'onBlur',
-        validator(r, v) {
-          if (v && (v.length < 6 || getSymbolTypeLength(v) < 3)) {
-            return Promise.reject(PASSWORD_STRENGTH_TEXT_MAP[3].validateMessage())
-          }
-          return Promise.resolve(true)
-        }
-      }
-    ],
-    4: [
-      ...required,
-      {
-        validateTrigger: 'onBlur',
-        pattern: customPasswordStrength?.regex,
-        message: getCustomPassword()
-      }
-    ]
-  }
-
-  return validateMap[strength]
 }
 
 export const VALIDATE_PATTERN = {

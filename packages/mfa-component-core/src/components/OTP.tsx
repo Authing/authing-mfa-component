@@ -111,7 +111,7 @@ function BindMFATotp(props: OTPProps) {
         </div>
 
         <SubmitButton
-          text={i18n.t('mfa.sure')}
+          text={i18n.t('mfa.sure') as string}
           onClick={() => {
             updateBackComponent(MFACustomBack)
             setMFASelectorVisible(false)
@@ -211,7 +211,7 @@ function VerifyMFAOtp(props: OTPProps) {
               <VerifyCodeInput length={6} showDivider={false} gutter={'10px'} onFinish={onFinish} />
             </VerifyCodeFormItem>
 
-            <SubmitButton text={i18n.t('mfa.sure')} ref={submitButtonRef} />
+            <SubmitButton text={i18n.t('mfa.sure') as string} ref={submitButtonRef} />
             <p className="authing-g2-mfa-totp-recoveryCode">
               {i18n.t('mfa.hasLooseSaftyCode')}
               <MFAButton

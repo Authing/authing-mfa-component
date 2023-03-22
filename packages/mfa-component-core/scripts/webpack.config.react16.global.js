@@ -1,20 +1,25 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const webpack = require('webpack')
 
 function resolve(dir, file = '') {
   return path.resolve(__dirname, '../', dir, file)
 }
 
-const reactVersion = '16' // 16 | 18
+const reactVersion = '16'
 
 module.exports = {
   mode: 'production',
-  entry: resolve('example.tsx'),
+  entry: resolve('src/index.tsx'),
   output: {
-    filename: 'bundle.js',
-    path: resolve('dist'),
+    filename: 'index.min.js',
+    path: resolve('dist/global'),
+    library: {
+      name: 'AuthingMFAFactory',
+      type: 'global'
+    }
   },
   experiments: {
     outputModule: true
@@ -87,8 +92,9 @@ module.exports = {
       }
     }),
     new MiniCssExtractPlugin({
-      filename: 'authing-mfa.min.css'
+      filename: 'index.min.css'
     }),
+    new CssMinimizerPlugin(),
     new webpack.DefinePlugin({
       __react_version__: JSON.stringify(reactVersion)
     })

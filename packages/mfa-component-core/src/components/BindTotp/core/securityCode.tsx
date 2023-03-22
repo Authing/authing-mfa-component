@@ -99,7 +99,7 @@ export const SecurityCode: React.FC<SecurityCodeProps> = ({
           <VerifyCodeInput length={6} showDivider={false} gutter={'10px'} onFinish={bindTotp} />
         </VerifyCodeFormItem>
 
-        <SubmitButton text={i18n.t('mfa.nextStep')} ref={submitButtonRef} />
+        <SubmitButton text={i18n.t('mfa.nextStep') as string} ref={submitButtonRef} />
       </Form>
     </>
   )

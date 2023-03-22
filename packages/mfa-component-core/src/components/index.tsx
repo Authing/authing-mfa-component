@@ -14,7 +14,7 @@ import { MFASelector } from './MFASelector'
 
 import { useIconfont } from '../IconFont'
 
-import { i18n, initAuthingMFAI18n } from '../locales'
+import { initAuthingMFAI18n } from '../locales'
 
 import { setRequestBaseUrl, setAppId, setUserpoolId } from '../request'
 
@@ -173,7 +173,7 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
 
   return (
     <AuthingMFAContext.Provider value={context}>
-      <ConfigProvider prefixCls={PREFIX_CLS} locale={i18n.language}>
+      <ConfigProvider prefixCls={PREFIX_CLS}>
         <div className="authing-mfa-container">
           {(appId && mfaTriggerData && publicConfig && (
             <>

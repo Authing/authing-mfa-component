@@ -68,7 +68,7 @@ export const SaveCode: React.FC<{
           </Checkbox>
         </Form.Item>
 
-        <SubmitButton text={i18n.t('mfa.confirm')} ref={submitButtonRef} />
+        <SubmitButton text={i18n.t('mfa.confirm') as string} ref={submitButtonRef} />
       </Form>
     </>
   )

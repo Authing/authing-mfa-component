@@ -1,16 +1,14 @@
 {
   "name": "@authing/mfa-component-core",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha.0",
   "description": "Authing continuous adaptive mfa component for core codes, only be used to internal",
-  "module": "dist/esm/authing-mfa-component-core.min.js",
-  "types": "dist/typings/index.d.ts",
+  "types": "dist/typings/src/index.d.ts",
   "files": [
-    "dist",
     "package.json",
     "package-lock.json"
   ],
   "scripts": {
-    "autoinstall": "npm ci && cd shim-antd4 && npm ci && cd ../shim-antd5 && npm ci && cd ../shim-react16 && npm ci && cd ../shim-react18 && npm ci && cd ..",
+    "autoinstall": "cd shim-antd4 && npm ci && cd ../shim-antd5 && npm ci && cd ../shim-react16 && npm ci && cd ../shim-react18 && npm ci",
     "build": "node scripts/build.js",
     "dev": "webpack-dev-server --config scripts/webpack.config.js",
     "release:official": "npm publish --verbose --access public",
@@ -26,18 +24,5 @@
     "phone": "^3.1.12",
     "qs": "^6.9.4",
     "react-use": "^17.4.0"
-  },
-  "devDependencies": {
-    "css-loader": "^6.7.3",
-    "html-webpack-plugin": "^5.5.0",
-    "husky": "^8.0.3",
-    "less": "^4.1.3",
-    "less-loader": "^11.1.0",
-    "mini-css-extract-plugin": "^2.7.3",
-    "rimraf": "^2.6.2",
-    "ts-loader": "^9.4.2",
-    "webpack": "^5.76.2",
-    "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.13.1"
   }
 }

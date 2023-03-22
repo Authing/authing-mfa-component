@@ -55,7 +55,7 @@ export const UseCode: React.FC<UseCodeProps> = props => {
           rules={[
             {
               required: true,
-              message: i18n.t('mfa.inputRecoverCode')
+              message: i18n.t('mfa.inputRecoverCode') as string
             }
           ]}
         >
@@ -63,13 +63,13 @@ export const UseCode: React.FC<UseCodeProps> = props => {
             className="authing-mfa-input"
             autoComplete="off"
             size="large"
-            placeholder={i18n.t('mfa.inputRecoverCode')}
+            placeholder={i18n.t('mfa.inputRecoverCode') as string}
             prefix={<IconFont type="authing-a-lock-line1" style={{ color: '#878A95' }} />}
           />
         </Form.Item>
 
         <Form.Item className="authing-g2-sumbit-form submit-form">
-          <SubmitButton text={i18n.t('mfa.sure')} ref={submitButtonRef} />
+          <SubmitButton text={i18n.t('mfa.sure') as string} ref={submitButtonRef} />
         </Form.Item>
       </Form>
     </>

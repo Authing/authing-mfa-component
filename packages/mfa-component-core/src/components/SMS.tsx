@@ -162,7 +162,7 @@ function BindMFASms(props: BindMFASmsProps) {
         >
           <PhoneAccount />
         </CustomFormItem.Phone>
-        <SubmitButton text={t('mfa.sure')} ref={submitButtonRef} />
+        <SubmitButton text={t('mfa.sure') as string} ref={submitButtonRef} />
       </Form>
     </>
   )
@@ -256,7 +256,11 @@ function VerifyMFASms(props: VerifyMFASmsProps) {
           setSent={setSent}
         />
 
-        <SubmitButton text={t('mfa.sure')} ref={submitButtonRef} className="g2-mfa-submit-button" />
+        <SubmitButton
+          text={t('mfa.sure') as string}
+          ref={submitButtonRef}
+          className="g2-mfa-submit-button"
+        />
       </Form>
     </>
   )

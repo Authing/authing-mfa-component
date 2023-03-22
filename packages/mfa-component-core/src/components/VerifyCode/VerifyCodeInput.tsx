@@ -1,6 +1,6 @@
 import { React } from 'shim-react'
 
-import { Divider, Input } from 'shim-antd'
+import { Divider, Input, InputRef } from 'shim-antd'
 
 import './style.less'
 
@@ -144,7 +144,7 @@ export function VerifyCodeInput(props: VerifyCodeInputProps) {
           <Fragment key={index}>
             <Input
               onFocus={() => setFocusIndex(index)}
-              ref={(el: Element) => (inputRef.current[index] = el)}
+              ref={(el: InputRef) => (inputRef.current[index] = el)}
               style={{
                 width: size,
                 minWidth: size,

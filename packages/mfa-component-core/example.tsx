@@ -34,13 +34,6 @@ const mfaTriggerData: IAuthingMFATriggerData = {
 		"status": 1,
 		"sort": 0
 	}],
-	"customPasswordStrength": {
-		"enabled": false,
-		"zhMessageOpen": false,
-		"enMessageOpen": false,
-		"twMessageOpen": false,
-		"jpMessageOpen": false
-	},
 	"passwordStrength": 0
 }
 

@@ -277,7 +277,7 @@ export function Face(props: IFaceProps) {
                 message.error(t('mfa.mediaDevicesSupport'))
               }
             }}
-            text={t('mfa.faceText3')}
+            text={t('mfa.faceText3') as string}
             className="mfa-face"
           />
         </>

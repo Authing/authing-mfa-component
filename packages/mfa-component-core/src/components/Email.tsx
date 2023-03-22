@@ -116,12 +116,12 @@ function BindMFAEmail(props: BindMFAEmailProps) {
             className="authing-mfa-input"
             autoComplete="off"
             size="large"
-            placeholder={i18n.t('mfa.inputEmail')}
+            placeholder={i18n.t('mfa.inputEmail') as string}
             prefix={<IconFont type="authing-a-mail-line3" style={{ color: '#878A95' }} />}
           />
         </CustomFormItem.Email>
 
-        <SubmitButton text={i18n.t('mfa.sure')} ref={submitButtonRef} />
+        <SubmitButton text={i18n.t('mfa.sure') as string} ref={submitButtonRef} />
       </Form>
     </>
   )
@@ -204,7 +204,7 @@ function VerifyMFAEmail(props: VerifyMFAEmailProps) {
         />
 
         <SubmitButton
-          text={i18n.t('mfa.sure')}
+          text={i18n.t('mfa.sure') as string}
           ref={submitButtonRef}
           className="g2-mfa-submit-button"
         />

@@ -1,7 +1,9 @@
 const path = require('path')
 const rm = require('rimraf')
 const webpack = require('webpack')
-const webpackEsmBundlerConfig = require('./webpack.config')
+const webpackReact16ESMConfig = require('./webpack.config.react16.esm')
+const webpackReact18ESMConfig = require('./webpack.config.react18.esm')
+const webpackGlobalConfig = require('./webpack.config.react16.global')
 
 try {
   rm.sync(path.resolve(__dirname, '../', 'dist'))
@@ -12,9 +14,21 @@ try {
 readyGo()
 
 function readyGo () {
-  webpack(webpackEsmBundlerConfig, (error) => {
+  webpack(webpackReact16ESMConfig, (error) => {
     if (error) {
-      console.error('build Authing MFA esm bundler error: ', error)
+      console.error('build Authing MFA core esm 16 bundler error: ', error)
+    }
+  })
+
+  webpack(webpackReact18ESMConfig, (error) => {
+    if (error) {
+      console.error('build Authing MFA core esm 18 bundler error: ', error)
+    }
+  })
+
+  webpack(webpackGlobalConfig, (error) => {
+    if (error) {
+      console.error('build Authing MFA core global bundler error: ', error)
     }
   })
 }
