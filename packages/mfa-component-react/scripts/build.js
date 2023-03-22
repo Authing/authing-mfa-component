@@ -12,8 +12,7 @@ try {
 readyGo()
 
 function readyGo () {
-  webpack(webpackConfig, (error, stats) => {
-    console.log(stats)
+  webpack(webpackConfig, (error) => {
     if (error) {
       console.error('build Authing MFA React esm bundler error: ', error)
     }

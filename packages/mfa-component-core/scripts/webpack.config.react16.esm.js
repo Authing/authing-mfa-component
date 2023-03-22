@@ -15,7 +15,10 @@ module.exports = {
   entry: resolve('src/index.tsx'),
   output: {
     filename: 'index.min.js',
-    path: resolve(`dist/esm-react${reactVersion}`)
+    path: resolve(`dist/esm-react${reactVersion}`),
+    library: {
+      type: 'module'
+    }
   },
   experiments: {
     outputModule: true
@@ -30,8 +33,8 @@ module.exports = {
     }
   },
   externals: {
-    React: 'react',
-    ReactDOM: 'react-dom'
+    react: 'react',
+    'react-dom': 'react-dom'
   },
   module: {
     rules: [

@@ -1,4 +1,4 @@
-import React, { useState, ComponentProps, JSXElementConstructor } from 'react'
+import React, { ComponentProps, JSXElementConstructor } from 'react'
 
 import { AuthingMFAContext } from './mfa-context'
 
@@ -9,9 +9,7 @@ type Options = IAuthingMFAOptions & ComponentProps<JSXElementConstructor<any>>
 export function AuthingMFAProvider(options: Options) {
   const { children, ...authingMFAOptions } = options
 
-  const _mfa = new AuthingMFA(authingMFAOptions)
-
-  const [mfa] = useState(_mfa)
+  const mfa = new AuthingMFA(authingMFAOptions)
 
   return <AuthingMFAContext.Provider value={mfa}>{children}</AuthingMFAContext.Provider>
 }

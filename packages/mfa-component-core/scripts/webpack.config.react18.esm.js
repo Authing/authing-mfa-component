@@ -16,6 +16,9 @@ module.exports = {
   output: {
     filename: 'index.min.js',
     path: resolve(`dist/esm-react${reactVersion}`),
+    library: {
+      type: 'module'
+    }
   },
   experiments: {
     outputModule: true

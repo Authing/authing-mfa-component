@@ -11,7 +11,10 @@ module.exports = {
   entry: resolve('src/index.tsx'),
   output: {
     filename: 'index.min.js',
-    path: resolve(`dist`)
+    path: resolve(`dist`),
+    library: {
+      type: 'module'
+    }
   },
   experiments: {
     outputModule: true
@@ -20,8 +23,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js', '.json']
   },
   externals: {
-    React: 'react',
-    ReactDOM: 'react-dom'
+    react: 'react'
   },
   module: {
     rules: [
