@@ -1,7 +1,5 @@
 import { React, render } from 'shim-react'
 
-import { AuthingMFAComponent } from './src/components'
-
 import { AuthingMFA } from './src/index'
 
 import { IAuthingMFATriggerData } from './src/types'
@@ -48,7 +46,7 @@ const mfaTriggerData: IAuthingMFATriggerData = {
 
 function Example() {
   return <>
-    <AuthingMFAComponent
+    <AuthingMFA.Component
 			appId="630ed3137dd6f2fd7001da24"
 			mfaTriggerData={mfaTriggerData}
 			onLoad={() => {
@@ -66,7 +64,7 @@ function Example() {
 			onUnmount={() => {
 				console.log('Authing MFA onUnmount')
 			}}>
-		</AuthingMFAComponent>
+		</AuthingMFA.Component>
   </>
 }
 
@@ -90,18 +88,18 @@ authingMFA.on('load', function () {
 })
 
 authingMFA.on('mount', function () {
-	console.log('Authing MFA mount')
+	console.log('Authing MFA mount: ', document.querySelector('.authing-mfa-content'))
 })
 
 authingMFA.on('unmount', function () {
 	console.log('Authing MFA unmount')
 })
 
-authingMFA.on('success', function () {
-	console.log('Authing MFA success')
+authingMFA.on('success', function (code, data) {
+	console.log('Authing MFA success: ', code, data)
 })
 
-authingMFA.on('fail', function () {
-	console.log('Authing MFA fail')
+authingMFA.on('fail', function (message) {
+	console.log('Authing MFA fail: ', message)
 })
 

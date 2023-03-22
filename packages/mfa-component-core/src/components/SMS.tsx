@@ -122,19 +122,19 @@ function BindMFASms(props: BindMFASmsProps) {
             maxLength={20}
           />
         )
-      } else {
-        return (
-          <InputNumber
-            {...props}
-            className="authing-mfa-input"
-            autoComplete="off"
-            size="large"
-            placeholder={t('mfa.inputPhone')}
-            prefix={<IconFont type="authing-a-smartphone-line1" style={{ color: '#878A95' }} />}
-            maxLength={20}
-          />
-        )
       }
+
+      return (
+        <InputNumber
+          {...props}
+          className="authing-mfa-input"
+          autoComplete="off"
+          size="large"
+          placeholder={t('mfa.inputPhone')}
+          prefix={<IconFont type="authing-a-smartphone-line1" style={{ color: '#878A95' }} />}
+          maxLength={20}
+        />
+      )
     },
     [areaCode, form, isInternationSms, setAreaCode, t]
   )
