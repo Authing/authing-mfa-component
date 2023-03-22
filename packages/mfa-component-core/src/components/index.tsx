@@ -24,6 +24,8 @@ import { noop } from '../helpers'
 
 import { AuthingMFAContext } from '../contexts'
 
+import { loopFunc } from '../helpers'
+
 import './style.less'
 
 import {
@@ -124,14 +126,14 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
     setUserpoolId(publicConfig.userPoolId)
     setRequestBaseUrl(`https://${publicConfig.requestHostname || 'core.authing.cn'}`)
 
-    events.onLoad()
+    loopFunc(events.onLoad)
 
     timer = setTimeout(() => {
-      events.onMount()
+      loopFunc(events.onMount)
     })
 
     return () => {
-      events.onUnmount()
+      loopFunc(events.onUnmount)
 
       if (timer) {
         clearTimeout(timer)

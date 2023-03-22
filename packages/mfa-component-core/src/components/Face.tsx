@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { message, Spin } from 'shim-antd'
 
-import { IAuthingPublicConfig, IAuthingMFATriggerData } from '../types'
+import { IAuthingPublicConfig, IAuthingMFATriggerData, IAuthingFunc } from '../types'
 
 import { i18n } from '../locales'
 
@@ -15,6 +15,8 @@ import { SubmitButton } from './SubmitButton'
 import { LazyloadImage } from './LazyloadImage'
 
 import { useAuthingMFAContext } from '../contexts'
+
+import { loopFunc } from '../helpers'
 
 const { useState, useRef, useEffect, useCallback } = React
 
@@ -139,7 +141,7 @@ export function Face(props: IFaceProps) {
     const { code, data, message: tips } = result
 
     if (code === 200) {
-      return authingMFAContext?.events.onSuccess?.(code, data)
+      return loopFunc(authingMFAContext?.events.onSuccess as IAuthingFunc, code, data)
     }
 
     if (code === 1700 || code === 1701 || code === 1702) {

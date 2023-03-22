@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { Form } from 'shim-antd'
 
-import { IAuthingMFATriggerData, IAuthingPublicConfig } from '../types'
+import { IAuthingFunc, IAuthingMFATriggerData, IAuthingPublicConfig } from '../types'
 
 import { i18n } from '../locales'
 
@@ -25,6 +25,8 @@ import { BackCustom } from './Back'
 import { verifyTotp } from '../apis'
 
 import { useAuthingMFAContext } from '../contexts'
+
+import { loopFunc } from '../helpers'
 
 const { useRef, useState, useEffect, useMemo } = React
 
@@ -161,10 +163,10 @@ function VerifyMFAOtp(props: OTPProps) {
     submitButtonRef.current?.onSpin(false)
 
     if (code === 200) {
-      return authingMFAContext?.events.onSuccess?.(code, data)
+      return loopFunc(authingMFAContext?.events.onSuccess as IAuthingFunc, code, data)
     }
 
-    return authingMFAContext?.events.onFail?.(tips)
+    return loopFunc(authingMFAContext?.events.onFail as IAuthingFunc, tips)
   }, [mfaToken])
 
   const CustomBack = useMemo(

@@ -6,6 +6,12 @@ import { phone } from 'phone'
 
 export * from './countryList'
 
+export * from './loop-func'
+
+export * from './noop'
+
+export * from './delay'
+
 // NoCheck | Low | Middle | High | AUTO
 export type PasswordStrength = 0 | 1 | 2 | 3 | 4
 
@@ -208,5 +214,3 @@ export const phoneDesensitization = (phone: string) => {
 export const getClassnames = (classnames: (string | boolean | undefined)[]) => {
   return classnames.filter(Boolean).join(' ')
 }
-
-export function noop() {}

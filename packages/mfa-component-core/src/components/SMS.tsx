@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { Form } from 'shim-antd'
 
-import { IAuthingMFATriggerData, IAuthingPublicConfig } from '../types'
+import { IAuthingFunc, IAuthingMFATriggerData, IAuthingPublicConfig } from '../types'
 
 import { i18n } from '../locales'
 
@@ -25,6 +25,8 @@ import { SendCodeBtn } from './SendCode'
 import { sendSMS, verifySms } from '../apis'
 
 import { useAuthingMFAContext } from '../contexts'
+
+import { loopFunc } from '../helpers'
 
 const { useState, useRef, useCallback, useMemo } = React
 
@@ -211,10 +213,10 @@ function VerifyMFASms(props: VerifyMFASmsProps) {
     submitButtonRef.current?.onSpin(false)
 
     if (code === 200 && data) {
-      return authingMFAContext?.events.onSuccess?.(code, data)
+      return loopFunc(authingMFAContext?.events.onSuccess as IAuthingFunc, code, data)
     }
 
-    return authingMFAContext?.events.onFail?.(tips)
+    return loopFunc(authingMFAContext?.events.onFail as IAuthingFunc, tips)
   }
 
   const tips = useMemo(() => {

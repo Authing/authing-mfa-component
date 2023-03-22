@@ -2,7 +2,7 @@ import { React } from 'shim-react'
 
 import { Input, message, Form } from 'shim-antd'
 
-import { IAuthingMFATriggerData, IAuthingPublicConfig } from '../types'
+import { IAuthingFunc, IAuthingMFATriggerData, IAuthingPublicConfig } from '../types'
 
 import { IconFont } from '../IconFont'
 
@@ -21,6 +21,8 @@ import { SendCodeBtn } from './SendCode'
 import { sendEmail, verifyEmail } from '../apis'
 
 import { useAuthingMFAContext } from '../contexts'
+
+import { loopFunc } from '../helpers'
 
 const { useState, useRef } = React
 
@@ -171,10 +173,10 @@ function VerifyMFAEmail(props: VerifyMFAEmailProps) {
     submitButtonRef.current?.onSpin(false)
 
     if (code === 200 && data) {
-      return authingMFAContext?.events.onSuccess?.(code, data)
+      return loopFunc(authingMFAContext?.events.onSuccess as IAuthingFunc, code, data)
     }
 
-    return authingMFAContext?.events.onFail?.(tips)
+    return loopFunc(authingMFAContext?.events.onFail as IAuthingFunc, tips)
   }
 
   return (

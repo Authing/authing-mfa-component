@@ -4,7 +4,7 @@ import { FormInstance, FormItemProps } from 'shim-antd/lib/form'
 
 import { Lang } from './locales'
 export interface IAuthingMFAOptions {
-  el: Element
+  appId: string
 }
 
 export type IAuthingMFAEventHandler = (...args: any[]) => void
@@ -60,12 +60,25 @@ export interface IAuthingPublicConfig {
   requestHostname?: string
 }
 
+interface OnSuccess {
+  (code: number, data: any): void
+}
+
+interface OnFail {
+  (message?: string): void
+}
+
 export interface IAuthingMFAEventFunc {
-  onLoad?: () => void
-  onMount?: () => void
-  onUnmount?: () => void
-  onSuccess?: (code: number, data: any) => void
-  onFail?: (message?: string) => void
+  onLoad?: IAuthingMFAEventHandler | IAuthingMFAEventHandler[]
+  onMount?: IAuthingMFAEventHandler | IAuthingMFAEventHandler[]
+  onUnmount?: IAuthingMFAEventHandler | IAuthingMFAEventHandler[]
+  onSuccess?: OnSuccess | OnSuccess[]
+  onFail?: OnFail | OnFail[]
+}
+
+export interface IStartProps {
+  el: Element
+  mfaTriggerData: IAuthingMFATriggerData
 }
 
 export interface IAuthingMFAComponentProps extends IAuthingMFAEventFunc {
@@ -105,4 +118,8 @@ export interface ICheckProps {
 export interface IAuthingMFAContext {
   events: IAuthingMFAEventFunc
   mfaTriggerData: IAuthingMFATriggerData
+}
+
+export interface IAuthingFunc {
+  (...args: any[]): any
 }
