@@ -41,6 +41,26 @@ export default function MFA() {
         "passwordStrength": 0
       }
     })
+
+    authingMFA.on('load', function () {
+      console.log('Authing MFA load')
+    })
+    
+    authingMFA.on('mount', function () {
+      console.log('Authing MFA mount: ', document.querySelector('.authing-mfa-content'))
+    })
+    
+    authingMFA.on('unmount', function () {
+      console.log('Authing MFA unmount')
+    })
+    
+    authingMFA.on('success', function (code, data) {
+      console.log('Authing MFA success: ', code, data)
+    })
+    
+    authingMFA.on('fail', function (message) {
+      console.log('Authing MFA fail: ', message)
+    })
   }, [])
 
   return (
