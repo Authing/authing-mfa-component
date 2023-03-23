@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "autoinstall": "npm ci",
-    "build": "npm run build:ng && npm run build:assets",
+    "build:lib": "npm run build:ng && npm run build:assets",
     "build:assets": "node scripts/build.js",
     "build:ng": "ng build mfa-angular",
     "release:official": "npm publish --verbose --access public",
