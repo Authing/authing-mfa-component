@@ -1,8 +1,8 @@
 {
   "name": "@authing/mfa-component-native",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "Authing continuous adaptive mfa component for Native",
-  "module": "dist/esm/authing-mfa-component-native.min.js",
+  "module": "dist/index.min.js",
   "types": "dist/typings/index.d.ts",
   "files": [
     "dist",
