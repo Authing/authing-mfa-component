@@ -1,1 +1,1 @@
-# Authing Continuous Adaptive MFA Components
+# Authing Continuous Adaptive MFA Component
