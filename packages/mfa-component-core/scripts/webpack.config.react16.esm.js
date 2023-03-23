@@ -33,8 +33,8 @@ module.exports = {
     }
   },
   externals: {
-    react: 'react',
-    'react-dom': 'react-dom'
+    React: 'react',
+    ReactDOM: 'react-dom'
   },
   module: {
     rules: [
