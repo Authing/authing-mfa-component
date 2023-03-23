@@ -1,0 +1,34 @@
+const path = require('path')
+const rm = require('rimraf')
+const webpack = require('webpack')
+const webpackReact16ESMConfig = require('./webpack.config.react16.esm')
+const webpackReact18ESMConfig = require('./webpack.config.react18.esm')
+const webpackGlobalConfig = require('./webpack.config.react16.global')
+
+try {
+  rm.sync(path.resolve(__dirname, '../', 'dist'))
+} catch (e) {
+  console.error('\n\n build Authing MFA, failed to delete dist directory, please operate manually \n\n')
+}
+
+readyGo()
+
+function readyGo () {
+  webpack(webpackReact16ESMConfig, (error) => {
+    if (error) {
+      console.error('build Authing MFA core esm 16 bundler error: ', error)
+    }
+  })
+
+  webpack(webpackReact18ESMConfig, (error) => {
+    if (error) {
+      console.error('build Authing MFA core esm 18 bundler error: ', error)
+    }
+  })
+
+  webpack(webpackGlobalConfig, (error) => {
+    if (error) {
+      console.error('build Authing MFA core global bundler error: ', error)
+    }
+  })
+}
