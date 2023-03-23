@@ -56,8 +56,8 @@ jobs:
 
       - name: build
         run: |
-          npm run build:guard
-          npm run build:guard-shim-react18
+          npm run build:core
+          npm run transfer-packages
           lerna link
           lerna run build
 
