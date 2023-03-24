@@ -14,22 +14,21 @@ try {
 readyGo()
 
 function readyGo () {
-  webpack(webpackReact16ESMConfig, (error, stats) => {
-    console.log(stats)
+  webpack(webpackReact16ESMConfig, (error) => {
     if (error) {
       console.error('build Authing MFA core esm 16 bundler error: ', error)
     }
   })
 
-  // webpack(webpackReact18ESMConfig, (error) => {
-  //   if (error) {
-  //     console.error('build Authing MFA core esm 18 bundler error: ', error)
-  //   }
-  // })
+  webpack(webpackReact18ESMConfig, (error) => {
+    if (error) {
+      console.error('build Authing MFA core esm 18 bundler error: ', error)
+    }
+  })
 
-  // webpack(webpackGlobalConfig, (error) => {
-  //   if (error) {
-  //     console.error('build Authing MFA core global bundler error: ', error)
-  //   }
-  // })
+  webpack(webpackGlobalConfig, (error) => {
+    if (error) {
+      console.error('build Authing MFA core global bundler error: ', error)
+    }
+  })
 }
