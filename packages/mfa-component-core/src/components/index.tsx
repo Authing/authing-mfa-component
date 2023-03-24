@@ -87,6 +87,7 @@ const ComponentsMapping: Record<MFAType, (props: IMFAFuncProps) => React.ReactNo
 export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
   const {
     appId,
+    host = '',
     mfaTriggerData,
     lang,
     onLoad = noop,
@@ -111,7 +112,7 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
   const [publicConfig, setPublicConfig] = useState<null | IAuthingPublicConfig>(null)
 
   const _getPublicConfig = useCallback(async () => {
-    const publicConfig = await getPublicConfig(appId)
+    const publicConfig = await getPublicConfig(appId, host)
     setPublicConfig(publicConfig)
   }, [appId])
 
