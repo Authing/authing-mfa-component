@@ -1,6 +1,6 @@
 {
   "name": "@authing/mfa-component-core",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.7",
   "description": "Authing continuous adaptive mfa component for core codes, only be used to internal",
   "types": "dist/typings/src/index.d.ts",
   "files": [
@@ -23,5 +23,8 @@
     "i18next-browser-languagedetector": "^7.0.1",
     "phone": "^3.1.12",
     "react-use": "^17.4.0"
+  },
+  "devDependencies": {
+    "url-loader": "^4.1.1"
   }
 }

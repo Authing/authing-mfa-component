@@ -79,9 +79,20 @@ export class AuthingMFA {
       ...events
     }
 
+    const style = this._options.style || {
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
+    }
+
     return render({
       container: this._el,
-      element: <AuthingMFAComponent {...componentProps}></AuthingMFAComponent>
+      element: (
+        <div style={style}>
+          <AuthingMFAComponent {...componentProps}></AuthingMFAComponent>
+        </div>
+      )
     })
   }
 }

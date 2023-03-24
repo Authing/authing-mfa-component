@@ -8,7 +8,7 @@ function resolve(dir, file = '') {
   return path.resolve(__dirname, '../', dir, file)
 }
 
-const reactVersion = '16'
+const reactVersion = '18'
 
 module.exports = {
   mode: 'production',
@@ -67,6 +67,10 @@ module.exports = {
             },
           },
         }]
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/i,
+        use: ['url-loader']
       }
     ]
   },
