@@ -75,6 +75,7 @@ export class AuthingMFA {
 
     const componentProps = {
       appId: this._options.appId,
+      host: this._options.host || '',
       mfaTriggerData: this._mfaTriggerData,
       ...events
     }

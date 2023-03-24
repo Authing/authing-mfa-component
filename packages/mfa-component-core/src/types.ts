@@ -5,6 +5,7 @@ import { FormInstance, FormItemProps } from 'shim-antd/lib/form'
 import { Lang } from './locales'
 export interface IAuthingMFAOptions {
   appId: string
+  host?: string
   style?: CSSProperties
 }
 
@@ -77,6 +78,7 @@ export interface IStartProps {
 
 export interface IAuthingMFAComponentProps extends IAuthingMFAEventFunc {
   appId: string
+  host?: string
   mfaTriggerData: IAuthingMFATriggerData
   lang?: Lang
   children?: ReactNode
