@@ -7,7 +7,7 @@ interface VerifyFaceContent {
 export const verifyFace = async (content: VerifyFaceContent) => {
   const { photo, mfaToken } = content
   return await post({
-    path: '/api/v2/applications/mfa/face/verify',
+    path: '/api/v2/mfa/face/verify',
     data: {
       photo
     },

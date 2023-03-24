@@ -179,8 +179,12 @@ export function Face(props: IFaceProps) {
       cooldown.current = 0
 
       setFaceState('retry')
-    } else {
-      console.log(data)
+
+      return
+    }
+
+    if (code === 200) {
+      loopFunc(authingMFAContext?.events.onSuccess as IAuthingFunc, code, data)
     }
   }
 

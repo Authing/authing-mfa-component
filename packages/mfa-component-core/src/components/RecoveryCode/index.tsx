@@ -1,10 +1,14 @@
 import { React } from 'shim-react'
 
-import { IAuthingMFATriggerData } from '../../types'
+import { IAuthingFunc, IAuthingMFATriggerData } from '../../types'
 
 import { SaveCode } from './core/saveCode'
 
 import { UseCode } from './core/useCode'
+
+import { useAuthingMFAContext } from '../../contexts'
+
+import { loopFunc } from '../../helpers'
 
 import './style.less'
 
@@ -17,8 +21,12 @@ interface IRecoveryCodeProps {
 // OTP 恢复码
 export function AuthingMFARecoveryCodeView(props: IRecoveryCodeProps) {
   const { mfaTriggerData } = props
+
   const { mfaToken } = mfaTriggerData
+
   const [recoveryCode, setRecoveryCode] = useState<string>()
+
+  const authingMFAContext = useAuthingMFAContext()
 
   return (
     <div className="g2-view-container g2-mfa-recovery-code">
@@ -27,7 +35,7 @@ export function AuthingMFARecoveryCodeView(props: IRecoveryCodeProps) {
           <SaveCode
             secret={recoveryCode}
             onBind={() => {
-              // 加入事件回调
+              loopFunc(authingMFAContext?.events.onBindOTP as IAuthingFunc)
             }}
           />
         ) : (
