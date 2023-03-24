@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authing MFA Demo</title>
+  <!-- 替换你自己的 React、React DOM CDN -->
+  <script src="https://zhaoyiming0803.github.io/static/js/pure-react-project-bundle.js"></script>
+  
+  <script src="https://cdn.authing.co/packages/authing-mfa-component/1.0.0-alpha.6/index.min.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="https://cdn.authing.co/packages/authing-mfa-component/1.0.0-alpha.6/index.min.css" />
+</head>
+<body>
+  <div id="authing-mfa-container"></div>
+
+  <script>
+    ;(function (window, document, AuthingMFAFactory) {
+      const authingMFA = new AuthingMFAFactory.AuthingMFA({
+        appId: '630ed3137dd6f2fd7001da24'
+      })
+
+      authingMFA.start({
+        el: document.querySelector('#authing-mfa-container'),
+        mfaTriggerData: {
+          "mfaToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJQb29sSWQiOiI2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzkiLCJ1c2VySWQiOiI2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJhcm4iOiJhcm46Y246YXV0aGluZzo2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzk6dXNlcjo2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJzdGFnZSI6MX0sImlhdCI6MTY3OTQ3MzA0MywiZXhwIjoxNjc5NDczNDAzfQ.gQe3ZP5jvtHyuRAP_Vf8xLmNwe1Mi-qyUVoaB5gRpj8",
+          "nickname": '',
+          "email": '',
+          "phone": '',
+          "phoneCountryCode": '',
+          "mfaPhone": "",
+          "mfaEmail": "",
+          "mfaPhoneCountryCode": "+86",
+          "username": "test6",
+          "avatar": "https://files.authing.co/authing-console/default-user-avatar.png",
+          "faceMfaEnabled": true,
+          "totpMfaEnabled": true,
+          "applicationMfa": [{
+            "mfaPolicy": "EMAIL",
+            "status": 1,
+            "sort": 0
+          }, {
+            "mfaPolicy": "FACE",
+            "status": 1,
+            "sort": 0
+          }, {
+            "mfaPolicy": "OTP",
+            "status": 1,
+            "sort": 0
+          }, {
+            "mfaPolicy": "SMS",
+            "status": 1,
+            "sort": 0
+          }],
+          "passwordStrength": 0
+        }
+      })
+    })(window, document, AuthingMFAFactory);
+  </script>
+</body>
+</html>
