@@ -59,7 +59,7 @@ jobs:
           npm run build:core
           npm run transfer-packages
           lerna link
-          lerna run build
+          lerna run build:lib
 
       - name: update version
         run: |
