@@ -64,11 +64,15 @@ module.exports = {
               modifyVars: {
                 '@primary-color': '#215AE5',
                 '@link-color': '#215AE5',
-                '@ant-prefix': 'authing-ant',
-              },
-            },
-          },
+                '@ant-prefix': 'authing-ant'
+              }
+            }
+          }
         }]
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/i,
+        use: ['url-loader']
       }
     ]
   },

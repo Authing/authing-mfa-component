@@ -8,16 +8,17 @@ function resolve(dir, file = '') {
   return path.resolve(__dirname, '../', dir, file)
 }
 
-const reactVersion = '18'
+const reactVersion = '16'
 
 module.exports = {
   mode: 'production',
   entry: resolve('src/index.tsx'),
   output: {
     filename: 'index.min.js',
-    path: resolve(`dist/esm-react${reactVersion}`),
+    path: resolve('dist/global'),
     library: {
-      type: 'module'
+      name: 'AuthingMFAFactory',
+      type: 'global'
     }
   },
   experiments: {
@@ -67,6 +68,10 @@ module.exports = {
             },
           },
         }]
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/i,
+        use: ['url-loader']
       }
     ]
   },

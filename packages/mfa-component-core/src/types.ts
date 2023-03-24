@@ -1,10 +1,11 @@
-import { ReactNode } from 'shim-react'
+import { CSSProperties, ReactNode } from 'shim-react'
 
 import { FormInstance, FormItemProps } from 'shim-antd/lib/form'
 
 import { Lang } from './locales'
 export interface IAuthingMFAOptions {
   appId: string
+  style?: CSSProperties
 }
 
 export type IAuthingMFAEventHandler = (...args: any[]) => void

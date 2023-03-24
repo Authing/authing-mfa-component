@@ -1,6 +1,6 @@
 import { React } from 'shim-react'
 
-import { ConfigProvider, message, Spin } from 'shim-antd'
+import { ConfigProvider, message } from 'shim-antd'
 
 import { Email } from './Email'
 
@@ -13,6 +13,8 @@ import { OTP } from './OTP'
 import { MFASelector } from './MFASelector'
 
 import { useIconfont } from '../IconFont'
+
+import { AuthingLoading } from './AuthingLoading'
 
 import { initAuthingMFAI18n } from '../locales'
 
@@ -194,7 +196,7 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
                 ></MFASelector>
               )}
             </>
-          )) || <Spin className="authing-mfa-container-placeholder"></Spin>}
+          )) || <AuthingLoading />}
         </div>
       </ConfigProvider>
     </AuthingMFAContext.Provider>

@@ -15,10 +15,9 @@ module.exports = {
   entry: resolve('src/index.tsx'),
   output: {
     filename: 'index.min.js',
-    path: resolve('dist/global'),
+    path: resolve(`dist/esm-react${reactVersion}`),
     library: {
-      name: 'AuthingMFAFactory',
-      type: 'global'
+      type: 'module'
     }
   },
   experiments: {
@@ -68,6 +67,10 @@ module.exports = {
             },
           },
         }]
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/i,
+        use: ['url-loader']
       }
     ]
   },
