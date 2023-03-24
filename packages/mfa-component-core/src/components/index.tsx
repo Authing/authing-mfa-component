@@ -94,7 +94,8 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
     onMount = noop,
     onUnmount = noop,
     onSuccess = noop,
-    onFail = noop
+    onFail = noop,
+    onBindOTP = noop
   } = props
 
   const events = useMemo(() => {
@@ -103,9 +104,10 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
       onMount,
       onUnmount,
       onSuccess,
-      onFail
+      onFail,
+      onBindOTP
     }
-  }, [onLoad, onMount, onUnmount, onSuccess, onFail])
+  }, [onLoad, onMount, onUnmount, onSuccess, onFail, onBindOTP])
 
   let timer: null | NodeJS.Timeout = null
 

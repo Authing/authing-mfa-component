@@ -8,13 +8,17 @@ import { BindSuccess } from './core/bind'
 
 import { SecurityCode } from './core/securityCode'
 
-import { IAuthingPublicConfig, IAuthingMFATriggerData } from '../../types'
+import { IAuthingPublicConfig, IAuthingMFATriggerData, IAuthingFunc } from '../../types'
 
 import { AuthingMFADownloadATView } from '../DownloadAuthenticator'
 
 import { BackType } from '../OTP'
 
 import { mfaAuthenticator, otpAssociate } from '../../apis'
+
+import { useAuthingMFAContext } from '../../contexts'
+
+import { loopFunc } from '../../helpers'
 
 import './styles.less'
 
@@ -35,7 +39,9 @@ export const AuthingMFABindTotpView = forwardRef((props: GuardBindTotpProps, ref
 
   const [qrcode, setQrcode] = useState('')
 
-  const [bindTotpType, setBindTotpType] = useState<BindTotpType>('bindSuccess')
+  const [bindTotpType, setBindTotpType] = useState<BindTotpType>('securityCode')
+
+  const authingMFAContext = useAuthingMFAContext()
 
   useImperativeHandle(
     ref,
@@ -75,11 +81,10 @@ export const AuthingMFABindTotpView = forwardRef((props: GuardBindTotpProps, ref
   }, [])
 
   const onBind = () => {
-    console.log('onBind')
+    loopFunc(authingMFAContext?.events.onBindOTP as IAuthingFunc)
   }
 
-  const onConfirmOTP = (user?: any) => {
-    console.log('onConfirmOTP: ', user)
+  const onConfirmOTP = () => {
     setBindTotpType('bindSuccess')
   }
 

@@ -5,13 +5,13 @@ import { AuthingMFA } from './src/index'
 import { IAuthingMFATriggerData } from './src/types'
 
 const mfaTriggerData: IAuthingMFATriggerData = {
-	"mfaToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJQb29sSWQiOiI2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzkiLCJ1c2VySWQiOiI2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJhcm4iOiJhcm46Y246YXV0aGluZzo2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzk6dXNlcjo2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJzdGFnZSI6MX0sImlhdCI6MTY3OTQ3MzA0MywiZXhwIjoxNjc5NDczNDAzfQ.gQe3ZP5jvtHyuRAP_Vf8xLmNwe1Mi-qyUVoaB5gRpj8",
+	"mfaToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJQb29sSWQiOiI2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzkiLCJ1c2VySWQiOiI2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJhcm4iOiJhcm46Y246YXV0aGluZzo2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzk6dXNlcjo2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJzdGFnZSI6MX0sImlhdCI6MTY3OTY3NDc1NywiZXhwIjoxNjc5Njc1MTE3fQ.G-dMoe7Uus3-jrxV66uKOBooPYOieLvQjIVI-VbVqt4",
 	"nickname": '',
 	"email": '',
 	"phone": '',
 	"phoneCountryCode": '',
-	"mfaPhone": "17610800803",
-	"mfaEmail": "1047832475@qq.com",
+	"mfaPhone": "",
+	"mfaEmail": "",
 	"mfaPhoneCountryCode": "+86",
 	"username": "test6",
 	"avatar": "https://files.authing.co/authing-console/default-user-avatar.png",
@@ -95,4 +95,9 @@ authingMFA.on('success', function (code, data) {
 authingMFA.on('fail', function (message) {
 	console.log('Authing MFA fail: ', message)
 })
+
+authingMFA.on('bindOTP', function () {
+	console.log('Authing MFA bindOTP')
+})
+
 
