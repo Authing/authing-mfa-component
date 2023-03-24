@@ -25,11 +25,11 @@ export const UseCode: React.FC<UseCodeProps> = props => {
   const submitButtonRef = useRef<any>(null)
 
   const onFinish = async () => {
-    // 特殊接口，标准接口 res 中没有 recoveryCode 字段
-    // @ts-ignore
     const {
       code,
       data,
+      // 特殊接口，标准接口 res 中没有 recoveryCode 字段
+      // @ts-ignore
       recoveryCode,
       message: tips
     } = await recoveryTotp({
