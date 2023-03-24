@@ -156,7 +156,7 @@ export function Face(props: IFaceProps) {
       return setFaceState('retry')
     }
 
-    message.error(tips, 5)
+    loopFunc(authingMFAContext?.events.onFail as IAuthingFunc, tips)
   }
 
   const faceCheck = async () => {
