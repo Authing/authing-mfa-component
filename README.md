@@ -21,7 +21,7 @@ In MFA, users need to provide two or more different authentication factors to pa
 
 MFA is a security measure that can improve the security of authentication and protect the identity and information of users.
 
-## 什么是 Adaptive MFA？
+## What is Adaptive MFA？
 
 Adaptive MFA (Adaptive Multi Factor Authentication) is a security authentication technology that uses multiple authentication factors to ensure the identity of users. Unlike traditional MFA, Adaptive MFA can adaptively choose which authentication factors to use based on the context in which the user logs in
 
