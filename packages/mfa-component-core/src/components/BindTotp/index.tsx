@@ -20,6 +20,8 @@ import { useAuthingMFAContext } from '../../contexts'
 
 import { loopFunc } from '../../helpers'
 
+import { i18n } from '../../locales'
+
 import './styles.less'
 
 const { useEffect, useState, useMemo, forwardRef, useImperativeHandle } = React
@@ -40,6 +42,8 @@ export const AuthingMFABindTotpView = forwardRef((props: GuardBindTotpProps, ref
   const [qrcode, setQrcode] = useState('')
 
   const [bindTotpType, setBindTotpType] = useState<BindTotpType>('securityCode')
+
+  const [successCallbackData, setSuccessCallbackData] = useState(null)
 
   const authingMFAContext = useAuthingMFAContext()
 
@@ -81,10 +85,12 @@ export const AuthingMFABindTotpView = forwardRef((props: GuardBindTotpProps, ref
   }, [])
 
   const onBind = () => {
-    loopFunc(authingMFAContext?.events.onBindOTP as IAuthingFunc)
+    message.success(i18n.t('mfa.bindSuccess'))
+    loopFunc(authingMFAContext?.events.onSuccess as IAuthingFunc, 200, successCallbackData)
   }
 
-  const onConfirmOTP = () => {
+  const onConfirmOTP = (data: any) => {
+    setSuccessCallbackData(data)
     setBindTotpType('bindSuccess')
   }
 

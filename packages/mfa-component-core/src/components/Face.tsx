@@ -141,6 +141,7 @@ export function Face(props: IFaceProps) {
     const { code, data, message: tips } = result
 
     if (code === 200) {
+      message.success(tips)
       return loopFunc(authingMFAContext?.events.onSuccess as IAuthingFunc, code, data)
     }
 
@@ -156,6 +157,7 @@ export function Face(props: IFaceProps) {
       return setFaceState('retry')
     }
 
+    message.error(tips)
     loopFunc(authingMFAContext?.events.onFail as IAuthingFunc, tips)
   }
 

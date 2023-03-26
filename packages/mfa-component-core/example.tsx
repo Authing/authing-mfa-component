@@ -5,7 +5,7 @@ import { AuthingMFA } from './src/index'
 import { IAuthingMFATriggerData } from './src/types'
 
 const mfaTriggerData: IAuthingMFATriggerData = {
-	"mfaToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJQb29sSWQiOiI2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzkiLCJ1c2VySWQiOiI2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJhcm4iOiJhcm46Y246YXV0aGluZzo2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzk6dXNlcjo2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJzdGFnZSI6MX0sImlhdCI6MTY3OTY3NDc1NywiZXhwIjoxNjc5Njc1MTE3fQ.G-dMoe7Uus3-jrxV66uKOBooPYOieLvQjIVI-VbVqt4",
+	"mfaToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJQb29sSWQiOiI2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzkiLCJ1c2VySWQiOiI2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJhcm4iOiJhcm46Y246YXV0aGluZzo2MmUyMjFmODVmNWFjNWNjNDcwMzdhMzk6dXNlcjo2NDEwMmZlYWJiZWQ1MTNiZjAzNjk5OTAiLCJzdGFnZSI6MX0sImlhdCI6MTY3OTg1OTI2OCwiZXhwIjoxNjc5ODU5NjI4fQ.9GSwcmP7ykaiALZUHLpFH6LvLOBYdRfpLzJHoCCgVUY",
 	"nickname": '',
 	"email": '',
 	"phone": '',
@@ -16,7 +16,7 @@ const mfaTriggerData: IAuthingMFATriggerData = {
 	"username": "test6",
 	"avatar": "https://files.authing.co/authing-console/default-user-avatar.png",
 	"faceMfaEnabled": true,
-	"totpMfaEnabled": true,
+	"totpMfaEnabled": false,
 	"applicationMfa": [{
 		"mfaPolicy": "EMAIL",
 		"status": 1,
@@ -68,8 +68,7 @@ function Example() {
 // })
 
 const authingMFA = new AuthingMFA({
-	appId: '630ed3137dd6f2fd7001da24',
-	lang: 'ja-JP'
+	appId: '630ed3137dd6f2fd7001da24'
 })
 
 authingMFA.start({
@@ -97,8 +96,8 @@ authingMFA.on('fail', function (message) {
 	console.log('Authing MFA fail: ', message)
 })
 
-authingMFA.on('bindOTP', function () {
-	console.log('Authing MFA bindOTP')
+authingMFA.on('saveRecoveryCode', function () {
+	console.log('Authing MFA saveRecoveryCode')
 })
 
 

@@ -70,7 +70,7 @@ export interface IAuthingMFAEventFunc {
   onUnmount?: IAuthingMFAEventHandler | IAuthingMFAEventHandler[]
   onSuccess?: OnSuccess | OnSuccess[]
   onFail?: OnFail | OnFail[]
-  onBindOTP?: IAuthingMFAEventHandler | IAuthingMFAEventHandler[]
+  onSaveRecoveryCode?: IAuthingMFAEventHandler | IAuthingMFAEventHandler[]
 }
 
 export interface IStartProps {

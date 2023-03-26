@@ -1,6 +1,6 @@
 import { React } from 'shim-react'
 
-import { Form } from 'shim-antd'
+import { Form, message } from 'shim-antd'
 
 import { IAuthingFunc, IAuthingMFATriggerData, IAuthingPublicConfig } from '../types'
 
@@ -163,9 +163,11 @@ function VerifyMFAOtp(props: OTPProps) {
     submitButtonRef.current?.onSpin(false)
 
     if (code === 200) {
+      message.success(tips)
       return loopFunc(authingMFAContext?.events.onSuccess as IAuthingFunc, code, data)
     }
 
+    message.error(tips)
     return loopFunc(authingMFAContext?.events.onFail as IAuthingFunc, tips)
   }, [mfaToken])
 

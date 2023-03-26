@@ -1,4 +1,4 @@
-import { Form } from 'shim-antd'
+import { Form, message } from 'shim-antd'
 
 import { React } from 'shim-react'
 
@@ -40,7 +40,11 @@ export const SecurityCode: React.FC<SecurityCodeProps> = ({
     const saftyCode = form.getFieldValue('saftyCode')
 
     try {
-      const { code, data } = await confirmOtp({
+      const {
+        code,
+        data,
+        message: tips
+      } = await confirmOtp({
         authenticator_type: 'totp',
         totp: saftyCode.join(''),
         source: 'APPLICATION',
@@ -49,10 +53,10 @@ export const SecurityCode: React.FC<SecurityCodeProps> = ({
       if (code === 200) {
         onConfirmOTP(data)
       } else {
-        submitButtonRef.current?.onError()
+        message.error(tips)
       }
     } catch (e) {
-      submitButtonRef.current?.onError()
+      message.error(JSON.stringify(e))
     } finally {
       submitButtonRef.current?.onSpin(false)
     }
