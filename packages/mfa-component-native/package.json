@@ -1,6 +1,6 @@
 {
   "name": "@authing/mfa-component-native",
-  "version": "1.0.0-alpha.9",
+  "version": "1.0.0-alpha.10",
   "description": "Authing continuous adaptive mfa component for Native",
   "module": "dist/index.min.js",
   "types": "dist/typings/index.d.ts",
@@ -18,6 +18,6 @@
   "author": "https://github.com/authing",
   "license": "MIT",
   "dependencies": {
-    "@authing/mfa-component-shim-react": "^1.0.0-alpha.9"
+    "@authing/mfa-component-shim-react": "^1.0.0-alpha.10"
   }
 }
