@@ -1,5 +1,18 @@
 # Authing 持续性自适应 MFA 组件
 
+<div align=center>
+  <img width="250" src="https://files.authing.co/authing-console/authing-logo-new-20210924.svg" />
+</div>
+
+<div align="center">
+  <a href="javascript:;"><img src="https://img.shields.io/badge/test-passing-brightgreen" /></a>
+  <a href="https://forum.authing.cn/" target="_blank"><img src="https://img.shields.io/badge/chat-forum-blue" /></a>
+  <a href="javascript:;"><img src="https://img.shields.io/badge/License-MIT-success" alt="License"></a>
+  <a href="javascript:;" target="_blank"><img src="https://img.shields.io/badge/node-%3E=12-green.svg" alt="Node"></a>
+</div>
+
+[English](./README.md) | 简体中文
+
 ## 什么是 MFA？
 
 MFA，全称为多因素认证（Multi-Factor Authentication），也被称为强制性身份验证（Strong Authentication），是一种安全措施，通过结合两个或更多不同的身份验证因素来保护用户的身份和信息安全。
@@ -34,4 +47,37 @@ Adaptive MFA 可以分析用户的登录环境和行为模式，选择合适的�
 |@authing/mfa-component-native|[![npm version](https://badge.fury.io/js/@authing%2Fmfa-component-native.svg)](https://www.npmjs.com/package/@authing/mfa-component-native)|MFA 组件适用于原生 JavaScript|
 
 
+## 🖥 环境支持
 
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)<br>Safari |
+| --- | --- | --- | --- |
+| IE11, Edge | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
+
+## 问题反馈
+
+如果需要在线技术支持，可访问[官方论坛](https://forum.authing.cn/). 此仓库的 issue 仅用于上报 Bug 和提交新功能特性。
+
+## 更新日志
+
+详细发布记录可参考[更新日志](https://github.com/Authing/authing-mfa-component/releases).
+
+## 开源共建
+
+- Fork 此仓库
+- 创建自己的 git 分支 (git checkout -b my-new-feature)
+- 提交你的修改 (git commit -am 'Add some feature')
+- 将修改内容推送到远程分支 (git push -u origin my-new-feature)
+- 创建一个 Pull Request
+
+## 开源许可
+
+[MIT](https://opensource.org/licenses/MIT)
+
+Copyright (c) 2023 Authing
+
+## 友情链接
+
+- [Guard](https://github.com/authing/Guard)
+- [authing-js-sdk](https://github.com/Authing/authing-js-sdk)
+- [AuthingMove](https://github.com/authing/authingmove)
+- [authingmove-template](https://github.com/Authing/authingmove-template)

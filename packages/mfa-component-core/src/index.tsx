@@ -7,7 +7,8 @@ import {
   IAuthingMFAEvent,
   IAuthingMFAEventHandler,
   IAuthingMFATriggerData,
-  IStartProps
+  IStartProps,
+  IAuthingMFAComponentProps
 } from './types'
 
 import { delay } from './helpers'
@@ -73,11 +74,15 @@ export class AuthingMFA {
       events[_eventName] = this._events[eventName]
     })
 
-    const componentProps = {
+    const componentProps: IAuthingMFAComponentProps = {
       appId: this._options.appId,
       host: this._options.host || '',
       mfaTriggerData: this._mfaTriggerData,
       ...events
+    }
+
+    if (this._options.lang) {
+      componentProps.lang = this._options.lang
     }
 
     const style = this._options.style || {
