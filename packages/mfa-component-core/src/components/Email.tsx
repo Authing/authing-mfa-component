@@ -173,9 +173,11 @@ function VerifyMFAEmail(props: VerifyMFAEmailProps) {
     submitButtonRef.current?.onSpin(false)
 
     if (code === 200 && data) {
+      message.success(tips)
       return loopFunc(authingMFAContext?.events.onSuccess as IAuthingFunc, code, data)
     }
 
+    message.error(tips)
     return loopFunc(authingMFAContext?.events.onFail as IAuthingFunc, tips)
   }
 

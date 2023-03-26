@@ -35,7 +35,7 @@ export function AuthingMFARecoveryCodeView(props: IRecoveryCodeProps) {
           <SaveCode
             secret={recoveryCode}
             onBind={() => {
-              loopFunc(authingMFAContext?.events.onBindOTP as IAuthingFunc)
+              loopFunc(authingMFAContext?.events.onSaveRecoveryCode as IAuthingFunc)
             }}
           />
         ) : (
