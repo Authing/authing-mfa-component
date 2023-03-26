@@ -59,7 +59,7 @@ For questions and support please use the [official forum](https://forum.authing.
 
 ## Changelog
 
-Detailed changes for each release are documented in the [release notes](https://docs.authing.cn/v2/reference/guard/guard-changelog.html).
+Detailed changes for each release are documented in the [release notes](https://github.com/Authing/authing-mfa-component/releases).
 
 ## Contribution
 
