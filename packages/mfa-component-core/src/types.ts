@@ -7,6 +7,7 @@ export interface IAuthingMFAOptions {
   appId: string
   host?: string
   style?: CSSProperties
+  lang?: Lang
 }
 
 export type IAuthingMFAEventHandler = (...args: any[]) => void

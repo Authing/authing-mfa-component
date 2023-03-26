@@ -68,7 +68,8 @@ function Example() {
 // })
 
 const authingMFA = new AuthingMFA({
-	appId: '630ed3137dd6f2fd7001da24'
+	appId: '630ed3137dd6f2fd7001da24',
+	lang: 'ja-JP'
 })
 
 authingMFA.start({
