@@ -1,5 +1,7 @@
 <template>
   <div class="mfa-container">
+    <button @click="showModal">Show Modal</button>
+    <button @click="hideModal">Hide Modal</button>
     <div id="authing-mfa-container"></div>
   </div>
 </template>
@@ -70,4 +72,7 @@ onMounted(() => {
     console.log('Authing MFA fail: ', message)
   })
 })
+
+const showModal = () => authingMFA.show()
+const hideModal = () => authingMFA.hide()
 </script>

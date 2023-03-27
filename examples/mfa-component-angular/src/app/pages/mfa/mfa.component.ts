@@ -69,4 +69,12 @@ export class MFAComponent {
       console.log('Authing MFA fail: ', message)
     })
   }
+
+  showModal () {
+    this.authingMFA.client.show()
+  }
+
+  hideModal () {
+    this.authingMFA.client.hide()
+  }
 }

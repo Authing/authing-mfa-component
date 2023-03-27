@@ -8,17 +8,20 @@
   <!-- 替换你自己的 React、React DOM CDN -->
   <script src="https://zhaoyiming0803.github.io/static/js/pure-react-project-bundle.js"></script>
   
-  <script src="https://cdn.authing.co/packages/authing-mfa-component/1.0.0-alpha.6/index.min.js"></script>
+  <script src="https://cdn.authing.co/packages/authing-mfa-component/1.0.0-alpha.14/index.min.js"></script>
   
-  <link rel="stylesheet" type="text/css" href="https://cdn.authing.co/packages/authing-mfa-component/1.0.0-alpha.6/index.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.authing.co/packages/authing-mfa-component/1.0.0-alpha.14/index.min.css" />
 </head>
 <body>
+  <button id="show-modal">Show Modal</button>
+  <button id="hide-modal">Hide Modal</button>
   <div id="authing-mfa-container"></div>
 
   <script>
     ;(function (window, document, AuthingMFAFactory) {
       const authingMFA = new AuthingMFAFactory.AuthingMFA({
-        appId: '630ed3137dd6f2fd7001da24'
+        appId: '630ed3137dd6f2fd7001da24',
+        mode: 'modal'
       })
 
       authingMFA.start({
@@ -56,6 +59,14 @@
           "passwordStrength": 0
         }
       })
+
+      document.querySelector('#show-modal').onclick = function () {
+        authingMFA.show()
+      }
+
+      document.querySelector('#hide-modal').onclick = function () {
+        authingMFA.hide()
+      }
     })(window, document, AuthingMFAFactory);
   </script>
 </body>

@@ -1,5 +1,7 @@
 <template>
   <div class="mfa-container">
+    <button @click="showModal">Show Modal</button>
+    <button @click="hideModal">Hide Modal</button>
     <div id="authing-mfa-container"></div>
   </div>
 </template>
@@ -65,6 +67,15 @@ export default {
     this.$authingMFA.on('fail', function (message) {
       console.log('Authing MFA fail: ', message)
     })
+  },
+
+  methods: {
+    showModal () {
+      this.$authingMFA.show()
+    },
+    hideModal () {
+      this.$authingMFA.hide()
+    }
   }
 }
 </script>

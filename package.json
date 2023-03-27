@@ -37,5 +37,8 @@
     "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.1"
+  },
+  "dependencies": {
+    "@authing/mfa-component-angular": "file:packages/mfa-component-angular"
   }
 }
