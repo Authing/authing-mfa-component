@@ -104,6 +104,7 @@ export class AuthingMFA {
   }
 
   show() {
+    this.unmount()
     this._render()
   }
 
