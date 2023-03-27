@@ -63,7 +63,14 @@ export default function MFA() {
     })
   }, [])
 
+  const showModal = () => authingMFA.show()
+  const hideModal = () => authingMFA.hide()
+
   return (
-    <div id="authing-mfa-container">123</div>
+    <div>
+      <button onClick={showModal}>Show Modal</button>
+      <button onClick={hideModal}>Hide Modal</button>
+      <div id="authing-mfa-container">123</div>
+    </div>
   )
 }
