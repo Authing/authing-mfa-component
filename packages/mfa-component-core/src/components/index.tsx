@@ -1,6 +1,6 @@
 import { React } from 'shim-react'
 
-import { ConfigProvider, message } from 'shim-antd'
+import { ConfigProvider, message, Modal } from 'shim-antd'
 
 import { Email } from './Email'
 
@@ -12,7 +12,7 @@ import { OTP } from './OTP'
 
 import { MFASelector } from './MFASelector'
 
-import { useIconfont } from '../IconFont'
+import { IconFont, useIconfont } from '../IconFont'
 
 import { AuthingLoading } from './AuthingLoading'
 
@@ -88,6 +88,7 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
   const {
     appId,
     host = '',
+    mode = 'normal',
     mfaTriggerData,
     lang,
     onLoad = noop,
@@ -112,6 +113,8 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
   let timer: null | NodeJS.Timeout = null
 
   const [publicConfig, setPublicConfig] = useState<null | IAuthingPublicConfig>(null)
+
+  const [modalVisible, setModalVisible] = useState<boolean>(mode === 'modal')
 
   const _getPublicConfig = useCallback(async () => {
     const publicConfig = await getPublicConfig(appId, host)
@@ -176,31 +179,56 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
     }
   }, [events, mfaTriggerData])
 
+  const onCloseModal = () => {
+    setModalVisible(false)
+  }
+
+  const renderContent = useMemo(() => {
+    return (
+      <div className="authing-mfa-container">
+        {(appId && mfaTriggerData && publicConfig && (
+          <div>
+            {CustomBack}
+            <div className="authing-mfa-content">
+              {ComponentsMapping[currentMFAType]({
+                mfaTriggerData,
+                setMFASelectorVisible,
+                publicConfig,
+                updateBackComponent
+              })}
+            </div>
+            {MFASelectorVisible && (
+              <MFASelector
+                mfaTriggerData={mfaTriggerData}
+                current={currentMFAType as MFAType}
+                onChange={onChange}
+              ></MFASelector>
+            )}
+          </div>
+        )) || <AuthingLoading />}
+      </div>
+    )
+  }, [appId, mfaTriggerData, publicConfig, currentMFAType])
+
   return (
     <AuthingMFAContext.Provider value={context}>
       <ConfigProvider prefixCls={PREFIX_CLS}>
-        <div className="authing-mfa-container">
-          {(appId && mfaTriggerData && publicConfig && (
-            <>
-              {CustomBack}
-              <div className="authing-mfa-content">
-                {ComponentsMapping[currentMFAType]({
-                  mfaTriggerData,
-                  setMFASelectorVisible,
-                  publicConfig,
-                  updateBackComponent
-                })}
-              </div>
-              {MFASelectorVisible && (
-                <MFASelector
-                  mfaTriggerData={mfaTriggerData}
-                  current={currentMFAType as MFAType}
-                  onChange={onChange}
-                ></MFASelector>
-              )}
-            </>
-          )) || <AuthingLoading />}
-        </div>
+        {mode === 'modal' ? (
+          <Modal
+            className="authing-g2-render-module-modal"
+            open={modalVisible}
+            closeIcon={<IconFont type="authing-close-line" className="g2-modal-close" />}
+            closable={true}
+            keyboard={true}
+            maskClosable={false}
+            footer={null}
+            onCancel={onCloseModal}
+          >
+            {renderContent}
+          </Modal>
+        ) : (
+          <div>{renderContent}</div>
+        )}
       </ConfigProvider>
     </AuthingMFAContext.Provider>
   )

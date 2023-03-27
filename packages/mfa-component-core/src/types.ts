@@ -3,11 +3,14 @@ import { CSSProperties, ReactNode } from 'shim-react'
 import { FormInstance, FormItemProps } from 'shim-antd/lib/form'
 
 import { Lang } from './locales'
+
+export type IAuthingMFAComponentMode = 'normal' | 'modal'
 export interface IAuthingMFAOptions {
   appId: string
   host?: string
   style?: CSSProperties
   lang?: Lang
+  mode?: IAuthingMFAComponentMode
 }
 
 export type IAuthingMFAEventHandler = (...args: any[]) => void
@@ -83,6 +86,7 @@ export interface IAuthingMFAComponentProps extends IAuthingMFAEventFunc {
   host?: string
   mfaTriggerData: IAuthingMFATriggerData
   lang?: Lang
+  mode?: IAuthingMFAComponentMode
   children?: ReactNode
 }
 

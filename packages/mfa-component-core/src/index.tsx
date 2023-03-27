@@ -78,6 +78,7 @@ export class AuthingMFA {
       appId: this._options.appId,
       host: this._options.host || '',
       mfaTriggerData: this._mfaTriggerData,
+      mode: this._options.mode || 'normal',
       ...events
     }
 
@@ -100,5 +101,13 @@ export class AuthingMFA {
         </div>
       )
     })
+  }
+
+  show() {
+    this._render()
+  }
+
+  hide() {
+    this.unmount()
   }
 }
