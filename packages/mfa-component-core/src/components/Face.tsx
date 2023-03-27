@@ -169,7 +169,7 @@ export function Face(props: IFaceProps) {
 
     const result = await verifyFace(requestData)
 
-    const { data, code } = result
+    const { data, code, message: tips } = result
 
     if (code === 1700 || code === 1701 || code === 1702) {
       p1.current = undefined
@@ -186,8 +186,12 @@ export function Face(props: IFaceProps) {
     }
 
     if (code === 200) {
+      message.success(tips)
       loopFunc(authingMFAContext?.events.onSuccess as IAuthingFunc, code, data)
     }
+
+    message.error(tips)
+    loopFunc(authingMFAContext?.events.onFail as IAuthingFunc, tips)
   }
 
   // bind 的情况
