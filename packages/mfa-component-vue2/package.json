@@ -1,6 +1,6 @@
 {
   "name": "@authing/mfa-component-vue2",
-  "version": "1.0.0-alpha.12",
+  "version": "1.0.0-alpha.13",
   "description": "Authing continuous adaptive mfa component for Vue 2",
   "module": "dist/index.min.js",
   "types": "dist/typings/index.d.ts",
@@ -18,7 +18,7 @@
   "author": "https://github.com/authing",
   "license": "MIT",
   "dependencies": {
-    "@authing/mfa-component-native": "^1.0.0-alpha.12",
+    "@authing/mfa-component-native": "^1.0.0-alpha.13",
     "vue": "^2.6.10"
   }
 }
