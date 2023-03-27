@@ -13,6 +13,7 @@ export default function App() {
     <AuthingMFAProvider
       appId="630ed3137dd6f2fd7001da24"
       lang="zh-TW"
+      mode="modal"
     >
       <RouterComponent></RouterComponent>
     </AuthingMFAProvider>

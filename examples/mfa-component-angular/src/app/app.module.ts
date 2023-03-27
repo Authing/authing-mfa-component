@@ -13,7 +13,8 @@ import { AuthingMFAModule } from '@authing/mfa-component-angular'
     BrowserModule,
     AppRoutingModule,
     AuthingMFAModule.forRoot({
-      appId: '630ed3137dd6f2fd7001da24'
+      appId: '630ed3137dd6f2fd7001da24',
+      mode: 'modal'
     })
   ],
   providers: [],

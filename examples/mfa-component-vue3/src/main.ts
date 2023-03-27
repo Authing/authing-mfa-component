@@ -12,7 +12,8 @@ const app = createApp(App)
 
 app.use(
   createAuthingMFA({
-    appId: '630ed3137dd6f2fd7001da24'
+    appId: '630ed3137dd6f2fd7001da24',
+    mode: 'modal'
   })
 )
 

@@ -7,7 +7,8 @@ import { AuthingMFAPlugin } from '@authing/mfa-component-vue2'
 import '@authing/mfa-component-vue2/dist/index.min.css'
 
 Vue.use(AuthingMFAPlugin, {
-  appId: '630ed3137dd6f2fd7001da24'
+  appId: '630ed3137dd6f2fd7001da24',
+  mode: 'modal'
 })
 
 new Vue({

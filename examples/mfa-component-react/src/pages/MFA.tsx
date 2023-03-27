@@ -5,6 +5,9 @@ import { useAuthingMFA } from '@authing/mfa-component-react'
 export default function MFA() {
   const authingMFA = useAuthingMFA()
 
+  const showModal = () => authingMFA.show()
+  const hideModal = () => authingMFA.hide()
+
   useEffect(() => {
     authingMFA.start({
       el: document.querySelector('#authing-mfa-container') as Element,
@@ -64,6 +67,10 @@ export default function MFA() {
   }, [])
 
   return (
-    <div id="authing-mfa-container">123</div>
+    <div>
+      <button onClick={showModal}>Show Modal</button>
+      <button onClick={hideModal}>Hide Modal</button>
+      <div id="authing-mfa-container"></div>
+    </div>
   )
 }
