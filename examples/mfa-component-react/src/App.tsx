@@ -11,7 +11,7 @@ import './App.css'
 export default function App() {
   return (
     <AuthingMFAProvider
-      appId="630ed3137dd6f2fd7001da24"
+      appId="AUTHING_APP_ID"
       lang="zh-TW"
       mode="modal"
     >

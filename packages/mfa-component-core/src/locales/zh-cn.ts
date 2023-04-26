@@ -66,5 +66,6 @@ export const mfa = {
   requireError: '无法满足要求错误',
   hardwareSupport: '硬件不支持',
   sendCodeTimeout: '发送失败,请稍后尝试',
-  emailMfaCheck: '请输入电子邮箱验证码'
+  emailMfaCheck: '请输入电子邮箱验证码',
+  verifyCodeTip: '换一张'
 }

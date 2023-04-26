@@ -63,5 +63,6 @@ export const mfa = {
   requireError: '要求エラーを満たすことができません',
   hardwareSupport: 'ハードウェアはサポートされていません',
   sendCodeTimeout: '送信に失敗した場合は後ほどお試しください',
-  emailMfaCheck: 'メール認証コードを入力してください'
+  emailMfaCheck: 'メール認証コードを入力してください',
+  verifyCodeTip: '別の画像を表示'
 }
