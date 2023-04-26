@@ -1,6 +1,6 @@
 {
   "name": "@authing/mfa-component-core",
-  "version": "1.0.0-alpha.15",
+  "version": "1.0.0-alpha.16",
   "description": "Authing continuous adaptive mfa component for core codes, only be used to internal",
   "types": "dist/typings/src/index.d.ts",
   "files": [
