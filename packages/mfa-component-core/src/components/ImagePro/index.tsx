@@ -119,7 +119,7 @@ export const ImagePro2 = (props: ImageProProps) => {
       />
       {loaded && (
         <div className="g2-base-imagepro-mask" ref={maskRef}>
-          <span style={{ marginRight: 4 }}>{i18n.t('login.verifyCodeTip')}</span>
+          <span style={{ marginRight: 4 }}>{i18n.t('mfa.verifyCodeTip')}</span>
           <svg
             width="16"
             height="16"

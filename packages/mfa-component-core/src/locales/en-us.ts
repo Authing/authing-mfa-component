@@ -64,5 +64,6 @@ export const mfa = {
   requireError: 'Unable to satisfy request error',
   hardwareSupport: 'Hardware not supported',
   sendCodeTimeout: 'Sending failed, please try later',
-  emailMfaCheck: 'Please enter email verification code'
+  emailMfaCheck: 'Please enter email verification code',
+  verifyCodeTip: 'Try another'
 }
