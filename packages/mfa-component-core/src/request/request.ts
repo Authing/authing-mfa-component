@@ -44,7 +44,7 @@ export async function get<T>(props: IGetProps): Promise<IAuthingResponse<T>> {
 
     const res: any = await Promise.race([
       timeoutAction(source.cancel),
-      axios(`${host || _baseUrl}${path}${query}`, {
+      axios(`${_baseUrl || host}${path}${query}`, {
         method: 'GET',
         ...config,
         withCredentials: true,
