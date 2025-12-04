@@ -132,7 +132,7 @@ export function AuthingMFAComponent(props: IAuthingMFAComponentProps) {
 
     setAppId(appId)
     setUserpoolId(publicConfig.userPoolId)
-    setRequestBaseUrl(host ?? `https://core.authing.cn`)
+    setRequestBaseUrl(host ?? 'https://core.authing.cn')
 
     loopFunc(events.onLoad)
 
